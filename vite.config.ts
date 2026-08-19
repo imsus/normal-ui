@@ -3,6 +3,15 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   plugins: [tailwindcss()],
+  build: {
+    rollupOptions: {
+      input: {
+        home: "index.html",
+        components: "components.html",
+        examples: "examples.html",
+      },
+    },
+  },
   staged: {
     "*": "vp check --fix",
   },

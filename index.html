@@ -4,10 +4,160 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>normal-ui</title>
+    <meta
+      name="description"
+      content="normal-ui design system: tokens, components, and example pages."
+    />
+    <title>normal-ui — Design System</title>
+    <script>
+      (function () {
+        var stored = localStorage.getItem("normal-ui-theme");
+        var dark =
+          stored === "dark" || (!stored && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+    <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <header
+      id="site-header"
+      class="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur"
+    ></header>
+
+    <main class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+      <section class="mb-16">
+        <p class="mb-3 text-sm font-medium text-primary">normal-ui</p>
+        <h1 class="mb-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+          A design system for building normal interfaces.
+        </h1>
+        <p class="mb-8 max-w-2xl text-lg text-muted-foreground">
+          Tokens, components, and example pages — plain HTML and CSS, no framework. Toggle the theme
+          to see the token system respond.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="/components.html"
+            class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Browse components
+          </a>
+          <a
+            href="/examples.html"
+            class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
+          >
+            See example pages
+          </a>
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Color</h2>
+        <p class="mb-6 text-sm text-muted-foreground">
+          Brand and neutral scales, defined in
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">src/styles/tokens.css</code>.
+        </p>
+
+        <h3 class="mb-3 text-sm font-medium text-muted-foreground">Brand</h3>
+        <div
+          id="brand-scale"
+          class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5"
+        ></div>
+
+        <h3 class="mb-3 text-sm font-medium text-muted-foreground">Neutral</h3>
+        <div id="neutral-scale" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5"></div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Semantic tokens</h2>
+        <p class="mb-6 text-sm text-muted-foreground">
+          Meaning-named roles mapped from the scales. These flip with the theme —
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--background</code>,
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--primary</code>, etc.
+        </p>
+        <div
+          id="semantic-tokens"
+          class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4"
+        ></div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Type</h2>
+        <p class="mb-6 text-sm text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--font-sans</code> for UI,
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--font-mono</code> for code.
+        </p>
+        <div class="space-y-2">
+          <p class="text-4xl font-semibold tracking-tight">Display — 4xl semibold</p>
+          <p class="text-2xl font-semibold tracking-tight">Heading — 2xl semibold</p>
+          <p class="text-lg font-medium">Title — lg medium</p>
+          <p class="text-base">Body — base regular. The quick brown fox jumps over the lazy dog.</p>
+          <p class="text-sm text-muted-foreground">
+            Secondary — sm muted. The quick brown fox jumps over the lazy dog.
+          </p>
+          <p class="font-mono text-sm">Mono — 14px. const tokens = { color: "brand" };</p>
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Radius &amp; shadow</h2>
+        <p class="mb-6 text-sm text-muted-foreground">
+          Radii derive from
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--radius</code>; shadows from
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--shadow-*</code>.
+        </p>
+        <div class="mb-8 flex flex-wrap gap-4">
+          <div
+            class="flex size-20 items-center justify-center rounded-sm border border-border bg-card text-xs text-muted-foreground"
+          >
+            sm
+          </div>
+          <div
+            class="flex size-20 items-center justify-center rounded-md border border-border bg-card text-xs text-muted-foreground"
+          >
+            md
+          </div>
+          <div
+            class="flex size-20 items-center justify-center rounded-lg border border-border bg-card text-xs text-muted-foreground"
+          >
+            lg
+          </div>
+          <div
+            class="flex size-20 items-center justify-center rounded-xl border border-border bg-card text-xs text-muted-foreground"
+          >
+            xl
+          </div>
+          <div
+            class="flex size-20 items-center justify-center rounded-2xl border border-border bg-card text-xs text-muted-foreground"
+          >
+            2xl
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-6">
+          <div
+            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-xs text-xs text-muted-foreground"
+          >
+            shadow-xs
+          </div>
+          <div
+            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-sm text-xs text-muted-foreground"
+          >
+            shadow-sm
+          </div>
+          <div
+            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-md text-xs text-muted-foreground"
+          >
+            shadow-md
+          </div>
+          <div
+            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-lg text-xs text-muted-foreground"
+          >
+            shadow-lg
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="site-footer" class="border-t border-border"></footer>
   </body>
 </html>
