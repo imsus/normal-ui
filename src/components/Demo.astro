@@ -75,6 +75,7 @@ highlighted = tinted.replace(/\u0000(\d+)\u0000/g, (_, i) =>
   </div>
   <slot name="notes" />
   <div
+    tabindex="-1"
     class="[&_pre]:m-0 [&_pre]:bg-transparent! overflow-x-auto border-t border-zinc-200 bg-zinc-950 px-5 py-4 font-mono text-xs leading-relaxed text-zinc-50 dark:border-zinc-800"
   >
     <Fragment set:html={highlighted} />

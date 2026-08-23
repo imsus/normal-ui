@@ -3,12 +3,12 @@ import Base from "../layouts/Base.astro";
 import Demo from "../components/Demo.astro";
 
 const base =
-  "inline-flex min-h-8 @max-sm/preview:min-h-11 cursor-default select-none items-center justify-center gap-1.5 rounded-sm shadow-2xs shadow-zinc-300 dark:shadow-white/10 border border-[color:buttonborder] bg-[color:buttonface] px-2 @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 enabled:hover:brightness-95 enabled:active:scale-98 enabled:active:brightness-90 enabled:active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed motion-reduce:transition-none enabled:motion-reduce:active:scale-100";
+  "inline-flex min-h-8 @max-sm/preview:min-h-11 cursor-default select-none items-center justify-center gap-1.5 rounded-sm shadow-2xs shadow-zinc-300 dark:shadow-white/10 border border-zinc-500 dark:border-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-black dark:text-white transition duration-100 enabled:hover:brightness-95 enabled:active:scale-98 enabled:active:brightness-90 enabled:active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed motion-reduce:transition-none enabled:motion-reduce:active:scale-100";
 
 const busy =
   "cursor-progress aria-busy:opacity-50 aria-busy:hover:brightness-100 aria-busy:active:scale-100 aria-busy:active:brightness-100 aria-busy:active:shadow-2xs";
 const latched =
-  "aria-pressed:text-(color:--nui-accent-text) aria-pressed:border-[color:color-mix(in_srgb,buttonborder_90%,black)] aria-pressed:shadow-none aria-pressed:brightness-90 aria-pressed:inset-shadow-sm aria-pressed:inset-shadow-black/30";
+  "aria-pressed:text-blue-500 aria-pressed:border-zinc-600 dark:aria-pressed:border-zinc-500 aria-pressed:shadow-none aria-pressed:brightness-90 aria-pressed:inset-shadow-sm aria-pressed:inset-shadow-black/30";
 
 const markupDefault = `<button type="button" class="${base}">
   Button
@@ -38,7 +38,7 @@ const markupToggle = `<button
   <header class="flex flex-col gap-2">
     <h1 class="text-2xl font-semibold tracking-tight">Button</h1>
     <p class="text-sm text-zinc-500">
-      The browser's default button, respecified in Tailwind. States: default, loading, disabled,
+      The browser's default button, respecified in Tailwind's nearest palette colors. States: default, loading, disabled,
       toggle. Hover, press, and the OS focus ring are live on every preview.
     </p>
   </header>
@@ -77,7 +77,7 @@ const markupToggle = `<button
         <span class="tracking-widest uppercase">Δ from Default</span>
         <span class="text-zinc-950 dark:text-zinc-50">+ aria-pressed="false" → "true" on click</span>
         <span class="text-zinc-950 dark:text-zinc-50">+ shadow gone, face sinks while latched</span>
-        <span class="text-zinc-950 dark:text-zinc-50">+ scheme-aware accent text, pressed-tinted border</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ blue accent text, pressed-tinted border</span>
         <span class="text-zinc-950 dark:text-zinc-50">latched = :active minus the scale</span>
       </div>
     </Fragment>

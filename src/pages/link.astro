@@ -1,0 +1,57 @@
+---
+import Base from "../layouts/Base.astro";
+import Demo from "../components/Demo.astro";
+
+const base = "cursor-pointer text-blue-700 underline dark:text-blue-300";
+
+const visited = "cursor-pointer text-purple-900 underline dark:text-purple-400";
+
+const markupUnvisited = `<a href="#" class="${base}">
+  Link
+</a>`;
+
+const markupVisited = `<a href="#" class="${visited}">
+  Link
+</a>`;
+
+const markupPlaceholder = `<a>
+  Placeholder
+</a>`;
+---
+
+<Base title="Link">
+  <header class="flex flex-col gap-2">
+    <h1 class="text-2xl font-semibold tracking-tight">Link</h1>
+    <p class="text-sm text-zinc-500">
+      The browser's default anchor, respecified in Tailwind's nearest palette colors. States: unvisited, visited, and the
+      href-less placeholder. Hover adds nothing beyond the pointer cursor; the OS focus ring is
+      live on every preview.
+    </p>
+  </header>
+
+  <Demo label="Unvisited" markup={markupUnvisited} />
+
+  <Demo label="Visited" markup={markupVisited} changed={["text-purple-900", "dark:text-purple-400"]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">blue-700/blue-300 → purple-900/purple-400</span>
+        <span class="text-zinc-950 dark:text-zinc-50">purple instead of blue; underline kept</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="No href" markup={markupPlaceholder}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">− href ⇒ :any-link stops matching</span>
+        <span class="text-zinc-950 dark:text-zinc-50">no underline, no blue, default cursor</span>
+      </div>
+    </Fragment>
+  </Demo>
+</Base>
