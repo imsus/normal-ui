@@ -1,0 +1,31 @@
+---
+import "../index.css";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scheme-light-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title} · normal-ui</title>
+    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACw=" />
+  </head>
+  <body class="bg-white font-sans text-zinc-950 antialiased dark:bg-zinc-950 dark:text-zinc-50">
+    <main class="mx-auto flex max-w-2xl flex-col gap-8 px-6 pt-14 pb-30">
+      <slot />
+    </main>
+
+    <script>
+      import Alpine from "alpinejs";
+
+      Alpine.start();
+    </script>
+  </body>
+</html>

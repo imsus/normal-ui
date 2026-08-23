@@ -1,1 +1,17 @@
 @import "tailwindcss";
+/* Tokens flagged by Demo's `changed` list — shiki's inline color is stripped there so this applies */
+.nui-delta {
+  color: var(--color-emerald-400);
+}
+/* AccentColor has no dark counterpart — it ignores color-scheme entirely. Nudge it
+   toward white in dark UIs (perceptual oklab mix) so latched text stays readable;
+   light mode keeps the raw system accent. */
+:root {
+  --nui-accent-text: accentcolor;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nui-accent-text: color-mix(in oklab, accentcolor, white 25%);
+  }
+}

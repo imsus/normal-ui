@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+import Demo from "../components/Demo.astro";
+
+const base =
+  "inline-flex min-h-8 @max-sm/preview:min-h-11 cursor-default select-none items-center justify-center gap-1.5 rounded-sm shadow-2xs shadow-zinc-300 dark:shadow-white/10 border border-[color:buttonborder] bg-[color:buttonface] px-2 @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 enabled:hover:brightness-95 enabled:active:scale-98 enabled:active:brightness-90 enabled:active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed motion-reduce:transition-none enabled:motion-reduce:active:scale-100";
+
+const busy =
+  "cursor-progress aria-busy:opacity-50 aria-busy:hover:brightness-100 aria-busy:active:scale-100 aria-busy:active:brightness-100 aria-busy:active:shadow-2xs";
+const latched =
+  "aria-pressed:text-(color:--nui-accent-text) aria-pressed:border-[color:color-mix(in_srgb,buttonborder_90%,black)] aria-pressed:shadow-none aria-pressed:brightness-90 aria-pressed:inset-shadow-sm aria-pressed:inset-shadow-black/30";
+
+const markupDefault = `<button type="button" class="${base}">
+  Button
+</button>`;
+
+const markupLoading = `<button type="button" aria-busy="true" class="${base.replace("cursor-default", busy)}">
+  Loading
+</button>`;
+
+const markupDisabled = `<button type="button" disabled class="${base}">
+  Button
+</button>`;
+
+const markupToggle = `<button
+  type="button"
+  x-data="{ pressed: false }"
+  :aria-pressed="pressed"
+  @click="pressed = !pressed"
+  aria-pressed="false"
+  class="${base.replace(" motion-reduce", ` ${latched} motion-reduce`)}"
+>
+  Toggle
+</button>`;
+---
+
+<Base title="Button">
+  <header class="flex flex-col gap-2">
+    <h1 class="text-2xl font-semibold tracking-tight">Button</h1>
+    <p class="text-sm text-zinc-500">
+      The browser's default button, respecified in Tailwind. States: default, loading, disabled,
+      toggle. Hover, press, and the OS focus ring are live on every preview.
+    </p>
+  </header>
+
+  <Demo label="Default" markup={markupDefault} />
+
+  <Demo label="Loading" markup={markupLoading} changed={["aria-busy=\"true\"", busy]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">cursor-default → cursor-progress</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ aria-busy="true"</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ disabled look, progress cursor kept</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="Disabled" markup={markupDisabled} changed={["disabled"]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ disabled attribute, not-allowed cursor</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="Toggle" markup={markupToggle} changed={["x-data", "pressed", ":aria-pressed", "@click", latched]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ aria-pressed="false" → "true" on click</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ shadow gone, face sinks while latched</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ scheme-aware accent text, pressed-tinted border</span>
+        <span class="text-zinc-950 dark:text-zinc-50">latched = :active minus the scale</span>
+      </div>
+    </Fragment>
+  </Demo>
+</Base>
