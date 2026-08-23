@@ -1,4 +1,6 @@
 ---
+import { linkClass } from "../components/link-class";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import "../index.css";
 
 interface Props {
@@ -9,16 +11,28 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scheme-light-dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
     <title>{title} · normal-ui</title>
     <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACw=" />
+    <script is:inline>
+      // Class-based theming: stored choice wins, else system preference.
+      // Runs before paint to avoid a flash of the wrong scheme.
+      const stored = localStorage.getItem("theme");
+      const dark = stored
+        ? stored === "dark"
+        : matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.classList.toggle("dark", dark);
+    </script>
   </head>
   <body class="bg-white font-sans text-zinc-950 antialiased dark:bg-zinc-950 dark:text-zinc-50">
     <main class="mx-auto flex max-w-2xl flex-col gap-8 px-6 pt-14 pb-30">
+      <div class="flex items-center justify-end gap-4">
+        <a href="https://github.com/imsus/normal-ui" class={linkClass}>GitHub</a>
+        <ThemeToggle />
+      </div>
       <slot />
     </main>
 

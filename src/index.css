@@ -1,4 +1,16 @@
 @import "tailwindcss";
+
+/* Manual theming: the .dark class (toggled by Base's ThemeToggle) wins over
+   the system preference; Base's head script seeds it before first paint. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
 /* Tokens flagged by Demo's `changed` list — shiki's inline color is stripped there so this applies */
 .nui-delta {
   color: var(--color-emerald-400);

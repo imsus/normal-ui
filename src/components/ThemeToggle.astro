@@ -1,0 +1,19 @@
+---
+import { buttonClass, buttonLatched } from "./button-class";
+
+// Latched look rides aria-pressed (same pattern as the Button page's toggle);
+// the label names the mode you'll switch to.
+const themeButton = `${buttonClass} ${buttonLatched}`;
+---
+
+<button
+  type="button"
+  title="Toggle color scheme"
+  x-data="{ dark: document.documentElement.classList.contains('dark') }"
+  @click="dark = !dark; document.documentElement.classList.toggle('dark', dark); localStorage.setItem('theme', dark ? 'dark' : 'light')"
+  :aria-pressed="dark"
+  aria-pressed="false"
+  class={themeButton}
+>
+  <span x-text="dark ? 'Light' : 'Dark'">Dark</span>
+</button>
