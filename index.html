@@ -1,163 +1,938 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-mode="tw">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="normal-ui design system: tokens, components, and example pages."
-    />
-    <title>normal-ui — Design System</title>
-    <script>
-      (function () {
-        var stored = localStorage.getItem("normal-ui-theme");
-        var dark =
-          stored === "dark" || (!stored && matchMedia("(prefers-color-scheme: dark)").matches);
-        document.documentElement.classList.toggle("dark", dark);
-      })();
-    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>about:blank — the user-agent stylesheet, respecified in Tailwind</title>
+    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACw=" />
     <script type="module" src="/src/main.ts"></script>
   </head>
-  <body>
+  <body
+    class="bg-[#f4f4f1] text-[#191917] antialiased [font-family:system-ui,_sans-serif] text-[14px]"
+  >
+    <!-- ══════════════════ top bar ══════════════════ -->
     <header
-      id="site-header"
-      class="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur"
-    ></header>
-
-    <main class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <section class="mb-16">
-        <p class="mb-3 text-sm font-medium text-primary">normal-ui</p>
-        <h1 class="mb-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          A design system for building normal interfaces.
-        </h1>
-        <p class="mb-8 max-w-2xl text-lg text-muted-foreground">
-          Tokens, components, and example pages — plain HTML and CSS, no framework. Toggle the theme
-          to see the token system respond.
-        </p>
-        <div class="flex flex-wrap gap-3">
-          <a
-            href="/components.html"
-            class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      class="sticky top-0 z-50 border-b border-[#e3e3de] bg-white/85 backdrop-blur-sm print:hidden"
+    >
+      <div class="mx-auto flex h-12 max-w-[1180px] items-center gap-4 px-5">
+        <a
+          href="#top"
+          class="flex items-center gap-2.5 font-mono text-[13px] tracking-tight outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0000ee]"
+        >
+          <span
+            class="grid size-6 place-items-center rounded-[5px] border border-[#d8d8d2] bg-white text-[10px]"
+            aria-hidden="true"
+            >_:|</span
           >
-            Browse components
-          </a>
-          <a
-            href="/examples.html"
-            class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
+          <span class="font-semibold">about:blank<span class="text-[#8a8a82]">.css</span></span>
+        </a>
+        <p class="ml-1 hidden text-[12px] text-[#8a8a82] md:block">
+          the user-agent stylesheet, respecified in&nbsp;Tailwind
+        </p>
+
+        <fieldset
+          id="mode-switch"
+          class="ml-auto flex rounded-[7px] border border-[#dcdcd6] bg-[#ecece8] p-0.5 text-[12px]"
+        >
+          <legend class="sr-only">Rendering mode</legend>
+          <label class="">
+            <input type="radio" name="mode" value="tw" checked class="peer sr-only" />
+            <span
+              class="block cursor-pointer rounded-[5px] px-2.5 py-1 peer-focus-visible:outline-2 peer-focus-visible:outline-[#0000ee] text-[#55554f] peer-checked:bg-white peer-checked:text-[#191917] peer-checked:shadow-[0_1px_2px_rgb(0_0_0/.08)]"
+              >Tailwind</span
+            >
+          </label>
+          <label>
+            <input type="radio" name="mode" value="native" class="peer sr-only" />
+            <span
+              class="block cursor-pointer rounded-[5px] px-2.5 py-1 peer-focus-visible:outline-2 peer-focus-visible:outline-[#0000ee] text-[#55554f] peer-checked:bg-white peer-checked:text-[#191917] peer-checked:shadow-[0_1px_2px_rgb(0_0_0/.08)]"
+              >Native</span
+            >
+          </label>
+          <label>
+            <input type="radio" name="mode" value="both" class="peer sr-only" />
+            <span
+              class="block cursor-pointer rounded-[5px] px-2.5 py-1 peer-focus-visible:outline-2 peer-focus-visible:outline-[#0000ee] text-[#55554f] peer-checked:bg-white peer-checked:text-[#191917] peer-checked:shadow-[0_1px_2px_rgb(0_0_0/.08)]"
+              >Compare</span
+            >
+          </label>
+        </fieldset>
+      </div>
+    </header>
+
+    <div
+      class="mx-auto grid max-w-[1180px] grid-cols-1 gap-x-10 px-5 lg:grid-cols-[168px_minmax(0,1fr)]"
+    >
+      <!-- ══════════════════ rail ══════════════════ -->
+      <nav id="top" class="hidden lg:block" aria-label="Sections">
+        <div class="sticky top-24 py-10 text-[12px]">
+          <ul
+            class="space-y-0.5 [font-family:ui-monospace,SFMono-Regular,Menlo,monospace]"
+            id="rail-list"
           >
-            See example pages
-          </a>
-        </div>
-      </section>
-
-      <section class="mb-16">
-        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Color</h2>
-        <p class="mb-6 text-sm text-muted-foreground">
-          Brand and neutral scales, defined in
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">src/styles/tokens.css</code>.
-        </p>
-
-        <h3 class="mb-3 text-sm font-medium text-muted-foreground">Brand</h3>
-        <div
-          id="brand-scale"
-          class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5"
-        ></div>
-
-        <h3 class="mb-3 text-sm font-medium text-muted-foreground">Neutral</h3>
-        <div id="neutral-scale" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5"></div>
-      </section>
-
-      <section class="mb-16">
-        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Semantic tokens</h2>
-        <p class="mb-6 text-sm text-muted-foreground">
-          Meaning-named roles mapped from the scales. These flip with the theme —
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--background</code>,
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--primary</code>, etc.
-        </p>
-        <div
-          id="semantic-tokens"
-          class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4"
-        ></div>
-      </section>
-
-      <section class="mb-16">
-        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Type</h2>
-        <p class="mb-6 text-sm text-muted-foreground">
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--font-sans</code> for UI,
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--font-mono</code> for code.
-        </p>
-        <div class="space-y-2">
-          <p class="text-4xl font-semibold tracking-tight">Display — 4xl semibold</p>
-          <p class="text-2xl font-semibold tracking-tight">Heading — 2xl semibold</p>
-          <p class="text-lg font-medium">Title — lg medium</p>
-          <p class="text-base">Body — base regular. The quick brown fox jumps over the lazy dog.</p>
-          <p class="text-sm text-muted-foreground">
-            Secondary — sm muted. The quick brown fox jumps over the lazy dog.
+            <!-- populated by script -->
+          </ul>
+          <p class="mt-6 border-t border-[#e3e3de] pt-4 leading-relaxed text-[#8a8a82]">
+            Run <code class="rounded bg-[#ecece8] px-1 py-0.5 text-[11px]">__audit()</code><br />in
+            the console to<br />re-verify fidelity.
           </p>
-          <p class="font-mono text-sm">Mono — 14px. const tokens = { color: "brand" };</p>
         </div>
-      </section>
+      </nav>
 
-      <section class="mb-16">
-        <h2 class="mb-2 text-2xl font-semibold tracking-tight">Radius &amp; shadow</h2>
-        <p class="mb-6 text-sm text-muted-foreground">
-          Radii derive from
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--radius</code>; shadows from
-          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">--shadow-*</code>.
-        </p>
-        <div class="mb-8 flex flex-wrap gap-4">
-          <div
-            class="flex size-20 items-center justify-center rounded-sm border border-border bg-card text-xs text-muted-foreground"
+      <main class="min-w-0 pb-24">
+        <!-- ══════════════════ hero ══════════════════ -->
+        <section class="pt-14 pb-10">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-[#8a8a82]">
+            specimen sheet · chromium 150 · tailwind v4
+          </p>
+          <h1
+            class="mt-3 max-w-[21ch] text-[34px] font-bold leading-[1.06] tracking-[-0.02em] text-[#141412] sm:text-[42px]"
           >
-            sm
-          </div>
+            Browser defaults,<br />spelled out in utilities.
+          </h1>
+          <p class="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-[#45453f]">
+            Nothing on this sheet relies on the user-agent stylesheet. Preflight strips every
+            default away; the classes you&rsquo;ll see under each specimen put them back, one
+            declaration at a time &mdash; margins in&nbsp;<code class="font-mono text-[13px]"
+              >em</code
+            >, the 40px list indent, Times for text, Courier for code, blue underline for links.
+          </p>
           <div
-            class="flex size-20 items-center justify-center rounded-md border border-border bg-card text-xs text-muted-foreground"
+            class="mt-7 max-w-[62ch] overflow-hidden rounded-lg border border-[#e3e3de] bg-white"
           >
-            md
+            <div
+              class="grid grid-cols-1 divide-y divide-[#eeeeea] sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+            >
+              <div class="px-4 py-3">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#8a8a82]">
+                  system-ui
+                </p>
+                <p class="mt-1 text-[15px] [font-family:system-ui,_sans-serif]">
+                  The quick brown fox
+                </p>
+              </div>
+              <div class="bg-[#fbfbfa] px-4 py-3">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#8a8a82]">
+                  serif &mdash; the default
+                </p>
+                <p class="mt-1 text-[15px] [font-family:serif]">The quick brown fox</p>
+              </div>
+              <div class="px-4 py-3">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#8a8a82]">
+                  monospace
+                </p>
+                <p class="mt-1 text-[15px] [font-family:monospace]">The quick brown fox</p>
+              </div>
+            </div>
           </div>
-          <div
-            class="flex size-20 items-center justify-center rounded-lg border border-border bg-card text-xs text-muted-foreground"
-          >
-            lg
-          </div>
-          <div
-            class="flex size-20 items-center justify-center rounded-xl border border-border bg-card text-xs text-muted-foreground"
-          >
-            xl
-          </div>
-          <div
-            class="flex size-20 items-center justify-center rounded-2xl border border-border bg-card text-xs text-muted-foreground"
-          >
-            2xl
-          </div>
-        </div>
-        <div class="flex flex-wrap gap-6">
-          <div
-            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-xs text-xs text-muted-foreground"
-          >
-            shadow-xs
-          </div>
-          <div
-            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-sm text-xs text-muted-foreground"
-          >
-            shadow-sm
-          </div>
-          <div
-            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-md text-xs text-muted-foreground"
-          >
-            shadow-md
-          </div>
-          <div
-            class="flex h-20 w-40 items-center justify-center rounded-lg bg-card shadow-lg text-xs text-muted-foreground"
-          >
-            shadow-lg
-          </div>
-        </div>
-      </section>
-    </main>
+          <p class="mt-4 max-w-[62ch] text-[12.5px] leading-relaxed text-[#8a8a82]">
+            Switch any specimen to <strong class="font-medium text-[#55554f]">Native</strong> or
+            <strong class="font-medium text-[#55554f]">Compare</strong> to diff it against the same
+            markup with zero classes. Fidelity was verified by an automated computed-style diff
+            &mdash; see
+            <a
+              href="#method"
+              class="text-[#0000ee] underline decoration-[1px] underline-offset-2 hover:text-[#4444ff]"
+              >Method</a
+            >.
+          </p>
+        </section>
 
-    <footer id="site-footer" class="border-t border-border"></footer>
+        <!-- ══════════════════ § document ══════════════════ -->
+        <section id="s-document" data-section="Document" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ document</span>The canvas itself</h2>
+
+          <article class="card" data-card="body">
+            <header class="card-h">
+              <code class="tag">&lt;body&gt;</code>
+              <p class="desc">
+                16px serif, black on white, line-height&nbsp;normal, an 8px margin all round.
+              </p>
+            </header>
+            <div class="well bg-[#e9e9e4]">
+              <div
+                data-spec
+                class="m-[8px] bg-white p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  A miniature viewport. Its white rectangle is the body; the grey gutter is
+                  everything the 8px default margin exposes.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="h1–h6" data-multi>
+            <header class="card-h">
+              <code class="tag">h1–h6</code>
+              <p class="desc">
+                Bold, sized in em, vertical margins in em of the heading&rsquo;s own size.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <h1 class="my-[0.67em] text-[2em] font-bold">Heading one</h1>
+                <h2 class="my-[0.83em] text-[1.5em] font-bold">Heading two</h2>
+                <h3 class="my-[1em] text-[1.17em] font-bold">Heading three</h3>
+                <h4 class="my-[1.33em] text-[1em] font-bold">Heading four</h4>
+                <h5 class="my-[1.67em] text-[0.83em] font-bold">Heading five</h5>
+                <h6 class="my-[2.33em] text-[0.67em] font-bold">Heading six</h6>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+        </section>
+
+        <!-- ══════════════════ § text ══════════════════ -->
+        <section id="s-text" data-section="Text" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ text-level</span>Inline semantics</h2>
+
+          <article class="card" data-card="a">
+            <header class="card-h">
+              <code class="tag">&lt;a href&gt;</code>
+              <p class="desc">Underlined, blue, purple once visited, red while clicked.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  Per the requested mapping:
+                  <a
+                    href="https://example.com/"
+                    class="underline text-blue-600 visited:text-purple-600 hover:text-blue-400 active:text-red-600"
+                    >a hyperlink</a
+                  >
+                  sits inside running text.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+            <footer class="note">
+              Chromium&rsquo;s literal palette is <code>#0000EE</code> / <code>#551A8B</code> /
+              red-on-active, and it restyles nothing on hover; purple appears only for URLs your
+              history has visited.
+            </footer>
+          </article>
+
+          <article class="card" data-card="emphasis" data-multi>
+            <header class="card-h">
+              <code class="tag">strong b em i cite var dfn</code>
+              <p class="desc">Two weights of emphasis: bold and italic, nothing more.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  <strong class="font-bold">strong</strong> and <b class="font-bold">b</b> carry
+                  weight; <em class="italic">em</em>, <i class="italic">i</i>,
+                  <cite class="italic">cite</cite>, <var class="italic">var</var> and
+                  <dfn class="italic">dfn</dfn> carry slant.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="small big" data-multi>
+            <header class="card-h">
+              <code class="tag">small · big</code>
+              <p class="desc">One step down or up the relative size ladder: smaller / larger.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  Fine print is <small class="text-[smaller]">small</small>; loud print is
+                  <big class="text-[larger]">big</big>.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="strike ins" data-multi>
+            <header class="card-h">
+              <code class="tag">s del · u ins</code>
+              <p class="desc">Line-through for removals, underline for insertions.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  <s class="line-through">struck</s> <del class="line-through">deleted</del> versus
+                  <u class="underline">underlined</u> <ins class="underline">inserted</ins>.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="mark">
+            <header class="card-h">
+              <code class="tag">&lt;mark&gt;</code>
+              <p class="desc">Yellow highlighter, black text.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  The relevant clause is <mark class="bg-[yellow] text-black">highlighted</mark> for
+                  review.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="abbr">
+            <header class="card-h">
+              <code class="tag">&lt;abbr title&gt;</code>
+              <p class="desc">Dotted underline, and a tooltip for free.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  Rendered in
+                  <abbr title="User Agent" class="underline decoration-dotted">UA</abbr> stylesheet
+                  terms.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="q">
+            <header class="card-h">
+              <code class="tag">&lt;q&gt;</code>
+              <p class="desc">Quotes generated by content:&nbsp;open-quote / close-quote.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  He said
+                  <q class="before:content-[open-quote] after:content-[close-quote]"
+                    >the default is a feature</q
+                  >
+                  and left.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="sub sup" data-multi>
+            <header class="card-h">
+              <code class="tag">sub · sup</code>
+              <p class="desc">Smaller type, shifted below or above the baseline.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  H<sub class="align-sub text-[smaller] leading-[normal]">2</sub>O and E = mc<sup
+                    class="align-super text-[smaller] leading-[normal]"
+                    >2</sup
+                  >
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="code kbd samp" data-multi>
+            <header class="card-h">
+              <code class="tag">code kbd samp</code>
+              <p class="desc">
+                Fixed 13px monospace &mdash; the browser&rsquo;s configured fixed font, not an em
+                multiple.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  Press <kbd class="text-[13px] [font-family:monospace]">Ctrl</kbd>+<kbd
+                    class="text-[13px] [font-family:monospace]"
+                    >U</kbd
+                  >
+                  to view source; the variable
+                  <code class="text-[13px] [font-family:monospace]">ua.css</code> produced
+                  <samp class="text-[13px] [font-family:monospace]">200 OK</samp>.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+        </section>
+
+        <!-- ══════════════════ § lists ══════════════════ -->
+        <section id="s-lists" data-section="Lists" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ lists</span>Marks, numbers, definitions</h2>
+
+          <article class="card" data-card="ul">
+            <header class="card-h">
+              <code class="tag">&lt;ul&gt;</code>
+              <p class="desc">
+                Discs outside, 40px inline start padding; nesting steps
+                disc&nbsp;&rarr;&nbsp;circle&nbsp;&rarr;&nbsp;square.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <ul class="list-disc ps-[40px] my-[1em]">
+                  <li>rasterized glyphs</li>
+                  <li>
+                    vector outlines
+                    <ul class="[list-style-type:circle] ps-[40px] m-0">
+                      <li>trueType</li>
+                      <li>
+                        openType
+                        <ul class="[list-style-type:square] ps-[40px] m-0">
+                          <li>variable axes</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>bitmap hints</li>
+                </ul>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="ol">
+            <header class="card-h">
+              <code class="tag">&lt;ol&gt;</code>
+              <p class="desc">
+                Decimal markers; <code>start</code> and <code>reversed</code> come from attributes,
+                not CSS.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <ol start="9" reversed class="list-decimal ps-[40px] my-[1em]">
+                  <li>countdown</li>
+                  <li>hold breath</li>
+                  <li>jump</li>
+                </ol>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="dl">
+            <header class="card-h">
+              <code class="tag">dl dt dd</code>
+              <p class="desc">
+                Terms plain &mdash; bold is a myth &mdash; definitions indented 40px.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <dl class="my-[1em]">
+                  <dt>kerning</dt>
+                  <dd class="ms-[40px]">adjusting the space between two specific glyphs</dd>
+                  <dt>tracking</dt>
+                  <dd class="ms-[40px]">adjusting spacing uniformly across a range</dd>
+                </dl>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+        </section>
+
+        <!-- ══════════════════ § blocks ══════════════════ -->
+        <section id="s-blocks" data-section="Blocks" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ blocks</span>Flow content</h2>
+
+          <article class="card" data-card="p">
+            <header class="card-h">
+              <code class="tag">&lt;p&gt;</code>
+              <p class="desc">One em of air above, one below; margins collapse between siblings.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  First paragraph. Margin collapsing means adjacent paragraphs share a single em of
+                  space rather than stacking two.
+                </p>
+                <p class="my-[1em]">Second paragraph, same one-em contract.</p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="blockquote">
+            <header class="card-h">
+              <code class="tag">&lt;blockquote&gt;</code>
+              <p class="desc">
+                1em block margins plus 40px on both inline sides &mdash; same box as figure.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <blockquote class="mx-[40px] my-[1em]">
+                  <p class="my-[1em]">
+                    The user-agent stylesheet is the most widely deployed design system in history.
+                  </p>
+                  <p class="my-[1em]"><cite class="italic">&mdash; attribution optional</cite></p>
+                </blockquote>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="pre">
+            <header class="card-h">
+              <code class="tag">&lt;pre&gt;</code>
+              <p class="desc">13px monospace, whitespace honored, 1em margins of its own size.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <pre class="my-[1em] text-[13px] whitespace-pre [font-family:monospace]">
+$ man browser
+No manual entry for browser</pre>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="hr">
+            <header class="card-h">
+              <code class="tag">&lt;hr&gt;</code>
+              <p class="desc">A 1px inset rule in gray: height zero, painted by border alone.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">Above the break.</p>
+                <hr class="my-[0.5em] text-[gray] [border-block:1px_inset_currentcolor]" />
+                <p class="my-[1em]">Below the break.</p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="figure">
+            <header class="card-h">
+              <code class="tag">figure figcaption</code>
+              <p class="desc">
+                figure shares blockquote&rsquo;s box; figcaption does nothing at all.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <figure class="mx-[40px] my-[1em]">
+                  <p role="img" aria-label="placeholder artwork" class="my-[1em]">▚▞▚▞</p>
+                  <figcaption>Fig. 1 &mdash; figcaption is display:block, full stop.</figcaption>
+                </figure>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="address">
+            <header class="card-h">
+              <code class="tag">&lt;address&gt;</code>
+              <p class="desc">Italic block &mdash; and contrary to folklore, zero margins.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">Contact the maintainer:</p>
+                <address class="italic">maintainer@localhost</address>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="details">
+            <header class="card-h">
+              <code class="tag">details summary</code>
+              <p class="desc">summary is display:list-item with a disclosure-closed marker.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <details>
+                  <summary class="list-item [list-style-type:disclosure-closed]">
+                    System requirements
+                  </summary>
+                  <p class="my-[1em]">A browser. Any browser &mdash; that is the entire point.</p>
+                </details>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+        </section>
+
+        <!-- ══════════════════ § tables ══════════════════ -->
+        <section id="s-tables" data-section="Tables" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ tables</span>Separate borders, 2px apart</h2>
+
+          <article class="card" data-card="table" data-multi>
+            <header class="card-h">
+              <code class="tag">table th td caption</code>
+              <p class="desc">Zero table margins; cells padded 1px; headers bold and centered.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <table class="[border-collapse:separate] [border-spacing:2px]">
+                  <caption class="[text-align:-webkit-center]">
+                    Default rendering
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th class="p-[1px] text-center align-middle font-bold">element</th>
+                      <th class="p-[1px] text-center align-middle font-bold">first shipped</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="p-[1px] align-middle">table</td>
+                      <td class="p-[1px] align-middle">1995, HTML 2.0</td>
+                    </tr>
+                    <tr>
+                      <td class="p-[1px] align-middle">border-spacing</td>
+                      <td class="p-[1px] align-middle">still 2px</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+            <footer class="note">
+              <code>-webkit-center</code> is kept verbatim: it is literally what Chromium computes
+              for caption, and Tailwind arbitrary properties can say it back to the engine.
+            </footer>
+          </article>
+        </section>
+
+        <!-- ══════════════════ § forms ══════════════════ -->
+        <section id="s-forms" data-section="Forms" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ forms</span>Widgets, half repainted, half spared</h2>
+
+          <article class="card" data-card="button">
+            <header class="card-h">
+              <code class="tag">&lt;button&gt;</code>
+              <p class="desc">
+                Arial 13.33px, centered, #EFEFEF face, 2px outset border, 1px×6px padding.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <button
+                  class="text-[13.3333px] [font-family:Arial] text-center bg-[#efefef] border-2 border-black [border-style:outset] px-[6px] py-[1px]"
+                >
+                  Save changes
+                </button>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+            <footer class="note">
+              Form controls don&rsquo;t inherit fonts, so family and size are restated explicitly.
+              The platform paints outset/groove borders, so the exact shading varies off this
+              reference renderer.
+            </footer>
+          </article>
+
+          <article class="card" data-card="input">
+            <header class="card-h">
+              <code class="tag">&lt;input type=text&gt;</code>
+              <p class="desc">
+                White field, 2px inset #767676 border, 2px×1px padding, Arial 13.33px.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <label>
+                  Handle:
+                  <input
+                    type="text"
+                    value="about_blank"
+                    class="text-[13.3333px] [font-family:Arial] bg-white px-[2px] py-[1px] border-2 border-[#767676] [border-style:inset]"
+                  />
+                </label>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="textarea">
+            <header class="card-h">
+              <code class="tag">&lt;textarea&gt;</code>
+              <p class="desc">Monospace 13px, thin solid border, default 20×2 characters.</p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <textarea
+                  cols="20"
+                  rows="2"
+                  class="text-[13.3333px] [font-family:monospace] bg-white border border-[#767676] p-[2px]"
+                >
+type here</textarea>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="select">
+            <header class="card-h">
+              <code class="tag">&lt;select&gt;</code>
+              <p class="desc">
+                1px solid #767676 box on white; the dropdown arrow stays natively painted.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <select
+                  class="text-[13.3333px] [font-family:Arial] bg-white border border-[#767676]"
+                >
+                  <option class="pb-[1px] px-[2px]">Times New Roman</option>
+                  <option class="pb-[1px] px-[2px]">Courier New</option>
+                  <option class="pb-[1px] px-[2px]">Andale Mono</option>
+                </select>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="fieldset">
+            <header class="card-h">
+              <code class="tag">fieldset legend</code>
+              <p class="desc">
+                2px groove frame, asymmetric padding, min-inline-size:min-content; legend pads 2px.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <fieldset
+                  class="mx-[2px] border-2 border-[#efefef] [border-style:groove] px-[12px] pt-[5.6px] pb-[10px] [min-inline-size:min-content]"
+                >
+                  <legend class="px-[2px]">Alignment</legend>
+                  <label
+                    ><input
+                      type="radio"
+                      name="al"
+                      class="mt-[3px] mb-0 ml-[5px] mr-[3px] text-[13.3333px] [font-family:Arial]"
+                    />
+                    Ragged right</label
+                  >
+                </fieldset>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="survivors" data-nochip>
+            <header class="card-h">
+              <code class="tag">checkbox radio progress meter label output</code>
+              <p class="desc">
+                Interiors stay natively painted &mdash; only their odd default margins and fonts
+                need restating.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p data-chrome class="flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <label
+                    ><input
+                      type="checkbox"
+                      checked
+                      class="mt-[3px] mb-[3px] ml-[4px] mr-[3px] text-[13.3333px] [font-family:Arial]"
+                    />
+                    notify me</label
+                  >
+                  <label
+                    ><input
+                      type="radio"
+                      name="x"
+                      checked
+                      class="mt-[3px] mb-0 ml-[5px] mr-[3px] text-[13.3333px] [font-family:Arial]"
+                    />
+                    weekly</label
+                  >
+                  <progress value="60" max="100">60%</progress>
+                  <meter value="0.4" class="[vertical-align:-3.2px]">40%</meter>
+                  <output>75</output>
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+            <footer class="note">
+              Checkmarks, dropdown arrows and progress fills come from <code>appearance:auto</code>,
+              which Preflight never touches. The grey <code data-chrome>data-chrome</code> wrapper
+              exists only to lay this row out; comparison frames discard it.
+            </footer>
+          </article>
+        </section>
+
+        <!-- ══════════════════ § embedded ══════════════════ -->
+        <section id="s-embedded" data-section="Embedded" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ embedded</span>Replaced elements</h2>
+
+          <article class="card" data-card="img">
+            <header class="card-h">
+              <code class="tag">&lt;img&gt;</code>
+              <p class="desc">
+                inline, natural size &mdash; undoing Preflight&rsquo;s display:block and
+                max-width:100%.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <p class="my-[1em]">
+                  Text wraps around the baseline of
+                  <img
+                    alt="pixel art smiley"
+                    width="48"
+                    height="48"
+                    class="inline max-w-none align-baseline"
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%23ffd400'/%3E%3Ccircle cx='17' cy='19' r='4'/%3E%3Ccircle cx='31' cy='19' r='4'/%3E%3Cpath d='M14 32q10 8 20 0' stroke='%23000' stroke-width='3' fill='none'/%3E%3C/svg%3E"
+                  />
+                  the image like it&rsquo;s 1996.
+                </p>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+
+          <article class="card" data-card="iframe">
+            <header class="card-h">
+              <code class="tag">&lt;iframe&gt;</code>
+              <p class="desc">
+                300×150 canvas with a 2px inset border &mdash; yes, inset, like grandpa&rsquo;s
+                frameset.
+              </p>
+            </header>
+            <div class="well">
+              <div
+                data-spec
+                class="p-2 text-[16px] leading-[normal] [font-family:serif] text-black"
+              >
+                <iframe
+                  title="embedded example"
+                  class="inline w-[300px] h-[150px] border-2 border-black [border-style:inset] align-baseline"
+                  src="about:blank"
+                ></iframe>
+              </div>
+              <iframe class="frame"></iframe>
+            </div>
+          </article>
+        </section>
+
+        <!-- ══════════════════ method ══════════════════ -->
+        <section id="method" data-section="Method" class="scroll-mt-20">
+          <h2 class="section-h"><span>§ colophon</span>How this was verified</h2>
+          <div class="card !bg-transparent border-dashed">
+            <div class="max-w-[68ch] space-y-3 text-[13.5px] leading-relaxed text-[#45453f] p-5">
+              <p>
+                <strong class="font-semibold text-[#191917]">Measurement.</strong> A bare HTML probe
+                &mdash; one of each element, no stylesheet &mdash; was opened in Chromium 150 and
+                every box, font and paint property was read off
+                <code class="font-mono text-[12.5px]">getComputedStyle()</code>. The utilities above
+                restate those values; em-based margins preserve the UA&rsquo;s proportional behavior
+                at any root size.
+              </p>
+              <p>
+                <strong class="font-semibold text-[#191917]">Diffing.</strong> Each specimen is
+                cloned, stripped of every class, and rendered in a same-origin
+                <code class="font-mono text-[12.5px]">&lt;iframe&gt;</code> that Preflight
+                can&rsquo;t reach. <code class="font-mono text-[12.5px]">__audit()</code> walks both
+                trees in lockstep and compares ~25 properties per node, including pseudo-element
+                content for <code class="font-mono text-[12.5px]">q</code> and the summary marker.
+              </p>
+              <p>
+                <strong class="font-semibold text-[#191917]">Known deltas.</strong> Comparison
+                frames suppress only the body&rsquo;s 8px margin so panes align. Widget interiors
+                (dropdown arrows, checkmarks, progress fills) remain natively painted by design.
+                Visited-link colors require matching history entries to appear. Off this reference
+                renderer, platforms substitute their own widget chrome and serif faces.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="mt-16 border-t border-[#e3e3de] pt-6 font-mono text-[11.5px] text-[#8a8a82]">
+          about:blank.css &mdash; measured against Chromium 150 · built with Tailwind v4 · the
+          default was never boring
+        </footer>
+      </main>
+    </div>
   </body>
 </html>

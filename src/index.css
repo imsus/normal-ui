@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@layer components {
+  /* ── section chrome ─────────────────────────────── */
+  .section-h {
+    @apply flex items-baseline gap-3 mt-16 pt-5 border-t border-[#e3e3de];
+  }
+  .section-h > span {
+    @apply shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-[#8a8a82];
+  }
+  .section-h {
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    font-weight: 650;
+    color: #191917;
+  }
+
+  /* ── specimen card ──────────────────────────────── */
+  .card {
+    @apply mt-4 bg-white border border-[#e3e3de] rounded-[10px] overflow-hidden
+           transition-colors duration-150 hover:border-[#cfcfc7];
+  }
+  .card-h {
+    @apply flex items-baseline gap-2.5 px-4 py-2.5 border-b border-[#eeeeea];
+  }
+  .tag {
+    @apply shrink-0 font-mono text-[11px] leading-5 px-1.5 rounded bg-[#f1f1ed]
+           border border-[#e3e3de] text-[#45453f] whitespace-nowrap;
+  }
+  .desc {
+    @apply min-w-0 text-[12.5px] leading-snug text-[#8a8a82];
+  }
+  .well {
+    @apply relative bg-white border-b border-[#eeeeea] p-4 overflow-hidden;
+  }
+  .note {
+    @apply px-4 py-2 text-[12px] leading-relaxed text-[#8a8a82] bg-[#fbfbfa];
+  }
+  .note code {
+    @apply font-mono text-[11px] px-1 py-0.5 rounded bg-[#f1f1ed] text-[#45453f];
+  }
+
+  /* ── spec chips ─────────────────────────────────── */
+  .specline {
+    @apply px-4 py-2 space-y-1 bg-white;
+  }
+  .specrow {
+    @apply flex items-center gap-2 min-w-0;
+  }
+  .spec-tag {
+    @apply shrink-0 font-mono text-[11px] text-[#0000ee];
+  }
+  .spec-cls {
+    @apply min-w-0 flex-1 truncate font-mono text-[11px] text-[#45453f];
+  }
+  .copybtn {
+    @apply ml-auto shrink-0 cursor-pointer font-mono text-[10.5px] uppercase tracking-[0.08em]
+           px-1.5 py-0.5 rounded border border-[#e3e3de] text-[#8a8a82] bg-white
+           transition-colors duration-100 hover:text-[#0000ee] hover:border-[#0000ee]
+           focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#0000ee];
+  }
+
+  /* ── comparison frames ──────────────────────────── */
+  .frame {
+    @apply block w-full border-0 bg-white align-top;
+  }
+
+  /* ── rendering modes ────────────────────────────── */
+  html[data-mode="tw"] .frame {
+    display: none;
+  }
+  html[data-mode="native"] [data-spec] {
+    display: none;
+  }
+  html[data-mode="native"] .well .frame,
+  html[data-mode="both"] .well .frame {
+    display: block;
+  }
+  html[data-mode="both"] .well {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding: 0;
+  }
+  html[data-mode="both"] .well > * {
+    min-width: 0;
+  }
+  html[data-mode="both"] .well .frame {
+    border-left: 1px dashed #dcdcd6;
+  }
+  @media (max-width: 767px) {
+    html[data-mode="both"] .well {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    html[data-mode="both"] .well .frame {
+      border-left: 0;
+      border-top: 1px dashed #dcdcd6;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

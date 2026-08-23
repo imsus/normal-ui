@@ -1,26 +1,21 @@
 {
   "name": "normal-ui",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "description": "The browser's user-agent stylesheet, respecified as Tailwind utilities",
   "type": "module",
   "scripts": {
-    "dev": "vp dev",
-    "build": "tsc && vp build",
-    "preview": "vp preview",
-    "prepare": "vp config"
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "tailwindcss": "^4.3.3",
-    "typescript": "~7.0.2",
-    "vite": "catalog:",
-    "vite-plus": "catalog:"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.22.0",
-      "onFail": "download"
-    }
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vite-plus": "^0.2.9"
   }
 }

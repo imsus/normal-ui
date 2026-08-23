@@ -1,24 +1,10 @@
-import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite-plus";
+import tailwindcss from "@tailwindcss/vite";
+import { viteSingleFile } from "vite-plugin-singlefile";
 
 export default defineConfig({
-  plugins: [tailwindcss()],
-  build: {
-    rollupOptions: {
-      input: {
-        home: "index.html",
-        components: "components.html",
-        examples: "examples.html",
-      },
-    },
-  },
+  plugins: [tailwindcss(), viteSingleFile()],
   staged: {
     "*": "vp check --fix",
-  },
-  fmt: {},
-  lint: {
-    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
-    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
-    options: { typeAware: true, typeCheck: true },
   },
 });
