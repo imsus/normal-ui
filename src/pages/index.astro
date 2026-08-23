@@ -1,5 +1,18 @@
 ---
 import Base from "../layouts/Base.astro";
+import { linkClass } from "../components/link-class";
+
+// Atomic-design stages (Frost: atom → molecule → organism → template → page).
+// Only Atoms exist today; new stages slot in here as files land.
+const stages = [
+  {
+    name: "Atoms",
+    items: [
+      { label: "Button", href: "/buttons/" },
+      { label: "Link", href: "/link/" },
+    ],
+  },
+];
 ---
 
 <Base title="Components">
@@ -10,8 +23,20 @@ import Base from "../layouts/Base.astro";
     </p>
   </header>
 
-  <ul class="flex list-none flex-col items-start gap-2 p-0 text-sm">
-    <li><a class="underline underline-offset-4 hover:brightness-95" href="/buttons/">Button</a></li>
-    <li><a class="underline underline-offset-4 hover:brightness-95" href="/link/">Link</a></li>
-  </ul>
+  {
+    stages.map((stage) => (
+      <section class="flex flex-col gap-3">
+        <h2 class="font-mono text-xs tracking-widest text-zinc-500 uppercase">{stage.name}</h2>
+        <ul class="flex list-none flex-col items-start gap-2 p-0 text-sm">
+          {stage.items.map((item) => (
+            <li>
+              <a class={linkClass} href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
 </Base>
