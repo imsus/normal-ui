@@ -2,9 +2,9 @@
 import Base from "../layouts/Base.astro";
 import Demo from "../components/Demo.astro";
 
-const base = "cursor-pointer text-blue-700 underline dark:text-blue-300";
+const base = "cursor-pointer text-blue-700 underline underline-offset-2 dark:text-blue-300";
 
-const visited = "cursor-pointer text-purple-900 underline dark:text-purple-400";
+const visited = "cursor-pointer text-purple-900 underline underline-offset-2 dark:text-purple-400";
 
 const markupUnvisited = `<a href="#" class="${base}">
   Link
@@ -17,15 +17,37 @@ const markupVisited = `<a href="#" class="${visited}">
 const markupPlaceholder = `<a>
   Placeholder
 </a>`;
+
+const markupNewTab = `<a href="https://example.com" target="_blank" class="${base}">
+  Link
+</a>`;
+
+const markupDownload = `<a href="/backup.zip" download class="${base}">
+  Backup
+</a>`;
+
+const markupCurrent = `<a href="#" aria-current="page" class="${base}">
+  Link
+</a>`;
+
+const markupExternal = `<a href="https://example.com" rel="external" class="${base}">
+  Link
+</a>`;
+
+const markupPdf = `<a href="/annual-report.pdf" class="${base}">
+  Annual report
+</a>`;
 ---
 
 <Base title="Link">
   <header class="flex flex-col gap-2">
     <h1 class="text-2xl font-semibold tracking-tight">Link</h1>
     <p class="text-sm text-zinc-500">
-      The browser's default anchor, respecified in Tailwind's nearest palette colors. States: unvisited, visited, and the
-      href-less placeholder. Hover adds nothing beyond the pointer cursor; the OS focus ring is
-      live on every preview.
+      The browser's default anchor, respecified in Tailwind's nearest palette colors. Baseline states: unvisited,
+      visited, and the href-less placeholder. Beyond the baseline, markers derive from the anchor's own attributes:
+      a new tab, a download, an exit, a PDF suffix, and the page you are already on each pull in their indicator via
+      global attribute selectors. Hover adds nothing beyond the pointer cursor; the OS focus ring is live on every
+      preview.
     </p>
   </header>
 
@@ -51,6 +73,69 @@ const markupPlaceholder = `<a>
         <span class="tracking-widest uppercase">Δ from Default</span>
         <span class="text-zinc-950 dark:text-zinc-50">− href ⇒ :any-link stops matching</span>
         <span class="text-zinc-950 dark:text-zinc-50">no underline, no blue, default cursor</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="New tab" markup={markupNewTab} changed={[`target="_blank"`]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ target="_blank"</span>
+        <span class="text-zinc-950 dark:text-zinc-50">↗ from a[target="_blank"], muted zinc</span>
+        <span class="text-zinc-950 dark:text-zinc-50">_blank implies rel=noopener</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="Download" markup={markupDownload} changed={["download"]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ download attribute</span>
+        <span class="text-zinc-950 dark:text-zinc-50">↓ from a[download]; saves instead of navigating</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="Current page" markup={markupCurrent} changed={[`aria-current="page"`]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ aria-current="page"</span>
+        <span class="text-zinc-950 dark:text-zinc-50">bold near-black, underline dropped — you are here</span>
+        <span class="text-zinc-950 dark:text-zinc-50">a[aria-current] fires on any truthy token</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="External" markup={markupExternal} changed={["rel=\"external\""]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">+ rel="external"</span>
+        <span class="text-zinc-950 dark:text-zinc-50">~= matches one token of the space-separated list</span>
+        <span class="text-zinc-950 dark:text-zinc-50">same ↗ family as New tab; one glyph when both apply</span>
+      </div>
+    </Fragment>
+  </Demo>
+
+  <Demo label="PDF file" markup={markupPdf} changed={[`href="/annual-report.pdf"`]}>
+    <Fragment slot="notes">
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="tracking-widest uppercase">Δ from Default</span>
+        <span class="text-zinc-950 dark:text-zinc-50">[href$=".pdf"] suffix match</span>
+        <span class="text-zinc-950 dark:text-zinc-50">(PDF) appended in muted xs — label stays clean</span>
       </div>
     </Fragment>
   </Demo>

@@ -3,3 +3,53 @@
 .nui-delta {
   color: var(--color-emerald-400);
 }
+
+/*
+ * Link attribute indicators (research/link-attributes.md): the marker derives
+ * from the anchor's own attributes, so no marker classes exist — an author who
+ * writes only <a download> gets the glyph. Specificity note: a[aria-current]
+ * is (0,1,1) and outbids single-class utilities like .text-blue-700.
+ * display:inline-block makes each marker an atomic inline, so the link's
+ * propagated underline skips it — text-decoration:none alone cannot do that.
+ */
+a[target="_blank"]::after,
+a[rel~="external"]::after,
+a[download]::after,
+a[href$=".pdf"]::after {
+  display: inline-block;
+  margin-left: 0.125rem;
+  color: var(--color-zinc-500);
+}
+
+a[target="_blank"]::after,
+a[rel~="external"]::after {
+  content: "↗";
+}
+
+a[download]::after {
+  content: "↓";
+}
+
+a[href$=".pdf"]::after {
+  content: "(PDF)";
+  font-size: 0.75rem;
+}
+
+a[aria-current] {
+  font-weight: 600;
+  text-decoration-line: none;
+  color: var(--color-zinc-950);
+}
+
+@media (prefers-color-scheme: dark) {
+  a[target="_blank"]::after,
+  a[rel~="external"]::after,
+  a[download]::after,
+  a[href$=".pdf"]::after {
+    color: var(--color-zinc-400);
+  }
+
+  a[aria-current] {
+    color: var(--color-zinc-50);
+  }
+}
