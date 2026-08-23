@@ -14,79 +14,101 @@
         <h1 class="text-2xl font-semibold tracking-tight">Button</h1>
         <p class="mt-2 text-sm text-zinc-500">
           The browser's default button, respecified in Tailwind. States: default, loading, disabled.
+          Focus indicator is left to the OS.
         </p>
       </header>
 
       <section class="mt-8 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
-        <div
-          class="@container/preview relative flex resize overflow-auto max-w-full min-h-[150px] flex-wrap items-center justify-center gap-3 px-6 py-11"
-        >
-          <span
-            class="absolute top-3 left-4 font-mono text-[11px] tracking-[0.08em] text-zinc-500 uppercase"
-            >Default</span
-          >
-          <button
-            type="button"
-            class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 dark:hover:brightness-110 dark:active:brightness-125 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-500 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"
-          >
-            Button
-          </button>
-        </div>
-        <pre
-          class="m-0 overflow-x-auto border-t border-zinc-200 dark:border-zinc-800 bg-zinc-950 px-5 py-4"
-        ><code class="font-mono text-[12.5px] leading-[1.7] text-zinc-50">&lt;button type="button" class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 dark:hover:brightness-110 dark:active:brightness-125 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-500 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"&gt;Button&lt;/button&gt;</code></pre>
-      </section>
-
-      <section class="mt-8 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
-        <div
-          class="@container/preview relative flex resize overflow-auto max-w-full min-h-[150px] flex-wrap items-center justify-center gap-3 px-6 py-11"
-        >
-          <span
-            class="absolute top-3 left-4 font-mono text-[11px] tracking-[0.08em] text-zinc-500 uppercase"
-            >Loading</span
-          >
-          <button
-            type="button"
-            aria-busy="true"
-            class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-progress select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 dark:hover:brightness-110 dark:active:brightness-125 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-500 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"
+        <div class="@container/preview relative block resize overflow-auto max-w-full">
+          <div
+            class="relative flex min-h-[150px] flex-wrap items-center justify-center gap-3 px-6 py-11 @max-sm/preview:px-3"
           >
             <span
-              aria-hidden="true"
-              class="inline-block size-[0.85em] animate-spin rounded-full border-2 border-current border-t-transparent"
-            ></span>
-            Loading
-          </button>
+              class="absolute top-3 left-4 font-mono text-[11px] tracking-[0.08em] text-zinc-500 uppercase"
+              >Default</span
+            >
+            <button
+              type="button"
+              class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"
+            >
+              Button
+            </button>
+          </div>
         </div>
         <pre
+          tabindex="-1"
           class="m-0 overflow-x-auto border-t border-zinc-200 dark:border-zinc-800 bg-zinc-950 px-5 py-4"
-        ><code class="font-mono text-[12.5px] leading-[1.7] text-zinc-50">&lt;button type="button" aria-busy="true" class="…"&gt;
-  &lt;span aria-hidden="true"
-    class="inline-block size-[0.85em] animate-spin rounded-full border-2 border-current border-t-transparent"&gt;&lt;/span&gt;
-  Loading
-&lt;/button&gt;
-
-/* swap cursor-pointer → cursor-progress in the class list */</code></pre>
+        ><code class="font-mono text-[12.5px] leading-[1.7] text-zinc-50">&lt;button type="button" class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"&gt;Button&lt;/button&gt;</code></pre>
       </section>
 
       <section class="mt-8 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
+        <div class="@container/preview relative block resize overflow-auto max-w-full">
+          <div
+            class="relative flex min-h-[150px] flex-wrap items-center justify-center gap-3 px-6 py-11 @max-sm/preview:px-3"
+          >
+            <span
+              class="absolute top-3 left-4 font-mono text-[11px] tracking-[0.08em] text-zinc-500 uppercase"
+              >Loading</span
+            >
+            <button
+              type="button"
+              aria-busy="true"
+              class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-progress select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"
+            >
+              <span
+                aria-hidden="true"
+                class="inline-block size-[0.85em] animate-spin motion-reduce:animate-none rounded-full border-2 border-current border-t-transparent"
+              ></span>
+              Loading
+            </button>
+          </div>
+        </div>
         <div
-          class="@container/preview relative flex resize overflow-auto max-w-full min-h-[150px] flex-wrap items-center justify-center gap-3 px-6 py-11"
+          class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-[11px] text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
         >
-          <span
-            class="absolute top-3 left-4 font-mono text-[11px] tracking-[0.08em] text-zinc-500 uppercase"
-            >Disabled</span
-          >
-          <button
-            type="button"
-            disabled
-            class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 dark:hover:brightness-110 dark:active:brightness-125 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-500 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"
-          >
-            Button
-          </button>
+          <span class="tracking-[0.08em] uppercase">Δ from Default</span>
+          <span class="text-zinc-950 dark:text-zinc-50">cursor-pointer → cursor-progress</span>
+          <span class="text-zinc-950 dark:text-zinc-50">+ aria-busy="true"</span>
+          <span class="text-zinc-950 dark:text-zinc-50">+ spinner span</span>
         </div>
         <pre
+          tabindex="-1"
           class="m-0 overflow-x-auto border-t border-zinc-200 dark:border-zinc-800 bg-zinc-950 px-5 py-4"
-        ><code class="font-mono text-[12.5px] leading-[1.7] text-zinc-50">&lt;button type="button" disabled class="…same as Default…"&gt;Button&lt;/button&gt;</code></pre>
+        ><code class="font-mono text-[12.5px] leading-[1.7] text-zinc-50">&lt;button type="button" <span class="text-emerald-400">aria-busy="true"</span> class="inline-flex min-h-6 @max-sm/preview:min-h-11 <span class="text-emerald-400">cursor-progress</span> select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"&gt;
+  &lt;span aria-hidden="true"
+    class="<span class="text-emerald-400">inline-block size-[0.85em] animate-spin motion-reduce:animate-none rounded-full border-2 border-current border-t-transparent</span>"&gt;&lt;/span&gt;
+  Loading
+&lt;/button&gt;</code></pre>
+      </section>
+
+      <section class="mt-8 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
+        <div class="@container/preview relative block resize overflow-auto max-w-full">
+          <div
+            class="relative flex min-h-[150px] flex-wrap items-center justify-center gap-3 px-6 py-11 @max-sm/preview:px-3"
+          >
+            <span
+              class="absolute top-3 left-4 font-mono text-[11px] tracking-[0.08em] text-zinc-500 uppercase"
+              >Disabled</span
+            >
+            <button
+              type="button"
+              disabled
+              class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"
+            >
+              Button
+            </button>
+          </div>
+        </div>
+        <div
+          class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-zinc-200 bg-zinc-50 px-5 py-2 font-mono text-[11px] text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900"
+        >
+          <span class="tracking-[0.08em] uppercase">Δ from Default</span>
+          <span class="text-zinc-950 dark:text-zinc-50">+ disabled attribute</span>
+        </div>
+        <pre
+          tabindex="-1"
+          class="m-0 overflow-x-auto border-t border-zinc-200 dark:border-zinc-800 bg-zinc-950 px-5 py-4"
+        ><code class="font-mono text-[12.5px] leading-[1.7] text-zinc-50">&lt;button type="button" <span class="text-emerald-400">disabled</span> class="inline-flex min-h-6 @max-sm/preview:min-h-11 cursor-pointer select-none items-center justify-center gap-1.5 rounded-[3px] border border-[color:buttonborder] bg-[color:buttonface] px-[7px] @max-sm/preview:px-3 text-base @max-sm/preview:text-lg leading-none text-[color:buttontext] transition duration-100 hover:brightness-95 active:scale-[0.98] active:brightness-90 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none motion-reduce:active:scale-100"&gt;Button&lt;/button&gt;</code></pre>
       </section>
     </main>
   </body>
