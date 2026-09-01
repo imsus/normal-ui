@@ -19,6 +19,6 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "alpinejs": "^3.16.2"
+    "alpinejs": "^3.16.3"
   }
 }
