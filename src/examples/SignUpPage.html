@@ -1,0 +1,49 @@
+<!-- @dsCard level="pages" group="Flows" height=880 width=960 page subtitle="Create an account: few fields, passkey option, password rules shown as you type" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SignUpPage</title><style>
+  body { margin:0; }
+  .auth { max-width:26rem; margin:0 auto; padding:var(--space-lg) var(--space-md); }
+  .auth header { font-weight:700; font-size:1.17em; margin-bottom:var(--space-lg); }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); }
+  .field input { width:100%; box-sizing:border-box; min-height:44px; }
+  .hint { font-size:.83em; color:var(--gray-text); }
+  .block { width:100%; min-height:44px; }
+  .pw { display:flex; } .pw input { flex:1; } .pw button { border-inline-start:0; min-width:4.5rem; }
+  .req { list-style:none; padding:0; margin:var(--space-xs) 0 0; font:.875rem var(--font-sans); display:grid; gap:2px; }
+  .req li::before { content:"○ " / ""; } .req li.ok::before { content:"✓ " / "Met: "; font-weight:700; }
+  .panels { display:grid; grid-template-columns:repeat(auto-fit, minmax(20rem,1fr)); gap:var(--space-lg); max-width:56rem; margin:0 auto; padding:var(--space-lg) var(--space-md); }
+  .panels > section { border:1px solid var(--control-border); padding:var(--space-md) var(--space-lg); }
+</style></head>
+<body>
+<main class="auth">
+  <header>Toko Rumah</header>
+  <h1>Create your shop account</h1>
+  <p class="muted" style="color:var(--gray-text)">Free for your first 50 orders a month.</p>
+  <form action="#" onsubmit="return false">
+    <div class="field"><label for="n">Your name</label><input id="n" autocomplete="name" value="Imam Susanto"></div>
+    <div class="field"><label for="shop">Shop name</label><span class="hint" id="shop-h">Customers see this. You can change it later.</span><input id="shop" autocomplete="organization" aria-describedby="shop-h" value="Toko Rumah"></div>
+    <div class="field"><label for="em">Email address</label><input id="em" type="email" autocomplete="email" spellcheck="false" value="imam@example.com"></div>
+    <div class="field">
+      <label for="new-pw">Create a password</label>
+      <div class="pw"><input id="new-pw" type="password" autocomplete="new-password" aria-describedby="rules"><button type="button" data-show aria-controls="new-pw" aria-pressed="false">Show</button></div>
+      <ul class="req" id="rules"><li id="r-len">At least 12 characters</li><li id="r-common">Not a common password</li></ul>
+    </div>
+    <p><label><input type="checkbox"> Email me tips for new shops (you can stop any time)</label></p>
+    <button type="submit" class="block">Create account</button>
+  </form>
+  <p style="text-align:center;margin-top:var(--space-md)"><button type="button" class="block">Sign up with a passkey instead</button></p>
+  <p style="text-align:center"><small>By creating an account you agree to the <a href="#terms">terms</a> and <a href="#privacy">privacy policy</a>.</small></p>
+  <p style="text-align:center">Already have an account? <a href="#signin">Sign in</a></p>
+</main>
+<div role="status" aria-live="polite" id="announce" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"></div>
+<script>
+document.querySelectorAll('[data-show]').forEach(function(b){ var f=document.getElementById(b.getAttribute('aria-controls'));
+  b.addEventListener('click',function(){ var on=f.type==='password'; f.type=on?'text':'password'; b.textContent=on?'Hide':'Show'; b.setAttribute('aria-pressed',String(on)); }); });
+var np=document.getElementById('new-pw');
+if(np){ np.addEventListener('input',function(){ var v=np.value;
+  document.getElementById('r-len').classList.toggle('ok', v.length>=12);
+  document.getElementById('r-common').classList.toggle('ok', v.length>0 && !/^(password|123456|qwerty)/i.test(v)); }); }
+</script>
+</body>
+</html>

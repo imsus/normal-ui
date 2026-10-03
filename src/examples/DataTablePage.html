@@ -1,0 +1,141 @@
+<!-- @dsCard level="pages" group="App" height=640 width=960 page subtitle="A data table with search, filter, sortable columns, row selection and pagination" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orders · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .toolbar { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:end; margin-block:var(--space-md); }
+  .toolbar .field { display:grid; gap:var(--space-xs); }
+  .toolbar .spacer { flex:1; }
+  .bulk { display:flex; gap:var(--space-sm); align-items:center; min-height:2.25rem; }
+  .scroll { overflow-x:auto; }
+  table { width:100%; margin:0; }
+  thead th { vertical-align:bottom; }
+  th .sort { all:unset; box-sizing:border-box; display:inline-flex; gap:var(--space-xs); align-items:center; min-height:var(--space-lg); font-weight:700; cursor:pointer; }
+  th .sort:focus-visible { outline:2px solid var(--focus-ring); outline-offset:2px; }
+  th.num .sort { flex-direction:row-reverse; }
+  [aria-sort="ascending"] .arrow::after { content:"▲"; font-size:.7em; }
+  [aria-sort="descending"] .arrow::after { content:"▼"; font-size:.7em; }
+  tbody tr:has(input:checked) { background:var(--highlight); color:var(--highlight-text); }
+  tbody tr:has(input:checked) a { color:inherit; }
+  td:first-child, th:first-child { width:2.5rem; }
+  .pager { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:center; justify-content:space-between; margin-block:var(--space-md); }
+  .pager ul { display:flex; gap:var(--space-xs); list-style:none; margin:0; padding:0; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders" aria-current="page">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="page-head">
+  <h1>Orders</h1>
+  <p class="muted">248 orders in September</p>
+</div>
+
+<search class="toolbar">
+  <div class="field">
+    <label for="q">Search orders</label>
+    <input id="q" type="search" placeholder="Name or order number">
+  </div>
+  <div class="field">
+    <label for="status">Status</label>
+    <select id="status"><option>All statuses</option><option>Awaiting payment</option><option>Paid</option><option>Packing</option><option>Shipped</option><option>Delivered</option><option>Returned</option></select>
+  </div>
+  <span class="spacer"></span>
+  <button type="button">Export CSV</button>
+</search>
+
+<div class="bulk"><span id="count">No orders selected.</span> <button type="button" id="mark" disabled>Mark as shipped</button></div>
+
+<div class="scroll">
+  <table id="orders">
+    <caption class="vh">Orders, sortable by column</caption>
+    <thead>
+      <tr>
+        <th scope="col"><input type="checkbox" id="all" aria-label="Select all orders on this page"></th>
+        <th scope="col" aria-sort="descending" class=""><button type="button" class="sort" data-k="0">Order<span aria-hidden="true" class="arrow"></span></button></th>
+        <th scope="col" class=""><button type="button" class="sort" data-k="1">Customer<span aria-hidden="true" class="arrow"></span></button></th>
+        <th scope="col" class=""><button type="button" class="sort" data-k="2">Date<span aria-hidden="true" class="arrow"></span></button></th>
+        <th scope="col" class=""><button type="button" class="sort" data-k="3">Status<span aria-hidden="true" class="arrow"></span></button></th>
+        <th scope="col" class="num"><button type="button" class="sort" data-k="4">Items<span aria-hidden="true" class="arrow"></span></button></th>
+        <th scope="col" class="num"><button type="button" class="sort" data-k="5">Total<span aria-hidden="true" class="arrow"></span></button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><input type="checkbox" aria-label="Select order 1048"></td><td><a href="#o1048">#1048</a></td><td>Budi Hartono</td><td data-v="2026-09-28"><time datetime="2026-09-28">28 Sep</time></td><td>Paid</td><td class="num">1</td><td class="num" data-v="289000">Rp 289.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1047"></td><td><a href="#o1047">#1047</a></td><td>Sari Wulandari</td><td data-v="2026-09-28"><time datetime="2026-09-28">28 Sep</time></td><td>Packing</td><td class="num">2</td><td class="num" data-v="412000">Rp 412.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1046"></td><td><a href="#o1046">#1046</a></td><td>Dewi Lestari</td><td data-v="2026-09-27"><time datetime="2026-09-27">27 Sep</time></td><td>Awaiting payment</td><td class="num">2</td><td class="num" data-v="150000">Rp 150.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1045"></td><td><a href="#o1045">#1045</a></td><td>Agus Pratama</td><td data-v="2026-09-27"><time datetime="2026-09-27">27 Sep</time></td><td>Shipped</td><td class="num">1</td><td class="num" data-v="96000">Rp 96.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1044"></td><td><a href="#o1044">#1044</a></td><td>Rina Kusuma</td><td data-v="2026-09-26"><time datetime="2026-09-26">26 Sep</time></td><td>Shipped</td><td class="num">4</td><td class="num" data-v="523000">Rp 523.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1043"></td><td><a href="#o1043">#1043</a></td><td>Hendra Wijaya</td><td data-v="2026-09-26"><time datetime="2026-09-26">26 Sep</time></td><td>Returned</td><td class="num">1</td><td class="num" data-v="89000">Rp 89.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1042"></td><td><a href="#o1042">#1042</a></td><td>Maya Anggraini</td><td data-v="2026-09-25"><time datetime="2026-09-25">25 Sep</time></td><td>Delivered</td><td class="num">3</td><td class="num" data-v="347000">Rp 347.000</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select order 1041"></td><td><a href="#o1041">#1041</a></td><td>Joko Santoso</td><td data-v="2026-09-25"><time datetime="2026-09-25">25 Sep</time></td><td>Delivered</td><td class="num">1</td><td class="num" data-v="61000">Rp 61.000</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<nav class="pager" aria-label="Pages of orders">
+  <span class="muted">Showing 1–8 of 248</span>
+  <ul>
+    <li><button type="button" disabled>Previous</button></li>
+    <li><button type="button" aria-current="page">1</button></li>
+    <li><button type="button">2</button></li>
+    <li><button type="button">3</button></li>
+    <li><button type="button">Next</button></li>
+  </ul>
+</nav>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+var tb=document.querySelector('#orders tbody'), all=document.getElementById('all'), count=document.getElementById('count'), mark=document.getElementById('mark'), live=document.getElementById('announce');
+function boxes(){ return Array.prototype.slice.call(tb.querySelectorAll('input[type=checkbox]')); }
+function update(){ var n=boxes().filter(function(b){return b.checked;}).length;
+  count.textContent = n ? n+(n===1?' order':' orders')+' selected.' : 'No orders selected.'; mark.disabled=!n;
+  all.checked = n===boxes().length; all.indeterminate = n>0 && n<boxes().length; }
+all.addEventListener('change',function(){ boxes().forEach(function(b){b.checked=all.checked;}); update(); });
+tb.addEventListener('change',update);
+document.querySelectorAll('th .sort').forEach(function(btn){ btn.addEventListener('click',function(){
+  var th=btn.parentNode, k=+btn.dataset.k+1, dir=th.getAttribute('aria-sort')==='ascending'?'descending':'ascending';
+  document.querySelectorAll('th[aria-sort]').forEach(function(h){h.removeAttribute('aria-sort');}); th.setAttribute('aria-sort',dir);
+  var rows=Array.prototype.slice.call(tb.rows);
+  rows.sort(function(a,b){ var A=a.cells[k].dataset.v||a.cells[k].textContent.trim(), B=b.cells[k].dataset.v||b.cells[k].textContent.trim();
+    var nA=parseFloat(A.replace(/[^0-9.-]/g,'')), nB=parseFloat(B.replace(/[^0-9.-]/g,''));
+    var c=(!isNaN(nA)&&!isNaN(nB)&&/^[#0-9]/.test(A))?nA-nB:A.localeCompare(B); return dir==='ascending'?c:-c; });
+  rows.forEach(function(r){tb.appendChild(r);});
+  live.textContent='Sorted by '+btn.textContent.trim()+', '+dir+'.'; }); });
+</script>
+</body>
+</html>

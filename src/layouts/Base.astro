@@ -1,45 +1,42 @@
 ---
-import { linkClass } from "../components/link-class";
-import ThemeToggle from "../components/ThemeToggle.astro";
-import "../index.css";
+// Every page: tokens, the element layer and the plain-HTML patterns layer, and the
+// theme switch. StyleX output is appended to the same stylesheet at build time.
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/patterns.css';
+// Docs-only rules, scoped to .docs-prose. Loaded here so every page shares one
+// stylesheet, the one StyleX appends its rules to.
+import '../site/docs.css';
 
 interface Props {
   title: string;
+  description?: string;
+  bodyClass?: string;
 }
-
-const { title } = Astro.props;
+const { title, description, bodyClass } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} · normal-ui</title>
-    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACw=" />
+    <!-- Declare the element layer first, so StyleX's layers (declared later) always win,
+         whatever order the stylesheets load in. -->
+    <style is:inline>@layer normal-ui;</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
     <script is:inline>
-      // Class-based theming: stored choice wins, else system preference.
-      // Runs before paint to avoid a flash of the wrong scheme.
-      const stored = localStorage.getItem("theme");
-      const dark = stored
-        ? stored === "dark"
-        : matchMedia("(prefers-color-scheme: dark)").matches;
-      document.documentElement.classList.toggle("dark", dark);
+      // Apply a saved theme before first paint. No saved choice: follow the device.
+      try {
+        const t = localStorage.getItem('pd-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
     </script>
+    {import.meta.env.DEV && <link rel="stylesheet" href="/virtual:stylex.css" />}
+    {import.meta.env.DEV && <script is:inline type="module" src="/@id/virtual:stylex:runtime"></script>}
+    <slot name="head" />
   </head>
-  <body class="bg-white font-sans text-zinc-950 antialiased dark:bg-zinc-950 dark:text-zinc-50">
-    <main class="mx-auto flex max-w-2xl flex-col gap-8 px-6 pt-14 pb-30">
-      <div class="flex items-center justify-end gap-4">
-        <a href="https://github.com/imsus/normal-ui" class={linkClass}>GitHub</a>
-        <ThemeToggle />
-      </div>
-      <slot />
-    </main>
-
-    <script>
-      import Alpine from "alpinejs";
-
-      Alpine.start();
-    </script>
+  <body class={bodyClass}>
+    <slot />
   </body>
 </html>

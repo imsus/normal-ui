@@ -1,0 +1,205 @@
+<!-- @dsCard level="pages" group="App" height=720 width=960 page subtitle="A sidebar layout with a side sheet for editing and a modal dialog to confirm a delete" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Products · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .with-side { display:grid; grid-template-columns:14rem minmax(0,1fr); gap:var(--space-lg); align-items:start; }
+  .with-side.collapsed { grid-template-columns:minmax(0,1fr); }
+  .with-side.collapsed .sidebar { display:none; }
+  @media (max-width:700px) { .with-side { grid-template-columns:1fr; } }
+  .sidebar { border-inline-end:1px solid var(--control-border); padding-inline-end:var(--space-md); }
+  .sidebar h2 { font:700 .875rem var(--font-sans); text-transform:uppercase; letter-spacing:.04em; color:var(--gray-text); margin:var(--space-md) 0 var(--space-xs); }
+  .sidebar h2:first-child { margin-top:0; }
+  .sidebar ul { list-style:none; margin:0; padding:0; }
+  .sidebar a { display:flex; justify-content:space-between; align-items:center; min-height:2rem; padding-inline:var(--space-sm); }
+  .sidebar a[aria-current] { background:var(--highlight); color:var(--highlight-text); font-weight:700; text-decoration:none; }
+  .sidebar .n { font:.83rem var(--font-sans); font-variant-numeric:tabular-nums; }
+  .toolbar { display:flex; flex-wrap:wrap; gap:var(--space-sm); align-items:center; justify-content:space-between; }
+  .toolbar h1 { margin-block:var(--space-sm); }
+  table { width:100%; }
+  thead th { vertical-align:bottom; }
+  td.actions { white-space:nowrap; text-align:end; }
+
+  /* Side sheet: a <dialog> pinned to the right edge */
+  dialog.sheet {
+    position:fixed; inset:0 0 0 auto; margin:0;
+    width:min(26rem, 100%); max-width:100%; height:100%; max-height:100%;
+    padding:0; border:0; border-inline-start:1px solid var(--control-border);
+    display:none; flex-direction:column;
+  }
+  dialog.sheet[open] { display:flex; }
+  .sheet header, .sheet footer { display:flex; align-items:center; justify-content:space-between; gap:var(--space-sm); padding:var(--space-sm) var(--space-md); }
+  .sheet header { border-bottom:1px solid var(--rule); }
+  .sheet header h2 { margin:0; font-size:1.17em; }
+  .sheet .body { flex:1; overflow-y:auto; padding:0 var(--space-md); }
+  .sheet footer { border-top:1px solid var(--rule); }
+  .sheet footer .end { display:flex; gap:var(--space-sm); }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); }
+  .hint { font-size:.83em; color:var(--gray-text); }
+  .icon { font:1.25rem/1 var(--font-sans); }
+
+  /* Modal dialog: centred, narrow */
+  dialog.confirm { max-width:min(28rem, calc(100% - 2 * var(--space-md))); padding:var(--space-md) var(--space-lg); }
+  .confirm h2 { margin-top:0; font-size:1.17em; }
+  .confirm .end { display:flex; flex-wrap:wrap; gap:var(--space-sm); justify-content:flex-end; }
+
+  /* Slide and fade in, only for people who have not asked for less motion */
+  @media (prefers-reduced-motion: no-preference) {
+    dialog.sheet { transition: translate .2s ease, overlay .2s allow-discrete, display .2s allow-discrete; translate:0 0; }
+    @starting-style { dialog.sheet:modal { translate:100% 0; } }
+    dialog.confirm { transition: opacity .15s ease, overlay .15s allow-discrete, display .15s allow-discrete; opacity:1; }
+    @starting-style { dialog.confirm[open] { opacity:0; } }
+  }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products" aria-current="page">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="with-side" id="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Catalogue">
+    <h2>Catalogue</h2>
+    <ul>
+      <li><a href="#products" aria-current="page">Products <span class="n">128</span></a></li>
+      <li><a href="#categories">Categories <span class="n">9</span></a></li>
+      <li><a href="#stock">Stock <span class="n">3 low</span></a></li>
+    </ul>
+    <h2>Sales</h2>
+    <ul>
+      <li><a href="#discounts">Discounts</a></li>
+      <li><a href="#vouchers">Vouchers</a></li>
+    </ul>
+    <h2>Store</h2>
+    <ul>
+      <li><a href="#shipping">Shipping</a></li>
+      <li><a href="#settings">Settings</a></li>
+    </ul>
+  </nav>
+
+  <div>
+    <div class="toolbar">
+      <button type="button" id="toggle" aria-controls="sidebar" aria-expanded="true">Hide sidebar</button>
+      <button type="button" id="add" aria-haspopup="dialog">Add product</button>
+    </div>
+    <h1>Products</h1>
+    <table>
+      <caption class="vh">Products</caption>
+      <thead><tr><th scope="col">Name</th><th scope="col">Category</th><th scope="col" class="num">Price</th><th scope="col" class="num">Stock</th><th scope="col"><span class="vh">Actions</span></th></tr></thead>
+      <tbody>
+      <tr><th scope="row">Teak cutting board</th><td>Home and kitchen</td><td class="num">Rp 123.000</td><td class="num">2 left, reorder</td><td class="actions"><button type="button" data-edit="Teak cutting board" aria-haspopup="dialog">Edit<span class="vh"> Teak cutting board</span></button></td></tr>
+      <tr><th scope="row">Linen shirt</th><td>Clothing</td><td class="num">Rp 289.000</td><td class="num">34</td><td class="actions"><button type="button" data-edit="Linen shirt" aria-haspopup="dialog">Edit<span class="vh"> Linen shirt</span></button></td></tr>
+      <tr><th scope="row">Batik table runner</th><td>Home and kitchen</td><td class="num">Rp 175.000</td><td class="num">12</td><td class="actions"><button type="button" data-edit="Batik table runner" aria-haspopup="dialog">Edit<span class="vh"> Batik table runner</span></button></td></tr>
+      <tr><th scope="row">Rattan basket, large</th><td>Home and kitchen</td><td class="num">Rp 210.000</td><td class="num">Out of stock</td><td class="actions"><button type="button" data-edit="Rattan basket, large" aria-haspopup="dialog">Edit<span class="vh"> Rattan basket, large</span></button></td></tr>
+      <tr><th scope="row">Coffee, Java Preanger 250 g</th><td>Food</td><td class="num">Rp 96.000</td><td class="num">58</td><td class="actions"><button type="button" data-edit="Coffee, Java Preanger 250 g" aria-haspopup="dialog">Edit<span class="vh"> Coffee, Java Preanger 250 g</span></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-h" closedby="any" open>
+  <form method="dialog" id="sheet-form" style="display:contents">
+    <header>
+      <h2 id="sheet-h">Edit product</h2>
+      <button type="submit" value="cancel" formnovalidate aria-label="Close"><span class="icon" aria-hidden="true">×</span></button>
+    </header>
+    <div class="body">
+      <div class="field">
+        <label for="p-name">Name</label>
+        <input id="p-name" value="Teak cutting board" required>
+      </div>
+      <div class="field">
+        <label for="p-cat">Category</label>
+        <select id="p-cat"><option>Clothing</option><option selected>Home and kitchen</option><option>Food</option></select>
+      </div>
+      <div class="field">
+        <label for="p-price">Price in rupiah</label>
+        <input id="p-price" inputmode="numeric" value="123000" style="width:12ch">
+      </div>
+      <div class="field">
+        <label for="p-stock">Stock</label>
+        <span class="hint" id="p-stock-hint">We email you when stock falls below 5.</span>
+        <input id="p-stock" type="number" min="0" value="2" style="width:8ch" aria-describedby="p-stock-hint">
+      </div>
+      <div class="field">
+        <label for="p-desc">Description</label>
+        <textarea id="p-desc">Solid teak from Jepara, oiled with food-safe oil. 40 × 25 cm.</textarea>
+      </div>
+      <p><label><input type="checkbox" checked> Show in the online shop</label></p>
+    </div>
+    <footer>
+      <button type="button" id="delete" aria-haspopup="dialog">Delete product</button>
+      <span class="end">
+        <button type="submit" value="cancel" formnovalidate>Cancel</button>
+        <button type="submit" value="save">Save changes</button>
+      </span>
+    </footer>
+  </form>
+</dialog>
+
+<dialog class="confirm" id="confirm" role="alertdialog" aria-labelledby="confirm-h" aria-describedby="confirm-d">
+  <form method="dialog">
+    <h2 id="confirm-h">Delete Teak cutting board?</h2>
+    <p id="confirm-d">It disappears from the shop straight away. Past orders keep their details. You cannot undo this.</p>
+    <div class="end">
+      <button type="submit" value="cancel" autofocus>Keep product</button>
+      <button type="submit" value="delete">Delete product</button>
+    </div>
+  </form>
+</dialog>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+var sheet=document.getElementById('sheet'), confirmDlg=document.getElementById('confirm'), live=document.getElementById('announce'), opener=null;
+var layout=document.getElementById('layout'), toggle=document.getElementById('toggle');
+toggle.addEventListener('click',function(){ var open=toggle.getAttribute('aria-expanded')==='true';
+  toggle.setAttribute('aria-expanded', String(!open)); toggle.textContent = open ? 'Show sidebar' : 'Hide sidebar'; layout.classList.toggle('collapsed', open); });
+function openSheet(title, btn){ opener=btn; if(sheet.open) sheet.close();
+  document.getElementById('sheet-h').textContent = title; sheet.showModal(); }
+document.querySelectorAll('[data-edit]').forEach(function(b){ b.addEventListener('click',function(){
+  document.getElementById('p-name').value=b.dataset.edit; openSheet('Edit product', b); }); });
+document.getElementById('add').addEventListener('click',function(e){ document.getElementById('p-name').value=''; openSheet('Add product', e.currentTarget); });
+sheet.addEventListener('close',function(){ if(sheet.returnValue==='save') live.textContent='Saved '+(document.getElementById('p-name').value||'product')+'.';
+  if(opener) opener.focus(); sheet.returnValue=''; });
+document.getElementById('delete').addEventListener('click',function(){
+  document.getElementById('confirm-h').textContent='Delete '+(document.getElementById('p-name').value||'this product')+'?'; confirmDlg.showModal(); });
+confirmDlg.addEventListener('close',function(){ if(confirmDlg.returnValue==='delete'){ var n=document.getElementById('p-name').value;
+    document.querySelectorAll('[data-edit]').forEach(function(b){ if(b.dataset.edit===n) b.closest('tr').remove(); });
+    sheet.close(); live.textContent=n+' deleted.'; var first=document.querySelector('[data-edit]'); if(first) first.focus(); }
+  else document.getElementById('delete').focus(); confirmDlg.returnValue=''; });
+</script>
+</body>
+</html>

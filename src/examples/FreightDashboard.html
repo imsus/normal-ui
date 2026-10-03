@@ -1,0 +1,591 @@
+<!-- @dsCard level="pages" group="Showcase" height=1780 width=1280 page subtitle="Freight analytics built with grid, flex and gap only, defensive CSS, and a switch to preview no data, 1, 2, typical, so many and broken data" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Freight performance · Lintas Cargo</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:10; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+
+  :root { --top-h:56px; --pd-sticky-top:calc(var(--top-h) + var(--space-sm)); }
+  body { margin:0; min-height:100dvh; display:grid; grid-template-columns:15rem minmax(0,1fr); grid-template-rows:auto auto auto 1fr auto;
+    grid-template-areas:"notice notice" "offline offline" "top top" "side main" "side foot"; }
+  .g-notice { grid-area:notice; display:flex; gap:var(--space-md); align-items:center; justify-content:space-between; padding:var(--space-xs) var(--space-md); border-bottom:2px dashed var(--canvas-text); }
+  .g-notice p { margin:0; }
+  .g-offline { grid-area:offline; margin:0; padding:var(--space-xs) var(--space-md); background:var(--canvas-text); color:var(--canvas); font-family:var(--font-sans); }
+  .topbar { grid-area:top; position:sticky; top:0; z-index:3; display:flex; align-items:center; gap:var(--space-md); min-height:var(--top-h); padding:0 var(--space-md); background:var(--canvas); border-bottom:1px solid var(--control-border); }
+  .topbar .brand { font-weight:700; font-size:1.17em; margin-inline-end:auto; }
+  .topbar search { flex:0 1 20rem; }
+  .topbar search input { width:100%; box-sizing:border-box; }
+  .menu-btn, .menu-close { display:none; }
+  .menu-close { margin:0 0 var(--space-sm); }
+  #sidebar { grid-area:side; position:sticky; top:var(--top-h); align-self:start; height:calc(100dvh - var(--top-h)); overflow:auto; box-sizing:border-box;
+    display:block; inset:auto; width:auto; margin:0; padding:var(--space-md); border:0; border-inline-end:1px solid var(--control-border); background:var(--canvas); }
+  #sidebar h2 { font:700 .8125rem var(--font-sans); text-transform:uppercase; letter-spacing:.04em; color:var(--gray-text); margin:var(--space-md) 0 var(--space-xs); }
+  #sidebar h2:first-child { margin-top:0; }
+  #sidebar ul { list-style:none; margin:0; padding:0; }
+  #sidebar a { display:flex; align-items:center; min-height:2rem; padding-inline:var(--space-sm); }
+  #sidebar a[aria-current] { background:var(--highlight); color:var(--highlight-text); font-weight:700; text-decoration:none; }
+  main { grid-area:main; padding:var(--space-md) var(--space-lg) var(--space-lg); min-width:0; }
+  main:focus { outline:none; }
+  main h1 { margin:var(--space-sm) 0; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:var(--space-md); }
+  .cards section { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .cards h2 { font-size:1rem; margin:0 0 var(--space-xs); }
+  footer { grid-area:foot; padding:var(--space-sm) var(--space-lg); border-top:1px solid var(--rule); font-size:.875rem; }
+  @media (max-width: 800px) {
+    body { grid-template-columns:1fr; grid-template-areas:"notice" "offline" "top" "main" "foot"; }
+    .menu-btn { display:inline-flex; }
+    #sidebar:popover-open .menu-close { display:block; }
+    .topbar search { display:none; }
+    #sidebar:not(:popover-open) { display:none; }
+    #sidebar:popover-open { position:fixed; inset:0 auto 0 0; width:min(18rem,85vw); height:100dvh; border-inline-end:1px solid var(--control-border); }
+  }
+
+  /* ================= Defensive layout =================
+     1. Every sibling group is flex or grid with gap: no margins between siblings.
+     2. Grid tracks use minmax(min(100%, X), 1fr) so a track never forces overflow on a narrow screen.
+     3. Grid and flex children get min-width: 0 so long content cannot stretch them.
+     4. Text wraps (overflow-wrap) instead of being clipped; nothing uses text-overflow: ellipsis.
+     5. Only tables and charts may scroll sideways, each inside its own .scroll box.
+     6. Sizes that depend on content use container queries, not the viewport. */
+  *, *::before, *::after { box-sizing: border-box; }
+  main { padding: var(--space-md, 16px) var(--space-lg, 24px) var(--space-lg, 24px); min-width: 0; }
+  main :is(h1, h2, p, dl, dd, ul, ol, fieldset, figure) { margin: 0; }
+  .stack { display: flex; flex-direction: column; gap: var(--space-md, 16px); min-width: 0; }
+
+  .page-head { display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); align-items: end; justify-content: space-between; }
+  .page-head .title { display: flex; flex-direction: column; gap: var(--space-xs); flex: 1 1 20rem; min-width: 0; }
+  .page-head .actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+  .demo { display: flex; flex-direction: column; gap: var(--space-xs); padding: var(--space-sm) var(--space-md); border: 2px dashed var(--control-border); }
+  .demo legend { padding-inline: var(--space-xs); font: 700 .875rem var(--font-sans); }
+  .seg { display: flex; flex-wrap: wrap; }
+  .seg label { position: relative; display: inline-flex; align-items: center; min-height: calc(var(--space-lg) + var(--space-sm)); padding: 0 var(--space-md); border: 1px solid var(--control-border); margin-inline-start: -1px; font-family: var(--font-sans); cursor: pointer; }
+  .seg input { position: absolute; inset: 0; opacity: 0; margin: 0; width: 100%; height: 100%; cursor: pointer; }
+  .seg label:has(:checked) { background: var(--canvas-text); color: var(--canvas); font-weight: 700; }
+  .seg label:has(:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 2px; z-index: 1; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: end; padding-block: var(--space-sm); border-block: 1px solid var(--rule); }
+  .filters .f { display: flex; flex-direction: column; gap: var(--space-xs); min-width: 0; }
+  .seg-f { border: 0; padding: 0; margin: 0; }
+  .seg-f legend { padding: 0; }
+
+  /* Key figures: as many columns as fit, each at least 11rem (or the full width on a tiny screen) */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--space-sm); }
+  .kpi { container-type: inline-size; display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: var(--space-sm) var(--space-md); border: 1px solid var(--control-border); }
+  .kpi.bad { border-style: dashed; }
+  .kpi dt { font: .875rem var(--font-sans); color: var(--gray-text); }
+  .kpi dd { display: flex; flex-direction: column; gap: 2px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2;
+    font-size: 1.5rem; font-size: clamp(1.125rem, 13cqi, 1.5rem); overflow-wrap: anywhere; }
+  .kpi small { font-size: .8125rem; font-weight: 400; color: var(--gray-text); overflow-wrap: anywhere; }
+
+  /* Board: auto-fit panels; the trend panel spans two tracks only when the board is wide enough to have them */
+  .board { container: board / inline-size; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--space-md); align-items: start; }
+  @container board (min-width: 44rem) { .p-trend, .p-heat { grid-column: span 2; } }
+  .p-lanes { grid-column: 1 / -1; }
+  .panel { container-type: inline-size; display: flex; flex-direction: column; gap: var(--space-sm); min-width: 0; padding: var(--space-sm) var(--space-md) var(--space-md); border: 1px solid var(--control-border); overflow-wrap: break-word; }
+  .panel-head { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md); align-items: baseline; }
+  .panel-head h2 { flex: 1 1 12rem; min-width: 0; font-size: 1.05rem; }
+  .panel-body { min-width: 0; }
+  .note { font: .875rem/1.4 var(--font-sans); color: var(--gray-text); }
+  .note:empty { display: none; }
+  .muted { color: var(--gray-text); }
+  .scroll { overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; max-inline-size: 100%; }
+  .scroll.tall { max-block-size: var(--scroll-max, 18rem); }
+  .scroll thead th, .scroll thead td { position: sticky; top: 0; z-index: 1; background: var(--canvas); }
+  table { width: 100%; }
+  .num { text-align: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .flag { font-weight: 700; }
+
+  /* Empty state: same box in every panel, never collapses to nothing */
+  .empty { display: flex; flex-direction: column; gap: var(--space-xs); align-items: center; justify-content: center; text-align: center; min-block-size: 9rem; padding: var(--space-md); border: 1px dashed var(--control-border); }
+  .empty-t { font-weight: 700; }
+
+  /* Trend chart */
+  .readout { font: .875rem var(--font-sans); min-block-size: 1.4em; margin-bottom: var(--space-xs) !important; }
+  svg.chart { display: block; width: 100%; height: auto; max-block-size: 20rem; overflow: visible; }
+  .gl { stroke: var(--rule); stroke-opacity: .4; }
+  .tk { fill: var(--gray-text); font: 12px var(--font-sans); }
+  .tgt { stroke: var(--canvas-text); stroke-width: 1.5; stroke-dasharray: 6 4; }
+  .tgl { fill: var(--canvas-text); font: 700 12px var(--font-sans); }
+  .ln { fill: none; stroke: var(--link); stroke-width: 2; stroke-linejoin: round; }
+  .dot { fill: var(--link); stroke: var(--canvas); stroke-width: 2; }
+  .el { fill: var(--canvas-text); font: 700 13px var(--font-sans); }
+  .gap { stroke: var(--gray-text); stroke-dasharray: 2 4; }
+  .cross { stroke: var(--canvas-text); stroke-dasharray: 3 3; }
+  .hit { fill: transparent; }
+
+  /* Bars in HTML so labels wrap: label | track | value. Label column shrinks but never below 6rem. */
+  .bars { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-xs); font-family: var(--font-sans); font-size: .9375rem; }
+  .bars li { display: grid; grid-template-columns: minmax(6rem, 38%) minmax(0, 1fr) auto; gap: var(--space-sm); align-items: center; }
+  .bl { min-width: 0; overflow-wrap: anywhere; }
+  .bl.other { font-style: italic; }
+  .bt { display: block; min-width: 0; height: 1rem; }
+  .bb { display: block; height: 100%; width: calc(var(--v, 0) * 1%); min-width: 2px; max-width: 100%; background: var(--link); border-radius: 0 2px 2px 0; }
+  .bv { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @container (max-width: 22rem) { .bars li { grid-template-columns: minmax(0, 1fr) auto; row-gap: 2px; } .bt { grid-column: 1 / -1; grid-row: 2; } .bt:empty { display: none; } }
+
+  /* Exceptions */
+  .excs { list-style: none; padding: 0; display: flex; flex-direction: column; }
+  .excs li + li { border-top: 1px solid var(--rule); }
+  .exc { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px var(--space-sm); width: 100%; min-height: 48px; padding: var(--space-xs) 0; background: transparent; border: 0; border-radius: 0; color: var(--canvas-text); text-align: start; cursor: pointer; }
+  .exc:hover { background: var(--highlight); color: var(--highlight-text); }
+  .exc .pd-badge { align-self: start; margin-top: 2px; white-space: normal; max-width: 10rem; }
+  .exc .t { min-width: 0; overflow-wrap: anywhere; text-decoration: underline; text-decoration-color: var(--link); text-underline-offset: .15em; }
+  .exc .r { grid-column: 2; min-width: 0; font-size: .875rem; overflow-wrap: anywhere; }
+  .more { font: .875rem var(--font-sans); padding-top: var(--space-xs); }
+
+  /* Heatmap */
+  .heat { table-layout: fixed; min-width: 22rem; font: .875rem var(--font-sans); }
+  .heat thead td:first-child { width: 6rem; border: 0; }
+  .heat th, .heat td { padding: var(--space-xs) 2px; }
+  .heat th[scope=row] { padding-inline: var(--space-xs); overflow-wrap: anywhere; }
+  .heat th[scope=col], .heat td { text-align: center; font-variant-numeric: tabular-nums; }
+  .h0 { background: var(--canvas); }
+  .h1 { background: color-mix(in oklab, var(--link) 12%, var(--canvas)); } .h2 { background: color-mix(in oklab, var(--link) 26%, var(--canvas)); }
+  .h3 { background: color-mix(in oklab, var(--link) 42%, var(--canvas)); font-weight: 700; } .h4 { background: color-mix(in oklab, var(--link) 60%, var(--canvas)); font-weight: 700; }
+  .hx { color: var(--gray-text); background: repeating-linear-gradient(135deg, transparent 0 4px, color-mix(in oklab, var(--gray-text) 25%, transparent) 4px 5px); }
+
+  /* Lanes */
+  #lanes { min-width: 40rem; font: .9375rem var(--font-sans); }
+  #lanes .lane { min-width: 12rem; max-width: 22rem; overflow-wrap: anywhere; font-weight: 700; }
+  #lanes thead th { vertical-align: bottom; }
+  #lanes .pd-badge { white-space: nowrap; }
+  th .sort { all: unset; box-sizing: border-box; display: inline-flex; gap: var(--space-xs); align-items: center; min-height: var(--space-lg); font-weight: 700; cursor: pointer; }
+  th .sort:disabled { cursor: default; }
+  th .sort:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  th.num .sort { flex-direction: row-reverse; }
+  [aria-sort="ascending"] .arrow::after { content: "▲"; font-size: .7em; }
+  [aria-sort="descending"] .arrow::after { content: "▼"; font-size: .7em; }
+  .empty-row { text-align: center; padding: var(--space-lg) var(--space-md); }
+  .pager { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; justify-content: flex-end; font-family: var(--font-sans); }
+
+  /* Side sheet */
+  dialog.sheet { position: fixed; inset: 0 0 0 auto; margin: 0; width: min(28rem, 100%); max-width: 100%; height: 100%; max-height: 100%; padding: 0; border: 0; border-inline-start: 1px solid var(--control-border); display: none; flex-direction: column; }
+  dialog.sheet[open] { display: flex; }
+  .sheet header, .sheet footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); }
+  .sheet header { border-bottom: 1px solid var(--rule); } .sheet header h2 { margin: 0; font-size: 1.17em; overflow-wrap: anywhere; min-width: 0; flex: 1; }
+  .sheet footer { border-top: 1px solid var(--rule); justify-content: flex-end; }
+  .sheet .body { flex: 1; overflow-y: auto; padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-md); }
+  .facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px var(--space-md); margin: 0; }
+  .facts dt { color: var(--gray-text); } .facts dd { margin: 0; overflow-wrap: anywhere; }
+  .field { display: flex; flex-direction: column; gap: var(--space-xs); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<section class="g-notice" id="notice" aria-label="Service notice">
+  <p><strong>Note:</strong> Tanjung Priok port congestion may add 1–2 days to sea shipments from Jakarta this week. <a href="#ports">Port status</a></p>
+  <button type="button" class="pd-square" aria-label="Dismiss notice">×</button>
+</section>
+<p class="g-offline" id="offline" role="status" hidden>You’re offline. Changes are saved on this device and sync when you reconnect.</p>
+<header class="topbar">
+  <button type="button" class="menu-btn pd-square" popovertarget="sidebar" aria-label="Menu">☰</button>
+  <span class="brand">Lintas Cargo</span>
+  <search><label for="gq" class="vh">Search shipments</label><input id="gq" type="search" placeholder="Search shipments, lanes, carriers"></search>
+  <button type="button">Notifications <span class="pd-badge" data-tone="strong">3</span></button>
+  <button type="button" popovertarget="acct" aria-haspopup="true">Imam <span class="pd-chevron" aria-hidden="true"></span></button>
+  <div popover id="acct" class="pd-menu"><ul><li><a href="#profile">Profile</a></li><li><a href="#settings">Settings</a></li><li><button type="button" commandfor="session" command="show-modal">Preview session warning</button></li><li><a href="#signout">Sign out</a></li></ul></div>
+</header>
+<nav id="sidebar" popover aria-label="Main">
+  <p class="menu-close"><button type="button" popovertarget="sidebar" popovertargetaction="hide">Close menu</button></p>
+  <h2>Operations</h2>
+  <ul><li><a href="#overview">Overview</a></li><li><a href="#shipments">Shipments</a></li><li><a href="#exceptions">Exceptions</a></li><li><a href="#carriers">Carriers</a></li></ul>
+  <h2>Analysis</h2>
+  <ul><li><a href="#perf" aria-current="page">Freight performance</a></li><li><a href="#lanes">Lanes</a></li><li><a href="#costs">Costs</a></li></ul>
+  <h2>Account</h2>
+  <ul><li><a href="#settings">Settings</a></li><li><a href="#help">Help</a></li></ul>
+</nav>
+<main id="main" tabindex="-1">
+  <div class="stack">
+    <header class="page-head">
+      <div class="title">
+        <nav aria-label="Breadcrumb"><ol><li><a href="#analysis">Analysis</a></li><li><a href="#perf" aria-current="page">Freight performance</a></li></ol></nav>
+        <h1>Freight performance</h1>
+        <p class="muted" id="meta"></p>
+      </div>
+      <div class="actions">
+        <button type="button" id="export">Export CSV</button>
+        <button type="button" popovertarget="more" aria-haspopup="true">More <span class="pd-chevron" aria-hidden="true"></span></button>
+        <div popover id="more" class="pd-menu"><ul><li><button type="button">Schedule weekly email</button></li><li><button type="button">Copy link to this view</button></li></ul></div>
+      </div>
+    </header>
+
+    <fieldset class="demo">
+      <legend>Preview this screen with sample data</legend>
+      <div class="seg"><label><input type="radio" name="dataset" value="none">No data</label><label><input type="radio" name="dataset" value="one">1 record</label><label><input type="radio" name="dataset" value="two">2 records</label><label><input type="radio" name="dataset" value="many" checked>Typical</label><label><input type="radio" name="dataset" value="somany">So many</label><label><input type="radio" name="dataset" value="broken">Broken</label></div>
+    </fieldset>
+
+    <form class="filters" aria-label="Filters" onsubmit="return false">
+      <div class="f"><label for="period">Period</label><select id="period"><option>Last 4 weeks</option><option>This quarter</option><option>Last 12 months</option></select></div>
+      <div class="f"><label for="origin">Origin</label><select id="origin"><option>All origins</option><option>Jakarta</option><option>Surabaya</option></select></div>
+      <fieldset class="f seg-f"><legend>Mode</legend><div class="seg"><label><input type="radio" name="mode" value="All" checked>All</label><label><input type="radio" name="mode" value="Road">Road</label><label><input type="radio" name="mode" value="Rail">Rail</label><label><input type="radio" name="mode" value="Sea">Sea</label><label><input type="radio" name="mode" value="Air">Air</label></div></fieldset>
+    </form>
+
+    <dl class="kpis" id="kpis" aria-label="Key figures"></dl>
+
+    <div class="board">
+      <section class="panel p-trend" aria-labelledby="tr-h">
+        <header class="panel-head"><h2 id="tr-h">On-time delivery per day</h2><span class="muted">Target 95%</span></header>
+        <div id="trend-box" class="panel-body"></div>
+        <p class="note" id="trend-note"></p>
+        <details id="trend-details"><summary>Show as table</summary><div class="scroll tall" id="trend-table" tabindex="0" aria-label="On-time table"></div></details>
+      </section>
+
+      <section class="panel p-bars" aria-labelledby="bars-h">
+        <header class="panel-head"><h2 id="bars-h">Volume by commodity</h2><span class="muted">tonnes</span></header>
+        <div id="bars" class="panel-body"></div>
+        <p class="note" id="bars-note"></p>
+      </section>
+
+      <section class="panel p-exc" aria-labelledby="exc-h">
+        <header class="panel-head"><h2 id="exc-h">Exceptions</h2><span class="muted" id="exc-count"></span><a href="#exceptions" id="exc-all" hidden>Show all</a></header>
+        <div id="exc" class="panel-body"></div>
+      </section>
+
+      <section class="panel p-heat" aria-labelledby="heat-h">
+        <header class="panel-head"><h2 id="heat-h">Late shipments by origin and weekday</h2></header>
+        <div id="heat" class="panel-body"></div>
+        <p class="note" id="heat-note"></p>
+      </section>
+
+      <section class="panel p-lanes" aria-labelledby="ln-h">
+        <header class="panel-head"><h2 id="ln-h">Lanes</h2><span class="muted" id="lane-count" aria-live="polite"></span></header>
+        <div class="scroll"><table id="lanes"><caption class="vh">Lanes, sortable by column</caption><thead><tr></tr></thead><tbody></tbody></table></div>
+        <nav class="pager" id="pager" aria-label="Lane pages" hidden><button type="button" id="pg-prev">Previous</button><span id="pg-info"></span><button type="button" id="pg-next">Next</button></nav>
+      </section>
+    </div>
+  </div>
+</main>
+<footer><a href="#accessibility">Accessibility statement</a> · <a href="#status">Service status</a> · <span class="muted">Version 4.2</span></footer>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sh-h" closedby="any">
+  <header><h2 id="sh-h"></h2><button type="button" class="pd-square" commandfor="sheet" command="close" aria-label="Close">×</button></header>
+  <div class="body">
+    <dl class="facts"><dt>Lane</dt><dd id="sh-lane"></dd><dt>Mode</dt><dd id="sh-mode"></dd><dt>Status</dt><dd id="sh-st"></dd><dt>Reason</dt><dd id="sh-r"></dd></dl>
+    <div class="field"><label for="note">Note for the customer</label><textarea id="note">Your shipment is delayed and we will send a new arrival date today.</textarea></div>
+  </div>
+  <footer><button type="button" commandfor="sheet" command="close">Cancel</button><button type="button" id="notify">Send update to customer</button></footer>
+</dialog>
+<div id="announce" class="vh" role="status" aria-live="polite"></div>
+<div popover="manual" class="pd-toast" id="toast" role="status"><span id="toast-t"></span><button type="button" id="toast-x" class="pd-square" aria-label="Dismiss">×</button></div>
+<dialog id="session" role="alertdialog" aria-labelledby="ss-h" aria-describedby="ss-d" style="max-width:26rem">
+  <h2 id="ss-h" style="margin-top:0;font-size:1.17em">Your session ends in 2 minutes</h2>
+  <p id="ss-d">You have been inactive for a while. Stay signed in to keep your unsaved changes.</p>
+  <p style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-bottom:0">
+    <button type="button" commandfor="session" command="close" autofocus>Stay signed in</button>
+    <button type="button" commandfor="session" command="close" value="out">Sign out</button>
+  </p>
+</dialog>
+<script>
+var toast=document.getElementById('toast'), tt=document.getElementById('toast-t'), timer;
+function showToast(msg){ tt.textContent=msg; try{ toast.showPopover(); }catch(e){} clearTimeout(timer); timer=setTimeout(function(){ if(!toast.matches(':hover,:focus-within')) toast.hidePopover(); },6000); }
+document.getElementById('toast-x').onclick=function(){ toast.hidePopover(); };
+var off=document.getElementById('offline');
+function net(){ off.hidden=navigator.onLine; }
+addEventListener('online',function(){ net(); showToast('Back online. Changes synced.'); }); addEventListener('offline',net); net();
+var ban=document.getElementById('notice');
+if(ban){ ban.querySelector('button').onclick=function(){ ban.remove(); document.getElementById('announce').textContent='Notice dismissed.'; document.getElementById('main').focus(); }; }
+if(!('commandForElement' in HTMLButtonElement.prototype)){ document.addEventListener('click',function(e){ var b=e.target.closest('button[commandfor]'); if(!b) return; var t=document.getElementById(b.getAttribute('commandfor')), c=b.getAttribute('command'); if(c==='show-modal') t.showModal(); else if(c==='close') t.close(); }); }
+
+/* Lintas Cargo freight dashboard: every panel renders from data and handles
+   none / one / two / many / so many / broken. Plain DOM, no libraries. */
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var live = $('#announce');
+
+  /* ---------- tiny helpers ---------- */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function num(v) { return typeof v === 'number' && isFinite(v); }
+  function pct(v) { return num(v) && v >= 0 && v <= 100; }
+  function fmt(n, d) { return n.toLocaleString('en', { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 }); }
+  function rp(n) { return 'Rp ' + Math.round(n).toLocaleString('id-ID'); }
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dlabel(d, long) { return d.getDate() + ' ' + MON[d.getMonth()] + (long ? ' ' + d.getFullYear() : ''); }
+  function el(tag, attrs, text) { var e = document.createElement(tag); if (attrs) for (var k in attrs) { if (k === 'class') e.className = attrs[k]; else e.setAttribute(k, attrs[k]); } if (text != null) e.textContent = text; return e; }
+  function txt(v, fallback) { return (typeof v === 'string' && v.trim()) ? v : fallback; }
+  function empty(box, title, body, action) {
+    box.replaceChildren();
+    var d = el('div', { class: 'empty' });
+    d.append(el('p', { class: 'empty-t' }, title));
+    if (body) d.append(el('p', null, body));
+    if (action) { var a = el('a', { href: action[1] }, action[0]); d.append(a); }
+    box.append(d);
+  }
+
+  /* ---------- sample data sets ---------- */
+  var ORIGINS = ['Jakarta','Surabaya','Semarang','Bandung','Medan','Makassar','Palembang','Balikpapan','Pontianak','Denpasar','Manado','Batam','Pekanbaru','Padang','Banjarmasin','Kupang','Ambon','Jayapura','Mataram','Jambi','Bengkulu','Serang','Cirebon','Tegal','Malang','Kediri','Solo','Yogyakarta','Samarinda','Tarakan','Gorontalo','Palu','Kendari','Sorong'];
+  var COMMOD = ['Electronics','Textiles','Coffee','Palm oil products','Furniture','Auto parts','Seafood','Pharmaceuticals','Paper','Rubber','Cocoa','Footwear','Ceramics','Spices','Tea','Glassware','Toys','Cement','Steel coil','Plastic resin'];
+  var MODES = ['Road','Rail','Sea','Air'];
+  var REASONS = ['Port congestion at Tanjung Priok','Missing commercial invoice','Cartons damaged in transit','Missed vessel, rebooked','Weather hold','Consignee not available','Address incomplete'];
+  var STATUSES = ['Late 2 days','Customs hold','Damaged','Missed vessel','Late 1 day','Failed delivery'];
+
+  function series(n, start, r, base) {
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var d = new Date(start); d.setDate(d.getDate() + i);
+      var dip = (n <= 40 && i >= 20 && i <= 25) ? 3.2 : 0;
+      var season = n > 40 ? 2.2 * Math.sin(i / 58) : 0;
+      out.push({ d: d, v: Math.round((base - dip + season + (r() - 0.5) * 2.8) * 10) / 10 });
+    }
+    return out;
+  }
+  function lanes(n, r) {
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var a = ORIGINS[i % ORIGINS.length], b = ORIGINS[(i * 7 + 3) % ORIGINS.length]; if (a === b) b = ORIGINS[(i + 1) % ORIGINS.length];
+      var m = MODES[i % 4];
+      out.push({ lane: a + ' → ' + b, mode: m, shipments: 20 + Math.round(r() * 380), ontime: Math.round((84 + r() * 15) * 10) / 10,
+        transit: Math.round(((m === 'Air' ? 1 : m === 'Sea' ? 4.5 : 1.8) + r()) * 10) / 10, cost: m === 'Air' ? 18000 + Math.round(r() * 2000) : m === 'Sea' ? 1300 + Math.round(r() * 400) : 2500 + Math.round(r() * 1200) });
+    }
+    return out;
+  }
+  function exceptions(n, r) {
+    var out = [], k = Math.min(n, 60);
+    for (var i = 0; i < k; i++) out.push({ id: 'SHP-' + (20931 + i * 13), lane: ORIGINS[i % 9] + ' → ' + ORIGINS[(i + 4) % 9], mode: MODES[(i + 2) % 4], status: STATUSES[i % STATUSES.length], reason: REASONS[i % REASONS.length] });
+    return { total: n, items: out };
+  }
+  function heat(rows, r) { return ORIGINS.slice(0, rows).map(function (o, i) { return { origin: o, cells: [0,1,2,3,4,5,6].map(function (d) { return Math.max(0, Math.round((i < 2 ? 8 : 4) * r() + (d === 4 ? 3 : 0) - (d === 6 ? 2 : 0))); }) }; }); }
+  function commod(n, r) { var out = []; for (var i = 0; i < n; i++) out.push({ name: i < COMMOD.length ? COMMOD[i] : 'Commodity group ' + (i + 1), tonnes: Math.round(40 + r() * (i < 5 ? 900 : 260)) }); return out; }
+
+  var SEP1 = new Date(2026, 8, 1);
+  function build(kind) {
+    var r = rng(7);
+    if (kind === 'none') return { label: 'No data', period: '1–28 September 2026', kpi: { ship: 0 }, days: [], commod: [], exc: { total: 0, items: [] }, heat: [], lanes: [] };
+    if (kind === 'one') return { label: 'One record', period: '28 September 2026', kpi: { ship: 1, ontime: 100, transit: 1.6, cost: 2900, exc: 0 },
+      days: [{ d: new Date(2026, 8, 28), v: 100 }], commod: [{ name: 'Electronics', tonnes: 1.2 }], exc: { total: 0, items: [] }, heat: [{ origin: 'Jakarta', cells: [0,0,0,0,0,0,0] }],
+      lanes: [{ lane: 'Jakarta → Surabaya', mode: 'Road', shipments: 1, ontime: 100, transit: 1.6, cost: 2900 }] };
+    if (kind === 'two') return { label: 'Two records', period: '27–28 September 2026', kpi: { ship: 2, ontime: 50, transit: 3.4, cost: 2275, exc: 1 },
+      days: [{ d: new Date(2026, 8, 27), v: 100 }, { d: new Date(2026, 8, 28), v: 0 }], commod: [{ name: 'Electronics', tonnes: 1.2 }, { name: 'Coffee', tonnes: 0.8 }],
+      exc: { total: 1, items: [{ id: 'SHP-20931', lane: 'Jakarta → Medan', mode: 'Sea', status: 'Late 2 days', reason: 'Port congestion at Tanjung Priok' }] },
+      heat: [{ origin: 'Jakarta', cells: [0,0,0,0,1,0,0] }, { origin: 'Surabaya', cells: [0,0,0,0,0,0,0] }],
+      lanes: [{ lane: 'Jakarta → Surabaya', mode: 'Road', shipments: 1, ontime: 100, transit: 1.6, cost: 2900 }, { lane: 'Jakarta → Medan', mode: 'Sea', shipments: 1, ontime: 0, transit: 5.2, cost: 1650 }] };
+    if (kind === 'many') return { label: 'Typical month', period: '1–28 September 2026', kpi: { ship: 1284, ontime: 91.7, transit: 3.2, cost: 4180, exc: 37 },
+      days: series(28, SEP1, r, 92.5), commod: commod(6, r), exc: exceptions(37, r), heat: heat(5, r), lanes: lanes(8, r) };
+    if (kind === 'somany') return { label: 'Full year', period: '29 September 2025 – 28 September 2026', kpi: { ship: 15482907, ontime: 92.1, transit: 3.1, cost: 4105, exc: 12480 },
+      days: series(365, new Date(2025, 8, 29), r, 92), commod: commod(60, r), exc: exceptions(12480, r), heat: heat(34, r), lanes: lanes(500, r) };
+    /* broken: missing, wrong type, out of range, very long strings */
+    var d = series(28, SEP1, r, 92.5);
+    d[5].v = null; d[6].v = 'n/a'; d[14].v = 140; d[15].v = -3; d[22].v = NaN;
+    var h = heat(5, r); h[1].cells[2] = null; h[3].cells[5] = 'x'; h[4].origin = '';
+    var L = lanes(8, r);
+    L[1].lane = 'Kawasan Berikat Nusantara Marunda, Jakarta Utara → Pelabuhan Terminal Petikemas Kariangau, Balikpapan';
+    L[2].ontime = 140; L[3].shipments = null; L[4].cost = 'unknown'; L[5].lane = ''; L[6].mode = null;
+    return { label: 'Broken data', period: '1–28 September 2026', kpi: { ship: 1284, ontime: 'n/a', transit: -2, cost: null, exc: 37 },
+      days: d,
+      commod: [{ name: 'Electronics', tonnes: 820 }, { name: 'HOUSEHOLDELECTRICALAPPLIANCESANDSPAREPARTSFORREFRIGERATION', tonnes: 410 }, { name: 'Coffee', tonnes: null }, { name: '', tonnes: 120 }, { name: 'Rubber', tonnes: -40 }],
+      exc: { total: 37, items: [{ id: '', lane: null, mode: 'Sea', status: '', reason: 'Container MSKU-7734112 held because the bill of lading lists a consignee NPWP that does not match the importer registered with Bea Cukai; broker has been asked for a corrected document.' },
+        { id: 'SHP-21004', lane: 'Jakarta → Singapore', mode: 'Air', status: 'Customs hold', reason: '' }, { id: 'SHP-21018', lane: 'Bandung → Denpasar', mode: null, status: 'Damaged', reason: '3 of 40 cartons crushed' }] },
+      heat: h, lanes: L };
+  }
+
+  /* ---------- KPIs ---------- */
+  function renderKpis(ds) {
+    var k = ds.kpi, box = $('#kpis'); box.replaceChildren();
+    var none = !k.ship;
+    function card(label, val, note, bad) {
+      var c = el('div', { class: 'kpi' + (bad ? ' bad' : '') });
+      c.append(el('dt', null, label));
+      var dd = el('dd', null, val); if (note) dd.append(el('small', null, note)); c.append(dd); box.append(c);
+    }
+    card('Shipments', num(k.ship) ? fmt(k.ship) : 'Not available', none ? 'No shipments in this period' : (num(k.ship) ? 'in ' + ds.period : 'Value missing from source'));
+    if (none) { card('On time', '—', 'Needs at least one delivery'); card('Average transit', '—', ''); card('Cost per kg', '—', ''); card('Open exceptions', '0', ''); return; }
+    card('On time', pct(k.ontime) ? fmt(k.ontime, 1) + '%' : 'Not available', pct(k.ontime) ? (k.ontime >= 95 ? 'target 95% · met' : 'target 95% · below') : 'Value "' + String(k.ontime) + '" is not a percentage', !pct(k.ontime));
+    card('Average transit', num(k.transit) && k.transit >= 0 ? fmt(k.transit, 1) + ' days' : 'Not available', num(k.transit) && k.transit >= 0 ? '' : 'Negative or missing value', !(num(k.transit) && k.transit >= 0));
+    card('Cost per kg', num(k.cost) ? rp(k.cost) : 'Not available', num(k.cost) ? '' : 'Value missing from source', !num(k.cost));
+    card('Open exceptions', num(k.exc) ? fmt(k.exc) : '—', k.exc > 0 ? 'need review' : 'none open');
+  }
+
+  /* ---------- trend chart (SVG) ---------- */
+  var trend = { pts: [], cur: 0 };
+  function renderTrend(ds) {
+    var box = $('#trend-box'), note = $('#trend-note'), pts = ds.days; trend.pts = pts;
+    note.textContent = ''; $('#trend-table').replaceChildren();
+    if (!pts.length) { empty(box, 'No deliveries in this period', 'The trend appears once shipments are delivered.', ['See all shipments', '#shipments']); $('#trend-details').hidden = true; return; }
+    $('#trend-details').hidden = false;
+    var W = 640, H = 240, PL = 44, PR = 60, PT = 14, PB = 30;
+    var good = pts.filter(function (p) { return pct(p.v); }), bad = pts.length - good.length;
+    var lo = Math.min(80, Math.floor(Math.min.apply(null, good.map(function (p) { return p.v; }).concat([80])) / 10) * 10), hi = 100;
+    var n = pts.length;
+    var X = function (i) { return n === 1 ? PL + (W - PL - PR) / 2 : PL + (W - PL - PR) * i / (n - 1); };
+    var Y = function (v) { return PT + (H - PT - PB) * (1 - (v - lo) / (hi - lo)); };
+    var s = '';
+    var step = (hi - lo) / 4;
+    for (var g = lo; g <= hi; g += step) s += '<line class="gl" x1="' + PL + '" x2="' + (W - PR) + '" y1="' + Y(g) + '" y2="' + Y(g) + '"/><text class="tk" x="' + (PL - 6) + '" y="' + (Y(g) + 4) + '" text-anchor="end">' + g + '%</text>';
+    s += '<line class="tgt" x1="' + PL + '" x2="' + (W - PR) + '" y1="' + Y(95) + '" y2="' + Y(95) + '"/><text class="tgl" x="' + (PL + 6) + '" y="' + (Y(95) - 6) + '">Target 95%</text>';
+    var ticks = n <= 2 ? pts.map(function (_, i) { return i; }) : [0, Math.round((n - 1) / 4), Math.round((n - 1) / 2), Math.round(3 * (n - 1) / 4), n - 1];
+    ticks.forEach(function (i) { s += '<text class="tk" x="' + X(i) + '" y="' + (H - 8) + '" text-anchor="middle">' + dlabel(pts[i].d, false) + '</text>'; });
+    /* line segments break at bad points, so a gap shows missing data instead of a false line */
+    var seg = [], segs = [];
+    pts.forEach(function (p, i) { if (pct(p.v)) seg.push(X(i).toFixed(1) + ',' + Y(p.v).toFixed(1)); else { if (seg.length) segs.push(seg); seg = []; s += '<line class="gap" x1="' + X(i) + '" x2="' + X(i) + '" y1="' + PT + '" y2="' + (H - PB) + '"/>'; } });
+    if (seg.length) segs.push(seg);
+    segs.forEach(function (sg) { s += sg.length > 1 ? '<polyline class="ln" points="' + sg.join(' ') + '"/>' : '<circle class="dot" r="4" cx="' + sg[0].split(',')[0] + '" cy="' + sg[0].split(',')[1] + '"/>'; });
+    var li = -1; for (var j = n - 1; j >= 0; j--) if (pct(pts[j].v)) { li = j; break; }
+    if (li > -1) s += '<circle class="dot" r="5" cx="' + X(li) + '" cy="' + Y(pts[li].v) + '"/><text class="el" x="' + (X(li) + 8) + '" y="' + (Y(pts[li].v) + (pts[li].v > 97 ? 16 : -8)) + '">' + fmt(pts[li].v, 1) + '%</text>';
+    s += '<line class="cross" id="cross" y1="' + PT + '" y2="' + (H - PB) + '" visibility="hidden"/><circle class="dot" id="fdot" r="5" visibility="hidden"/>';
+    var bw = n === 1 ? (W - PL - PR) : (W - PL - PR) / (n - 1);
+    pts.forEach(function (p, i) { s += '<rect class="hit" data-i="' + i + '" x="' + (X(i) - bw / 2) + '" y="' + PT + '" width="' + bw + '" height="' + (H - PT - PB) + '"/>'; });
+    var avg = good.length ? good.reduce(function (a, p) { return a + p.v; }, 0) / good.length : null;
+    var summary = n === 1 ? 'One day of data: ' + (pct(pts[0].v) ? fmt(pts[0].v, 1) + '% on time on ' + dlabel(pts[0].d, true) : 'no valid value') + '.'
+      : 'On-time delivery for ' + n + ' days, ' + dlabel(pts[0].d, true) + ' to ' + dlabel(pts[n - 1].d, true) + (avg != null ? ', average ' + fmt(avg, 1) + '%' : '') + (bad ? ', ' + bad + (bad === 1 ? ' day' : ' days') + ' without valid data' : '') + '. Target 95%.';
+    box.innerHTML = '<p class="readout" id="readout" aria-live="polite">Use the arrow keys on the chart, or point at it, to read each day.</p><svg class="chart" id="line" viewBox="0 0 ' + W + ' ' + H + '" role="img" tabindex="0" aria-describedby="readout"></svg>';
+    var svg = $('#line'); svg.innerHTML = s; svg.setAttribute('aria-label', summary);
+    var notes = [];
+    if (n === 1) notes.push('Only one day so far. A trend needs at least two.');
+    if (n === 2) notes.push('Only two days, so this is a comparison, not a trend.');
+    if (n > 60) notes.push('Showing all ' + fmt(n) + ' days; ticks are thinned. Use the table for exact values.');
+    if (bad) notes.push(bad + (bad === 1 ? ' day has' : ' days have') + ' missing or invalid values. The line breaks there and a dashed mark shows each gap.');
+    note.textContent = notes.join(' ');
+    trend.cur = li > -1 ? li : 0;
+    function show(i) { trend.cur = i; var c = $('#cross'), f = $('#fdot'), p = pts[i]; c.setAttribute('x1', X(i)); c.setAttribute('x2', X(i)); c.setAttribute('visibility', 'visible');
+      if (pct(p.v)) { f.setAttribute('cx', X(i)); f.setAttribute('cy', Y(p.v)); f.setAttribute('visibility', 'visible'); } else f.setAttribute('visibility', 'hidden');
+      $('#readout').textContent = dlabel(p.d, true) + ': ' + (pct(p.v) ? fmt(p.v, 1) + '% on time' + (p.v >= 95 ? ', meets target' : ', ' + fmt(95 - p.v, 1) + ' points below target') : (p.v === null || p.v === undefined || (typeof p.v === 'number' && isNaN(p.v)) ? 'no data' : 'invalid value "' + String(p.v) + '"')) + '.'; }
+    svg.querySelectorAll('.hit').forEach(function (h) { h.addEventListener('mouseenter', function () { show(+h.dataset.i); }); });
+    svg.addEventListener('focus', function () { show(trend.cur); });
+    svg.addEventListener('keydown', function (e) { var k = e.key, i = trend.cur;
+      if (k === 'ArrowRight') i = Math.min(n - 1, i + 1); else if (k === 'ArrowLeft') i = Math.max(0, i - 1); else if (k === 'Home') i = 0; else if (k === 'End') i = n - 1;
+      else if (k === 'PageDown') i = Math.min(n - 1, i + 7); else if (k === 'PageUp') i = Math.max(0, i - 7); else return; e.preventDefault(); show(i); });
+    var t = el('table'); t.innerHTML = '<caption class="vh">On-time delivery per day</caption><thead><tr><th scope="col">Day</th><th scope="col" class="num">On time</th></tr></thead>';
+    var tb = el('tbody'); pts.forEach(function (p) { var tr = el('tr'); tr.append(el('th', { scope: 'row' }, dlabel(p.d, true)));
+      tr.append(el('td', { class: 'num' + (pct(p.v) ? '' : ' flag') }, pct(p.v) ? fmt(p.v, 1) + '%' : (p.v === null || p.v === undefined || (typeof p.v === 'number' && isNaN(p.v)) ? 'No data' : 'Invalid (' + String(p.v) + ')'))); tb.append(tr); });
+    t.append(tb); $('#trend-table').append(t);
+  }
+
+  /* ---------- commodity bars (HTML, so long names wrap) ---------- */
+  function renderBars(ds) {
+    var box = $('#bars'), note = $('#bars-note'); note.textContent = ''; box.replaceChildren();
+    var rows = ds.commod.slice();
+    if (!rows.length) { empty(box, 'No cargo moved', 'Volumes by commodity appear here once shipments are booked.'); return; }
+    var valid = rows.filter(function (r) { return num(r.tonnes) && r.tonnes >= 0; });
+    var invalid = rows.filter(function (r) { return !(num(r.tonnes) && r.tonnes >= 0); });
+    valid.sort(function (a, b) { return b.tonnes - a.tonnes; });
+    var MAX = 7, shown = valid;
+    if (valid.length > MAX + 1) { var rest = valid.slice(MAX); shown = valid.slice(0, MAX).concat([{ name: 'Other (' + rest.length + ' commodities)', tonnes: rest.reduce(function (a, r) { return a + r.tonnes; }, 0), other: true }]); }
+    var mx = Math.max.apply(null, shown.filter(function (r) { return !r.other; }).map(function (r) { return r.tonnes; }).concat([0])) || 1;
+    var ul = el('ul', { class: 'bars' });
+    shown.concat(invalid).forEach(function (r) {
+      var ok = num(r.tonnes) && r.tonnes >= 0;
+      var li = el('li'); li.append(el('span', { class: 'bl' + (r.other ? ' other' : '') }, txt(r.name, 'Unnamed commodity')));
+      var track = el('span', { class: 'bt', 'aria-hidden': 'true' });
+      if (ok && !r.other) { var b = el('span', { class: 'bb' }); b.style.setProperty('--v', (r.tonnes / mx * 100).toFixed(2)); track.append(b); }
+      li.append(track);
+      li.append(el('span', { class: 'bv' + (ok ? '' : ' flag') }, ok ? fmt(r.tonnes, r.tonnes < 10 ? 1 : 0) + ' t' : (r.tonnes === null ? 'No data' : 'Invalid')));
+      ul.append(li);
+    });
+    box.append(ul);
+    var notes = [];
+    if (rows.length === 1) notes.push('Only one commodity, so there is nothing to compare yet.');
+    if (valid.length > MAX + 1) notes.push('Top ' + MAX + ' shown with bars; the other ' + (valid.length - MAX) + ' are totalled in one row without a bar, so the group does not dwarf them.');
+    if (invalid.length) notes.push(invalid.length + ' with missing or invalid volumes are listed last without a bar.');
+    note.textContent = notes.join(' ');
+  }
+
+  /* ---------- exceptions ---------- */
+  function renderExc(ds) {
+    var box = $('#exc'), cnt = $('#exc-count'), all = $('#exc-all'); box.replaceChildren();
+    var e = ds.exc; cnt.textContent = e.total ? fmt(e.total) + ' open' : '';
+    all.hidden = e.total <= 5; all.textContent = 'Show all ' + fmt(e.total);
+    if (!e.total) { empty(box, 'No exceptions', 'Every shipment is on schedule.'); return; }
+    var ul = el('ul', { class: 'excs' });
+    e.items.slice(0, 5).forEach(function (x, i) {
+      var li = el('li'), b = el('button', { type: 'button', class: 'exc', 'aria-haspopup': 'dialog' });
+      b.append(el('span', { class: 'pd-badge' }, txt(x.status, 'Unknown status')));
+      var t = el('span', { class: 't' }); t.append(el('b', null, txt(x.id, 'No shipment ID'))); t.append(document.createTextNode(' ' + txt(x.lane, 'Lane not recorded') + ' · ' + txt(x.mode, 'Mode unknown'))); b.append(t);
+      b.append(el('span', { class: 'r' }, txt(x.reason, 'No reason given')));
+      b.addEventListener('click', function () { openSheet(x, b); });
+      li.append(b); ul.append(li);
+    });
+    box.append(ul);
+    if (e.total > 5) box.append(el('p', { class: 'more muted' }, 'Showing 5 of ' + fmt(e.total) + ', most urgent first.'));
+  }
+  var sheet = $('#sheet'), opener = null;
+  function openSheet(x, b) { opener = b; $('#sh-h').textContent = txt(x.id, 'No shipment ID');
+    $('#sh-lane').textContent = txt(x.lane, 'Lane not recorded'); $('#sh-mode').textContent = txt(x.mode, 'Mode unknown'); $('#sh-st').textContent = txt(x.status, 'Unknown status'); $('#sh-r').textContent = txt(x.reason, 'No reason given');
+    sheet.showModal(); }
+  sheet.addEventListener('close', function () { if (opener && opener.isConnected) opener.focus(); });
+
+  /* ---------- heatmap ---------- */
+  function renderHeat(ds) {
+    var box = $('#heat'), note = $('#heat-note'); box.replaceChildren(); note.textContent = '';
+    var rows = ds.heat;
+    if (!rows.length) { empty(box, 'No late shipments to map', 'This fills in once shipments leave an origin.'); return; }
+    var mx = 0, bad = 0; rows.forEach(function (r) { r.cells.forEach(function (c) { if (num(c) && c >= 0) mx = Math.max(mx, c); else bad++; }); });
+    var t = el('table', { class: 'heat' });
+    t.innerHTML = '<caption class="vh">Late shipments: rows are origins, columns are weekdays</caption><thead><tr><td></td><th scope="col">Mon</th><th scope="col">Tue</th><th scope="col">Wed</th><th scope="col">Thu</th><th scope="col">Fri</th><th scope="col">Sat</th><th scope="col">Sun</th></tr></thead>';
+    var tb = el('tbody');
+    rows.forEach(function (r) { var tr = el('tr'); tr.append(el('th', { scope: 'row' }, txt(r.origin, 'Unknown origin')));
+      r.cells.forEach(function (c) { var ok = num(c) && c >= 0, td = el('td');
+        if (ok) { td.textContent = c; td.className = 'h' + (c === 0 || !mx ? 0 : Math.min(4, 1 + Math.floor((c - 1) / mx * 4))); }
+        else { td.className = 'hx'; td.append(el('span', { 'aria-hidden': 'true' }, '—')); td.append(el('span', { class: 'vh' }, 'No data')); }
+        tr.append(td); }); tb.append(tr); });
+    t.append(tb);
+    var sc = el('div', { class: 'scroll' + (rows.length > 8 ? ' tall' : ''), tabindex: rows.length > 8 ? '0' : '-1', 'aria-label': 'Late shipments table' }); sc.append(t); box.append(sc);
+    var notes = [];
+    if (!mx) notes.push('No late shipments on any day. Nothing to shade.');
+    if (rows.length > 8) notes.push(rows.length + ' origins; the table scrolls and its header stays in place.');
+    if (bad) notes.push(bad + (bad === 1 ? ' cell has' : ' cells have') + ' no valid count and show a dash.');
+    note.textContent = notes.join(' ');
+  }
+
+  /* ---------- lanes table with filter, sort and pages ---------- */
+  var L = { all: [], rows: [], page: 0, per: 10, key: 'shipments', dir: -1 };
+  var COLS = [['lane', 'Lane', ''], ['mode', 'Mode', ''], ['shipments', 'Shipments', 'num'], ['ontime', 'On time', 'num'], ['transit', 'Transit (days)', 'num'], ['cost', 'Cost per kg', 'num']];
+  function renderLanes(ds) { L.all = ds.lanes; L.page = 0; applyLanes(); }
+  function applyLanes() {
+    var mode = document.querySelector('input[name=mode]:checked').value;
+    var rows = L.all.filter(function (r) { return mode === 'All' || r.mode === mode; });
+    rows.sort(function (a, b) { var A = a[L.key], B = b[L.key]; var okA = L.key === 'lane' || L.key === 'mode' ? typeof A === 'string' && A : num(A), okB = L.key === 'lane' || L.key === 'mode' ? typeof B === 'string' && B : num(B);
+      if (!okA && !okB) return 0; if (!okA) return 1; if (!okB) return -1; /* missing values always sort last */
+      return (typeof A === 'string' ? A.localeCompare(B) : A - B) * L.dir; });
+    L.rows = rows;
+    var pages = Math.max(1, Math.ceil(rows.length / L.per)); if (L.page >= pages) L.page = pages - 1;
+    var head = $('#lanes thead tr'); head.replaceChildren();
+    COLS.forEach(function (c) { var th = el('th', { scope: 'col', class: c[2] }); if (L.key === c[0]) th.setAttribute('aria-sort', L.dir > 0 ? 'ascending' : 'descending');
+      var b = el('button', { type: 'button', class: 'sort' }, c[1]); b.append(el('span', { class: 'arrow', 'aria-hidden': 'true' }));
+      b.disabled = rows.length < 2;
+      b.addEventListener('click', function () { if (L.key === c[0]) L.dir = -L.dir; else { L.key = c[0]; L.dir = c[2] ? -1 : 1; } applyLanes(); live.textContent = 'Lanes sorted by ' + c[1] + ', ' + (L.dir > 0 ? 'ascending' : 'descending') + '.'; var nb = document.querySelectorAll('#lanes th .sort')[COLS.indexOf(c)]; if (nb) nb.focus(); });
+      th.append(b); head.append(th); });
+    var tb = $('#lanes tbody'); tb.replaceChildren();
+    if (!rows.length) { var tr = el('tr'), td = el('td', { colspan: COLS.length, class: 'empty-row' }); td.append(el('b', null, L.all.length ? 'No ' + mode.toLowerCase() + ' lanes' : 'No lanes in this period')); td.append(document.createTextNode(L.all.length ? '. Choose another mode.' : '. Lanes appear once shipments are booked.')); tr.append(td); tb.append(tr); }
+    rows.slice(L.page * L.per, L.page * L.per + L.per).forEach(function (r) {
+      var tr = el('tr');
+      tr.append(el('th', { scope: 'row', class: 'lane' }, txt(r.lane, 'Lane not recorded')));
+      tr.append(el('td', null, txt(r.mode, '—')));
+      tr.append(el('td', { class: 'num' }, num(r.shipments) ? fmt(r.shipments) : '—'));
+      var ot = el('td', { class: 'num' }); if (pct(r.ontime)) { ot.textContent = fmt(r.ontime, 1) + '%'; if (r.ontime < 95) { ot.append(' '); ot.append(el('span', { class: 'pd-badge' }, 'Below target')); } } else { ot.textContent = num(r.ontime) ? fmt(r.ontime, 1) + '% ' : '— '; ot.append(el('span', { class: 'pd-badge', 'data-tone': 'strong' }, 'Check data')); } tr.append(ot);
+      tr.append(el('td', { class: 'num' }, num(r.transit) ? fmt(r.transit, 1) : '—'));
+      tr.append(el('td', { class: 'num' }, num(r.cost) ? rp(r.cost) : '—'));
+      tb.append(tr); });
+    var from = rows.length ? L.page * L.per + 1 : 0, to = Math.min(rows.length, (L.page + 1) * L.per);
+    $('#lane-count').textContent = rows.length ? 'Showing ' + fmt(from) + '–' + fmt(to) + ' of ' + fmt(rows.length) + (rows.length === 1 ? ' lane' : ' lanes') : '0 lanes';
+    var pager = $('#pager'); pager.hidden = pages < 2; $('#pg-info').textContent = 'Page ' + (L.page + 1) + ' of ' + fmt(pages);
+    $('#pg-prev').disabled = L.page === 0; $('#pg-next').disabled = L.page >= pages - 1;
+  }
+  $('#pg-prev').onclick = function () { L.page--; applyLanes(); live.textContent = $('#lane-count').textContent; };
+  $('#pg-next').onclick = function () { L.page++; applyLanes(); live.textContent = $('#lane-count').textContent; };
+  document.querySelectorAll('input[name=mode]').forEach(function (r) { r.addEventListener('change', function () { L.page = 0; applyLanes(); live.textContent = $('#lane-count').textContent; }); });
+
+  /* ---------- state switcher ---------- */
+  function renderAll(kind) {
+    var ds = build(kind);
+    $('#meta').textContent = ds.period + ' · all origins';
+    renderKpis(ds); renderTrend(ds); renderBars(ds); renderExc(ds); renderHeat(ds); renderLanes(ds);
+    document.body.dataset.state = kind;
+  }
+  document.querySelectorAll('input[name=dataset]').forEach(function (r) { r.addEventListener('change', function () { renderAll(r.value); live.textContent = 'Showing sample: ' + r.parentNode.textContent.trim() + '.'; }); });
+  var initial = document.querySelector('input[name=dataset]:checked').value;
+  renderAll(initial);
+  window.__renderFreight = renderAll;
+  document.getElementById('export').onclick = function () { showToast('Export started. We will email the CSV to you.'); };
+  $('#notify').onclick = function () { sheet.close(); showToast('Update sent to the customer.'); };
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!-- @dsCard level="pages" group="Flows" height=650 width=960 page subtitle="Search results with a count, filters as checkboxes, sorting and highlighted matches" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Search · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .sr-head { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:end; margin-block:var(--space-md); }
+  .sr-head .field { display:grid; gap:var(--space-xs); flex:1 1 20rem; }
+  .sr-head input { width:100%; box-sizing:border-box; }
+  .cols { display:grid; grid-template-columns:14rem minmax(0,1fr); gap:var(--space-lg); align-items:start; }
+  @media (max-width:700px) { .cols { grid-template-columns:1fr; } }
+  aside fieldset { margin:0 0 var(--space-md); }
+  aside fieldset p { margin:0; }
+  .results { list-style:none; margin:0; padding:0; }
+  .results li { padding-block:var(--space-sm); border-top:1px solid var(--rule); }
+  .results h3 { font-size:1.05rem; margin:0; }
+  .results p { margin:var(--space-xs) 0 0; }
+  .bar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:var(--space-sm); margin-bottom:var(--space-sm); }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders" aria-current="page">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<h1>Search</h1>
+<search class="sr-head">
+  <div class="field"><label for="q">Search orders, products and customers</label><input id="q" type="search" value="batik"></div>
+  <button type="button">Search</button>
+</search>
+<div class="cols">
+  <aside aria-labelledby="f-h">
+    <h2 id="f-h" style="font-size:1.17em;margin-top:0">Filter</h2>
+    <fieldset><legend>Type</legend>
+      <p><label><input type="checkbox" checked> Products (3)</label></p>
+      <p><label><input type="checkbox" checked> Orders (4)</label></p>
+      <p><label><input type="checkbox"> Customers (0)</label></p>
+    </fieldset>
+    <fieldset><legend>Date</legend>
+      <p><label><input type="radio" name="d" checked> Any time</label></p>
+      <p><label><input type="radio" name="d"> Last 30 days</label></p>
+    </fieldset>
+    <p><a href="#clear">Clear filters</a></p>
+  </aside>
+  <section aria-labelledby="r-h">
+    <div class="bar">
+      <h2 id="r-h" style="margin:0;font-size:1.17em" aria-live="polite">7 results for “batik”</h2>
+      <label>Sort by <select><option>Best match</option><option>Newest</option></select></label>
+    </div>
+    <ol class="results">
+      <li><h3><a href="#p1"><mark>Batik</mark> table runner</a></h3><p class="muted"><small>Product · Home and kitchen · 12 in stock</small></p></li>
+      <li><h3><a href="#p2"><mark>Batik</mark> shirt, parang pattern</a></h3><p class="muted"><small>Product · Clothing · 5 in stock</small></p></li>
+      <li><h3><a href="#o1039">Order #1039</a></h3><p>2 × <mark>batik</mark> table runner for Dewi Lestari</p><p class="muted"><small>Order · Delivered · 21 September</small></p></li>
+      <li><h3><a href="#o1022">Order #1022</a></h3><p><mark>Batik</mark> shirt, size L, for Agus Pratama</p><p class="muted"><small>Order · Returned · 9 September</small></p></li>
+    </ol>
+    <p><button type="button">Show 3 more results</button></p>
+  </section>
+</div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

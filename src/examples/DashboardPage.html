@@ -1,0 +1,117 @@
+<!-- @dsCard level="pages" group="App" height=780 width=960 page subtitle="A back-office overview: key figures, a target, a chart and what needs attention" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(12rem, 1fr)); gap:var(--space-md); margin:0 0 var(--space-lg); }
+  .stats > div { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .stats dt { color:var(--gray-text); }
+  .stats dd { margin:0; font-size:1.5em; font-weight:700; font-variant-numeric:tabular-nums; }
+  .stats .delta { display:block; font-size:0.83rem; font-weight:400; color:var(--gray-text); }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(20rem, 1fr)); gap:var(--space-lg); align-items:start; }
+  progress { width:100%; height:1rem; }
+  svg.chart { width:100%; height:auto; overflow:visible; }
+  .bar { fill:var(--link); }
+  .bar:hover { fill:var(--link-visited); }
+  .grid { stroke:var(--rule); stroke-opacity:.4; }
+  .tick { fill:var(--gray-text); font:12px var(--font-sans); }
+  .attention { list-style:none; padding:0; margin:0; }
+  .attention li { display:flex; gap:var(--space-sm); padding-block:var(--space-xs); border-top:1px solid var(--rule); }
+  .attention li:first-child { border-top:0; }
+  .tag { font:700 0.83rem var(--font-sans); border:1px solid var(--canvas-text); padding:0 var(--space-xs); white-space:nowrap; align-self:start; }
+  table { width:100%; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard" aria-current="page">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="page-head">
+  <h1>Today</h1>
+  <p class="muted"><time datetime="2026-09-28">Monday 28 September 2026</time>, updated 15:42</p>
+</div>
+
+<dl class="stats">
+  <div><dt>Orders</dt><dd>48 <span class="delta">up 12% on last Monday</span></dd></div>
+  <div><dt>Revenue</dt><dd>Rp 12,48 jt <span class="delta">up 8% on last Monday</span></dd></div>
+  <div><dt>Returns</dt><dd>3 <span class="delta">same as last Monday</span></dd></div>
+  <div><dt>Messages waiting</dt><dd>5 <span class="delta">oldest 2 hours ago</span></dd></div>
+</dl>
+
+<div class="grid2">
+  <section class="panel" aria-labelledby="target-h">
+    <h2 id="target-h">Daily target</h2>
+    <label for="target">48 of 60 orders (80%)</label>
+    <progress id="target" max="60" value="48">48 of 60</progress>
+    <p class="muted" style="margin-block:var(--space-xs) 0"><small>12 more orders by 21:00 to reach the target.</small></p>
+
+    <h2 style="margin-block:var(--space-lg) var(--space-sm);font-size:1.17em">Needs attention</h2>
+    <ul class="attention">
+      <li><span class="tag">Late</span><span><a href="#o1038">Order #1038</a> has not shipped after 3 days.</span></li>
+      <li><span class="tag">Stock</span><span>Teak cutting board: 2 left.</span></li>
+      <li><span class="tag">Reply</span><span><a href="#chat">Sari Wulandari</a> is waiting for an answer about a refund.</span></li>
+    </ul>
+  </section>
+
+  <figure class="panel" style="margin:0">
+    <figcaption><b>Orders by hour, today</b></figcaption>
+    <svg class="chart" viewBox="0 0 440 180" role="img" aria-label="Bar chart of orders by hour today. Busiest at 11:00 with 9 orders.">
+      <line class="grid" x1="32" x2="440" y1="156.0" y2="156.0"/><text class="tick" x="26" y="160" text-anchor="end">0</text><line class="grid" x1="32" x2="440" y1="84.0" y2="84.0"/><text class="tick" x="26" y="88" text-anchor="end">5</text><line class="grid" x1="32" x2="440" y1="12.0" y2="12.0"/><text class="tick" x="26" y="16" text-anchor="end">10</text>
+      <rect class="bar" x="38" y="127" width="39" height="29" rx="2"><title>08:00, 2 orders</title></rect><text class="tick" x="58" y="174" text-anchor="middle">08</text><rect class="bar" x="89" y="84" width="39" height="72" rx="2"><title>09:00, 5 orders</title></rect><text class="tick" x="108" y="174" text-anchor="middle">09</text><rect class="bar" x="140" y="55" width="39" height="101" rx="2"><title>10:00, 7 orders</title></rect><text class="tick" x="160" y="174" text-anchor="middle">10</text><rect class="bar" x="191" y="26" width="39" height="130" rx="2"><title>11:00, 9 orders</title></rect><text class="tick" x="210" y="174" text-anchor="middle">11</text><rect class="bar" x="242" y="70" width="39" height="86" rx="2"><title>12:00, 6 orders</title></rect><text class="tick" x="262" y="174" text-anchor="middle">12</text><rect class="bar" x="293" y="98" width="39" height="58" rx="2"><title>13:00, 4 orders</title></rect><text class="tick" x="312" y="174" text-anchor="middle">13</text><rect class="bar" x="344" y="41" width="39" height="115" rx="2"><title>14:00, 8 orders</title></rect><text class="tick" x="364" y="174" text-anchor="middle">14</text><rect class="bar" x="395" y="55" width="39" height="101" rx="2"><title>15:00, 7 orders</title></rect><text class="tick" x="414" y="174" text-anchor="middle">15</text>
+    </svg>
+    <details>
+      <summary>Show as table</summary>
+      <table><caption class="vh">Orders by hour</caption><thead><tr><th scope="col">Hour</th><th scope="col" class="num">Orders</th></tr></thead><tbody><tr><th scope="row">08:00</th><td class="num">2</td></tr><tr><th scope="row">09:00</th><td class="num">5</td></tr><tr><th scope="row">10:00</th><td class="num">7</td></tr><tr><th scope="row">11:00</th><td class="num">9</td></tr><tr><th scope="row">12:00</th><td class="num">6</td></tr><tr><th scope="row">13:00</th><td class="num">4</td></tr><tr><th scope="row">14:00</th><td class="num">8</td></tr><tr><th scope="row">15:00</th><td class="num">7</td></tr></tbody></table>
+    </details>
+  </figure>
+</div>
+
+<section aria-labelledby="recent-h">
+  <h2 id="recent-h">Latest orders</h2>
+  <table>
+    <thead><tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col" class="num">Total</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#o1048">#1048</a></td><td>Budi Hartono</td><td>Paid</td><td class="num">Rp 289.000</td></tr>
+      <tr><td><a href="#o1047">#1047</a></td><td>Sari Wulandari</td><td>Packing</td><td class="num">Rp 412.000</td></tr>
+      <tr><td><a href="#o1046">#1046</a></td><td>Dewi Lestari</td><td>Awaiting payment</td><td class="num">Rp 150.000</td></tr>
+    </tbody>
+  </table>
+</section>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

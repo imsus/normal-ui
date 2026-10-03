@@ -1,0 +1,57 @@
+<!-- @dsCard level="pages" group="Marketing" height=1060 width=960 page subtitle="Pricing plans in a comparable table-backed layout with the price per month in words and numbers" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>PricingPage</title><style>
+  body { margin:0; }
+  .wrap { max-width:60rem; margin:0 auto; padding:0 var(--space-md); }
+  .top { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:center; justify-content:space-between; padding-block:var(--space-sm); border-bottom:1px solid var(--rule); }
+  .top ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; align-items:center; }
+  .top strong { font-size:1.17em; }
+  .muted { color:var(--gray-text); }
+  .cta { display:inline-flex; align-items:center; min-height:44px; padding:0 var(--space-md); background:var(--canvas-text); color:var(--canvas) !important; text-decoration:none; font:700 1rem var(--font-sans); }
+  .cta:hover { text-decoration:underline; }
+  .cta.alt { background:var(--button-face); color:var(--button-text) !important; border:1px solid var(--control-border); font-weight:400; }
+  footer { border-top:1px solid var(--rule); margin-top:var(--space-lg); padding-block:var(--space-md); }
+  footer ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; margin:0; }
+
+  .plans { display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem,1fr)); gap:var(--space-md); margin-block:var(--space-lg); }
+  .plan { border:1px solid var(--control-border); padding:var(--space-md); display:flex; flex-direction:column; gap:var(--space-sm); }
+  .plan.rec { border:3px solid var(--canvas-text); }
+  .plan h2 { margin:0; font-size:1.25rem; }
+  .price { font:700 2rem var(--font-sans); margin:0; font-variant-numeric:tabular-nums; }
+  .price small { font-size:1rem; font-weight:400; }
+  .plan ul { margin:0; padding-inline-start:1.25em; flex:1; }
+  .scroll { overflow-x:auto; }
+  table { width:100%; }
+  td, th { text-align:center; } th[scope=row] { text-align:start; }
+</style></head>
+<body>
+<a href="#main" style="position:absolute;left:-999px" onfocus="this.style.left='8px'" onblur="this.style.left='-999px'">Skip to main content</a>
+<header class="wrap top"><strong>Toko Rumah</strong><nav aria-label="Main"><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#help">Help</a></li><li><a href="#signin">Sign in</a></li><li><a class="cta" href="#signup">Start free</a></li></ul></nav></header>
+<main id="main" class="wrap">
+<h1 style="margin-top:var(--space-lg)">Pricing</h1>
+<p>Every plan includes all accessibility features. Prices in rupiah, VAT included.</p>
+<fieldset style="display:inline-flex;gap:var(--space-md)"><legend>Billing</legend><label><input type="radio" name="b" checked> Monthly</label><label><input type="radio" name="b"> Yearly (2 months free)</label></fieldset>
+<div class="plans">
+  <section class="plan" aria-labelledby="p1"><h2 id="p1">Starter</h2><p class="price">Rp 0 <small>a month</small></p><p class="muted">For your first orders.</p><ul><li>50 orders a month</li><li>1 staff account</li><li>Email support</li></ul><a class="cta alt" href="#s1">Start free</a></section>
+  <section class="plan rec" aria-labelledby="p2"><h2 id="p2">Shop <span class="pd-badge" data-tone="strong">Most chosen</span></h2><p class="price">Rp 149.000 <small>a month</small></p><p class="muted">For a growing shop.</p><ul><li>1,000 orders a month</li><li>5 staff accounts</li><li>Stock alerts and reports</li><li>Chat support</li></ul><a class="cta" href="#s2">Start 30-day trial</a></section>
+  <section class="plan" aria-labelledby="p3"><h2 id="p3">Business</h2><p class="price">Rp 449.000 <small>a month</small></p><p class="muted">For several shops.</p><ul><li>Unlimited orders</li><li>Unlimited staff</li><li>3 shops</li><li>Phone support</li></ul><a class="cta alt" href="#s3">Talk to us</a></section>
+</div>
+<h2>Compare plans</h2>
+<div class="scroll"><table>
+  <thead><tr><th scope="col" style="text-align:start">Feature</th><th scope="col">Starter</th><th scope="col">Shop</th><th scope="col">Business</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Orders a month</th><td>50</td><td>1,000</td><td>Unlimited</td></tr>
+    <tr><th scope="row">Staff accounts</th><td>1</td><td>5</td><td>Unlimited</td></tr>
+    <tr><th scope="row">Stock alerts</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+    <tr><th scope="row">Reports</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+    <tr><th scope="row">Support</th><td>Email</td><td>Chat</td><td>Phone</td></tr>
+  </tbody>
+</table></div>
+<h2>Questions</h2>
+<details name="pq"><summary>Can I change plan later?</summary><p>Yes, any time. We refund the unused part of the month.</p></details>
+<details name="pq"><summary>What happens after the trial?</summary><p>We email you 3 days before it ends. Nothing is charged unless you add a payment method.</p></details>
+</main>
+<footer class="wrap"><ul><li><a href="#about">About</a></li><li><a href="#accessibility">Accessibility statement</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#terms">Terms</a></li></ul></footer>
+</body>
+</html>

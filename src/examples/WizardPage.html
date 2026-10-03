@@ -1,0 +1,50 @@
+<!-- @dsCard level="pages" group="Flows" height=720 width=960 page subtitle="A multi-step setup: stepper, step count, one topic per step, Back and Continue" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>WizardPage</title><style>
+  body { margin:0; }
+  .auth { max-width:26rem; margin:0 auto; padding:var(--space-lg) var(--space-md); }
+  .auth header { font-weight:700; font-size:1.17em; margin-bottom:var(--space-lg); }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); }
+  .field input { width:100%; box-sizing:border-box; min-height:44px; }
+  .hint { font-size:.83em; color:var(--gray-text); }
+  .block { width:100%; min-height:44px; }
+  .pw { display:flex; } .pw input { flex:1; } .pw button { border-inline-start:0; min-width:4.5rem; }
+  .req { list-style:none; padding:0; margin:var(--space-xs) 0 0; font:.875rem var(--font-sans); display:grid; gap:2px; }
+  .req li::before { content:"○ " / ""; } .req li.ok::before { content:"✓ " / "Met: "; font-weight:700; }
+  .panels { display:grid; grid-template-columns:repeat(auto-fit, minmax(20rem,1fr)); gap:var(--space-lg); max-width:56rem; margin:0 auto; padding:var(--space-lg) var(--space-md); }
+  .panels > section { border:1px solid var(--control-border); padding:var(--space-md) var(--space-lg); }
+</style></head>
+<body>
+<main class="auth" style="max-width:36rem">
+  <header>Toko Rumah</header>
+  <ol class="pd-steps" aria-label="Shop setup">
+    <li data-done>Your shop</li>
+    <li aria-current="step">Delivery</li>
+    <li>Payments</li>
+    <li>Review</li>
+  </ol>
+  <form onsubmit="return false">
+    <h1 style="font-size:1.75em;margin-bottom:0">Delivery</h1>
+    <p style="color:var(--gray-text);margin-top:4px">Step 2 of 4</p>
+    <fieldset>
+      <legend>Where do you ship from?</legend>
+      <div class="field"><label for="city">City</label><input id="city" autocomplete="address-level2" value="Bandung"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Which couriers can customers choose?</legend>
+      <p style="margin:0"><label><input type="checkbox" checked> Standard courier, 3–5 days</label></p>
+      <p style="margin:0"><label><input type="checkbox" checked> Express courier, 1–2 days</label></p>
+      <p style="margin:0"><label><input type="checkbox"> Collect from your shop</label></p>
+    </fieldset>
+    <div class="field" style="max-width:14rem"><label for="free">Free delivery over (Rp)</label><span class="hint" id="free-h">Leave empty for no free delivery.</span><input id="free" inputmode="numeric" value="250000" aria-describedby="free-h"></div>
+    <div style="display:flex;justify-content:space-between;gap:var(--space-md);margin-top:var(--space-lg)">
+      <button type="button">Back</button>
+      <button type="submit">Continue to payments</button>
+    </div>
+    <p style="text-align:center"><a href="#later">Save and finish later</a></p>
+  </form>
+</main>
+<div role="status" aria-live="polite" id="announce" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"></div>
+</body>
+</html>

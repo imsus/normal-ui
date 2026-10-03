@@ -1,0 +1,65 @@
+<!-- @dsCard level="pages" group="States" height=480 width=960 page subtitle="Error pages: 404, 500 and offline, each with plain words and a next step" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page not found · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .err { max-width:36rem; }
+  .code { font:700 .875rem var(--font-sans); text-transform:uppercase; letter-spacing:.04em; color:var(--gray-text); margin-bottom:0; }
+  .err h1, .err h2 { margin-top:var(--space-xs); }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="err pd-content"><div role="tablist" aria-label="Error page examples"><button type="button" role="tab" id="e-t0" aria-controls="e-p0" aria-selected="true">404 Not found</button><button type="button" role="tab" id="e-t1" aria-controls="e-p1" aria-selected="false" tabindex="-1">500 Server error</button><button type="button" role="tab" id="e-t2" aria-controls="e-p2" aria-selected="false" tabindex="-1">Offline</button></div><div role="tabpanel" id="e-p0" aria-labelledby="e-t0" tabindex="0"><p class="code">Error 404</p><h1>We can’t find that page</h1><p>The link may be old, or the address may have a typo. Order links stay valid for a year.</p><ul><li><a href="#home">Go to the dashboard</a></li><li><a href="#orders">Search your orders</a></li><li><a href="#help">Contact support</a></li></ul></div><div role="tabpanel" id="e-p1" aria-labelledby="e-t1" tabindex="0" hidden><p class="code">Error 500</p><h2 style="font-size:2em">Something went wrong on our side</h2><p>Your changes were not lost. Try again in a few minutes. If it keeps happening, tell us and quote reference <code>7F3A-19C2</code>.</p><p><button type="button">Try again</button> <a href="#status">Check service status</a></p></div><div role="tabpanel" id="e-p2" aria-labelledby="e-t2" tabindex="0" hidden><p class="code">No connection</p><h2 style="font-size:2em">You’re offline</h2><p>We’ll reconnect when your connection is back. Orders you open now are saved on this device and sync later.</p><p><button type="button">Try to reconnect</button></p></div></div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+document.querySelectorAll('[role=tablist]').forEach(function(list){
+  var tabs=[].slice.call(list.querySelectorAll('[role=tab]'));
+  function sel(t,focus){ tabs.forEach(function(x){ var on=x===t; x.setAttribute('aria-selected',String(on)); x.tabIndex=on?0:-1;
+    document.getElementById(x.getAttribute('aria-controls')).hidden=!on; }); if(focus) t.focus(); }
+  tabs.forEach(function(t,i){ t.addEventListener('click',function(){ sel(t); });
+    t.addEventListener('keydown',function(e){ var j=null;
+      if(e.key==='ArrowRight') j=(i+1)%tabs.length; if(e.key==='ArrowLeft') j=(i-1+tabs.length)%tabs.length;
+      if(e.key==='Home') j=0; if(e.key==='End') j=tabs.length-1;
+      if(j!==null){ e.preventDefault(); sel(tabs[j],true); } }); });
+});
+</script>
+</body>
+</html>

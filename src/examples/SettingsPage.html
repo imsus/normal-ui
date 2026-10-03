@@ -1,0 +1,86 @@
+<!-- @dsCard level="pages" group="Flows" height=560 width=960 page subtitle="Settings with tabs, switches that apply at once, a logo upload and a danger zone" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .set { max-width:44rem; }
+  .row { display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-md); padding-block:var(--space-sm); border-top:1px solid var(--rule); }
+  .row:first-of-type { border-top:0; }
+  .row p { margin:0; }
+  .row .hint { display:block; font-size:.83em; color:var(--gray-text); }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); max-width:28rem; }
+  .danger { border:2px dashed var(--canvas-text); padding:var(--space-sm) var(--space-md); margin-top:var(--space-lg); }
+  .danger h3 { margin-top:0; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="set"><div class="page-head"><h1>Settings</h1></div><div role="tablist" aria-label="Settings sections"><button type="button" role="tab" id="st-t0" aria-controls="st-p0" aria-selected="true">Notifications</button><button type="button" role="tab" id="st-t1" aria-controls="st-p1" aria-selected="false" tabindex="-1">Shop profile</button><button type="button" role="tab" id="st-t2" aria-controls="st-p2" aria-selected="false" tabindex="-1">Account</button></div><div role="tabpanel" id="st-p0" aria-labelledby="st-t0" tabindex="0">
+  <div class="row"><p><label for="n1">New orders</label><span class="hint" id="n1-h">An email for each order as it arrives.</span></p><input type="checkbox" role="switch" id="n1" checked aria-describedby="n1-h"></div>
+  <div class="row"><p><label for="n2">Daily summary</label><span class="hint" id="n2-h">One email at 20:00 with the day’s orders and stock.</span></p><input type="checkbox" role="switch" id="n2" checked aria-describedby="n2-h"></div>
+  <div class="row"><p><label for="n3">Low stock</label><span class="hint" id="n3-h">When a product falls below its alert level.</span></p><input type="checkbox" role="switch" id="n3" aria-describedby="n3-h"></div>
+  <div class="row"><p><label for="n4">Customer messages</label><span class="hint" id="n4-h">A push notification on this device.</span></p><input type="checkbox" role="switch" id="n4" checked aria-describedby="n4-h"></div>
+ </div><div role="tabpanel" id="st-p1" aria-labelledby="st-t1" tabindex="0" hidden>
+  <div class="field"><label for="sn">Shop name</label><input id="sn" value="Toko Rumah"></div>
+  <div class="field"><span>Logo</span><label class="pd-drop"><span><b>Drop your logo here</b> or choose a file</span><input type="file" accept="image/png,image/svg+xml"><small class="muted">PNG or SVG, square, at least 512 px.</small></label></div>
+  <p><button type="button">Save profile</button></p>
+ </div><div role="tabpanel" id="st-p2" aria-labelledby="st-t2" tabindex="0" hidden>
+  <div class="field"><label for="ae">Email address</label><input id="ae" type="email" value="imam@example.com" autocomplete="email"></div>
+  <p><a href="#password">Change password</a> · <a href="#passkeys">Manage passkeys</a></p>
+  <section class="danger" aria-labelledby="dz"><h3 id="dz">Close shop</h3><p>Hides your shop and cancels open orders. You can reopen within 30 days.</p><button type="button">Close shop…</button></section>
+ </div></div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+document.querySelectorAll('[role=tablist]').forEach(function(list){
+  var tabs=[].slice.call(list.querySelectorAll('[role=tab]'));
+  function sel(t,focus){ tabs.forEach(function(x){ var on=x===t; x.setAttribute('aria-selected',String(on)); x.tabIndex=on?0:-1;
+    document.getElementById(x.getAttribute('aria-controls')).hidden=!on; }); if(focus) t.focus(); }
+  tabs.forEach(function(t,i){ t.addEventListener('click',function(){ sel(t); });
+    t.addEventListener('keydown',function(e){ var j=null;
+      if(e.key==='ArrowRight') j=(i+1)%tabs.length; if(e.key==='ArrowLeft') j=(i-1+tabs.length)%tabs.length;
+      if(e.key==='Home') j=0; if(e.key==='End') j=tabs.length-1;
+      if(j!==null){ e.preventDefault(); sel(tabs[j],true); } }); });
+});
+
+document.querySelectorAll('[role=switch]').forEach(function(s){ s.addEventListener('change',function(){
+  var l=document.querySelector('label[for='+s.id+']').textContent; document.getElementById('announce').textContent=l+(s.checked?' on. Saved.':' off. Saved.'); }); });
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+---
+// The example exactly as designed: its own styles, body class, markup and script.
+import Base from '../../../layouts/Base.astro';
+import { examples, levelOf, loadExample } from '../../../lib/site';
+
+export function getStaticPaths() {
+  return examples.map((e) => ({ params: { level: e.level, slug: e.slug }, props: { name: e.name } }));
+}
+// Read per request, so edits to src/examples/*.html show on reload in dev.
+const { head, body, bodyClass, subtitle } = loadExample(Astro.props.name);
+const meta = examples.find((e) => e.name === Astro.props.name)!;
+const level = levelOf(meta.level);
+---
+<Base title={`${meta.title} · Normal UI`} description={subtitle} bodyClass={bodyClass || undefined}>
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+  {/* The way back to the docs. It lives in the top layer, outside the example's own
+      layout (several examples lay out <body> as a grid), and comes last in tab order so
+      the example's skip link stays first. */}
+  <nav popover="manual" id="docs-return" class="docs-return" aria-label="Docs">
+    <a href={meta.href}>‹ {meta.title} docs</a>
+    <a href={`${meta.href.replace(/[^/]+\/$/, '')}`}>All {level.label.toLowerCase()}</a>
+    <button type="button" id="docs-return-hide">Hide</button>
+  </nav>
+  <script is:inline>
+    (function () {
+      var bar = document.getElementById('docs-return');
+      if (!bar || !bar.showPopover) return;
+      var key = 'pd-docs-return-hidden';
+      try { if (sessionStorage.getItem(key)) return; } catch (e) {}
+      // Inside the docs preview frame the docs are already around it.
+      if (window.self !== window.top) return;
+      bar.showPopover();
+      document.getElementById('docs-return-hide').addEventListener('click', function () {
+        bar.hidePopover();
+        try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      });
+    })();
+  </script>
+</Base>

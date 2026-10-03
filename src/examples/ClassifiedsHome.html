@@ -1,0 +1,129 @@
+<!-- @dsCard level="pages" group="Showcase" height=1520 width=1200 page subtitle="A dense classifieds homepage in the Normal UI style: left rail, three category columns, side lists, fictional brand" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasar Warga Bandung: classifieds for jobs, housing, for sale, services, community and events</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:9; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+
+  /* Page: three columns on wide screens, one on phones. Grid areas only, gap for all spacing. */
+  body { display:grid; gap:var(--space-md) var(--space-lg); padding:var(--space-md);
+    grid-template-columns:minmax(0,1fr); grid-template-areas:"top" "main" "more" "side" "foot"; max-width:80rem; margin-inline:auto; }
+  @media (min-width: 62rem) {
+    body { grid-template-columns:13rem minmax(0,1fr) 11rem; grid-template-rows:auto 1fr auto;
+      grid-template-areas:"top main side" "more main side" "foot foot foot"; }
+  }
+  .top { grid-area:top; } main { grid-area:main; } .more { grid-area:more; } .side { grid-area:side; } footer { grid-area:foot; }
+
+  /* Left rail */
+  .brand { font-size:1.5rem; font-weight:700; letter-spacing:-.01em; }
+  .brand a { color:var(--canvas-text); text-decoration:none; }
+  .brand a:hover { text-decoration:underline; }
+  .post { display:flex; align-items:center; justify-content:center; min-height:calc(var(--space-lg) + var(--space-md)); padding:0 var(--space-md);
+    background:var(--canvas-text); color:var(--canvas) !important; font-weight:700; text-decoration:none; }
+  .post:hover { text-decoration:underline; }
+  search form { display:flex; flex-direction:column; gap:var(--space-xs); }
+  search .row { display:flex; gap:var(--space-xs); }
+  search .row input { flex:1; min-width:0; }
+  search select { width:100%; }
+  .cal { width:100%; table-layout:fixed; font-size:.875rem; }
+  .cal caption { font-weight:700; text-align:start; padding:0 0 var(--space-xs); }
+  .cal th, .cal td { padding:0; text-align:center; }
+  .cal th abbr { text-decoration:none; }
+  .cal a { display:block; min-height:var(--space-lg); line-height:var(--space-lg); }
+  .cal td[aria-current] { outline:2px solid var(--canvas-text); outline-offset:-2px; font-weight:700; }
+  .small-links { list-style:none; padding:0; display:flex; flex-direction:column; gap:2px; font-size:.9375rem; }
+
+  /* Categories: CSS columns, so short and long sections stack without gaps and read top to bottom */
+  .area { display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--space-xs) var(--space-md); padding-bottom:var(--space-sm); border-bottom:1px solid var(--rule); }
+  .area h1 { flex:0 1 auto; }
+  .area label { font-size:.875rem; }
+  .cats { columns:15rem 3; column-gap:var(--space-lg); }
+  .cat { break-inside:avoid; display:flex; flex-direction:column; gap:var(--space-xs); padding-bottom:var(--space-lg); }
+  .cat h2 { padding-bottom:2px; border-bottom:1px solid var(--rule); }
+  .cat h2 a { color:var(--canvas-text); text-decoration-thickness:1px; }
+  .links { list-style:none; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:0 var(--space-md); font-size:.9375rem; }
+  .links.two { grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .links.three { grid-template-columns:repeat(3, minmax(0,1fr)); }
+  .links a { display:inline-block; padding-block:2px; overflow-wrap:anywhere; }
+  @media (pointer: coarse) { .links a { padding-block:var(--space-xs); } }
+
+  /* Right rail */
+  .side h2 { font-size:.875rem; text-transform:uppercase; letter-spacing:.04em; color:var(--gray-text); }
+  .side select { width:100%; }
+  footer { display:flex; flex-wrap:wrap; justify-content:center; gap:var(--space-xs) var(--space-md); padding-top:var(--space-sm); border-top:1px solid var(--rule); font-size:.875rem; }
+  footer ul { list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to categories</a>
+
+<header class="top pd-stack" style="--pd-stack-gap: var(--space-sm)">
+  <p class="brand"><a href="#home">pasar warga</a></p>
+  <a class="post" href="#post">Post an ad</a>
+  <a href="#account">My account</a>
+  <search aria-label="Search Bandung listings">
+    <form action="#" onsubmit="return false">
+      <label for="q">Search Bandung</label>
+      <div class="row"><input id="q" type="search" placeholder="e.g. sofa" enterkeyhint="search"><button type="submit">Search</button></div>
+      <label class="vh" for="in">In category</label>
+      <select id="in"><option>all categories</option><option>for sale</option><option>housing</option><option>jobs</option><option>services</option><option>community</option><option>gigs</option></select>
+    </form>
+  </search>
+</header>
+
+<main id="main" class="pd-stack" tabindex="-1">
+  <div class="area">
+    <h1>Bandung</h1>
+    <label for="area">Change area <select id="area"><option>Bandung</option><option>Jakarta</option><option>Bogor</option><option>Bekasi</option><option>Cirebon</option></select></label>
+  </div>
+  <div class="cats">
+<section class="cat" aria-labelledby="c-community"><h2 id="c-community"><a href="#community">Community</a></h2><ul class="links"><li><a href="#activities">activities</a></li><li><a href="#artists">artists</a></li><li><a href="#childcare">childcare</a></li><li><a href="#classes">classes</a></li><li><a href="#events">events</a></li><li><a href="#general">general</a></li><li><a href="#groups">groups</a></li><li><a href="#local-news">local news</a></li><li><a href="#lost---found">lost + found</a></li><li><a href="#missed-connections">missed connections</a></li><li><a href="#musicians">musicians</a></li><li><a href="#pets">pets</a></li><li><a href="#rideshare">rideshare</a></li><li><a href="#volunteers">volunteers</a></li></ul></section>
+<section class="cat" aria-labelledby="c-services"><h2 id="c-services"><a href="#services">Services</a></h2><ul class="links two"><li><a href="#automotive">automotive</a></li><li><a href="#beauty">beauty</a></li><li><a href="#cell-mobile">cell/mobile</a></li><li><a href="#computer">computer</a></li><li><a href="#creative">creative</a></li><li><a href="#cycle">cycle</a></li><li><a href="#event">event</a></li><li><a href="#farm---garden">farm + garden</a></li><li><a href="#financial">financial</a></li><li><a href="#health-wellness">health/wellness</a></li><li><a href="#household">household</a></li><li><a href="#labour-move">labour/move</a></li><li><a href="#legal">legal</a></li><li><a href="#lessons">lessons</a></li><li><a href="#pet">pet</a></li><li><a href="#real-estate">real estate</a></li><li><a href="#skilled-trade">skilled trade</a></li><li><a href="#small-business">small business</a></li><li><a href="#travel">travel</a></li><li><a href="#writing-translation">writing/translation</a></li></ul></section>
+<section class="cat" aria-labelledby="c-discussion-forums"><h2 id="c-discussion-forums"><a href="#discussion-forums">Discussion forums</a></h2><ul class="links three"><li><a href="#arts">arts</a></li><li><a href="#beauty">beauty</a></li><li><a href="#cars">cars</a></li><li><a href="#crafts">crafts</a></li><li><a href="#food">food</a></li><li><a href="#games">games</a></li><li><a href="#garden">garden</a></li><li><a href="#health">health</a></li><li><a href="#history">history</a></li><li><a href="#housing">housing</a></li><li><a href="#jobs">jobs</a></li><li><a href="#money">money</a></li><li><a href="#motorbikes">motorbikes</a></li><li><a href="#music">music</a></li><li><a href="#parenting">parenting</a></li><li><a href="#pets">pets</a></li><li><a href="#photo">photo</a></li><li><a href="#science">science</a></li><li><a href="#sports">sports</a></li><li><a href="#travel">travel</a></li><li><a href="#tv">tv</a></li><li><a href="#writing">writing</a></li></ul></section>
+<section class="cat" aria-labelledby="c-housing"><h2 id="c-housing"><a href="#housing">Housing</a></h2><ul class="links"><li><a href="#apartments-houses">apartments/houses</a></li><li><a href="#kos-rooms">kos/rooms</a></li><li><a href="#sublets-temporary">sublets/temporary</a></li><li><a href="#housing-wanted">housing wanted</a></li><li><a href="#housing-swap">housing swap</a></li><li><a href="#holiday-rentals">holiday rentals</a></li><li><a href="#parking-storage">parking/storage</a></li><li><a href="#office-commercial">office/commercial</a></li><li><a href="#property-for-sale">property for sale</a></li></ul></section>
+<section class="cat" aria-labelledby="c-for-sale"><h2 id="c-for-sale"><a href="#for-sale">For sale</a></h2><ul class="links two"><li><a href="#antiques">antiques</a></li><li><a href="#appliances">appliances</a></li><li><a href="#arts---crafts">arts + crafts</a></li><li><a href="#auto-parts">auto parts</a></li><li><a href="#baby---kid">baby + kid</a></li><li><a href="#batik---textiles">batik + textiles</a></li><li><a href="#bicycles">bicycles</a></li><li><a href="#books">books</a></li><li><a href="#business">business</a></li><li><a href="#cars">cars</a></li><li><a href="#clothes---accessories">clothes + accessories</a></li><li><a href="#collectibles">collectibles</a></li><li><a href="#computers">computers</a></li><li><a href="#electronics">electronics</a></li><li><a href="#farm---garden">farm + garden</a></li><li><a href="#free-stuff">free stuff</a></li><li><a href="#furniture">furniture</a></li><li><a href="#garage-sale">garage sale</a></li><li><a href="#general">general</a></li><li><a href="#household">household</a></li><li><a href="#jewellery">jewellery</a></li><li><a href="#materials">materials</a></li><li><a href="#motorbikes">motorbikes</a></li><li><a href="#music-instruments">music instruments</a></li><li><a href="#phones">phones</a></li><li><a href="#photo---video">photo + video</a></li><li><a href="#sporting">sporting</a></li><li><a href="#tickets">tickets</a></li><li><a href="#tools">tools</a></li><li><a href="#toys---games">toys + games</a></li><li><a href="#video-gaming">video gaming</a></li><li><a href="#wanted">wanted</a></li></ul></section>
+<section class="cat" aria-labelledby="c-jobs"><h2 id="c-jobs"><a href="#jobs">Jobs</a></h2><ul class="links"><li><a href="#accounting---finance">accounting + finance</a></li><li><a href="#admin-office">admin/office</a></li><li><a href="#architecture-engineering">architecture/engineering</a></li><li><a href="#art-media-design">art/media/design</a></li><li><a href="#customer-service">customer service</a></li><li><a href="#education">education</a></li><li><a href="#food-drink-hospitality">food/drink/hospitality</a></li><li><a href="#general-labour">general labour</a></li><li><a href="#government">government</a></li><li><a href="#healthcare">healthcare</a></li><li><a href="#human-resources">human resources</a></li><li><a href="#legal">legal</a></li><li><a href="#manufacturing">manufacturing</a></li><li><a href="#marketing-pr">marketing/PR</a></li><li><a href="#nonprofit">nonprofit</a></li><li><a href="#retail-wholesale">retail/wholesale</a></li><li><a href="#sales">sales</a></li><li><a href="#security">security</a></li><li><a href="#skilled-trade">skilled trade</a></li><li><a href="#software-it">software/IT</a></li><li><a href="#transport-logistics">transport/logistics</a></li><li><a href="#writing-editing">writing/editing</a></li></ul></section>
+<section class="cat" aria-labelledby="c-gigs"><h2 id="c-gigs"><a href="#gigs">Gigs</a></h2><ul class="links two"><li><a href="#computer">computer</a></li><li><a href="#creative">creative</a></li><li><a href="#crew">crew</a></li><li><a href="#domestic">domestic</a></li><li><a href="#event">event</a></li><li><a href="#labour">labour</a></li><li><a href="#talent">talent</a></li><li><a href="#writing">writing</a></li></ul></section>
+<section class="cat" aria-labelledby="c-resumés"><h2 id="c-resumés"><a href="#resumés">Resumés</a></h2><p class="muted">Post your CV so employers in Bandung can find you. <a href="#resumes">Browse resumés</a></p></section>
+  </div>
+</main>
+
+<aside class="more pd-stack" aria-label="Events and help" style="--pd-stack-gap: var(--space-md)">
+  <table class="cal"><caption>Event calendar</caption><thead><tr><th scope="col"><abbr title="Sunday">S</abbr></th><th scope="col"><abbr title="Monday">M</abbr></th><th scope="col"><abbr title="Tuesday">T</abbr></th><th scope="col"><abbr title="Wednesday">W</abbr></th><th scope="col"><abbr title="Thursday">T</abbr></th><th scope="col"><abbr title="Friday">F</abbr></th><th scope="col"><abbr title="Saturday">S</abbr></th></tr></thead><tbody><tr><td><a href="#events-2026-09-27" aria-label="Events on Sunday 27 September">27</a></td><td><a href="#events-2026-09-28" aria-label="Events on Monday 28 September">28</a></td><td><a href="#events-2026-09-29" aria-label="Events on Tuesday 29 September">29</a></td><td aria-current="date"><a href="#events-2026-09-30" aria-label="Events on Wednesday 30 September">30</a></td><td><a href="#events-2026-10-01" aria-label="Events on Thursday 1 October">1</a></td><td><a href="#events-2026-10-02" aria-label="Events on Friday 2 October">2</a></td><td><a href="#events-2026-10-03" aria-label="Events on Saturday 3 October">3</a></td></tr><tr><td><a href="#events-2026-10-04" aria-label="Events on Sunday 4 October">4</a></td><td><a href="#events-2026-10-05" aria-label="Events on Monday 5 October">5</a></td><td><a href="#events-2026-10-06" aria-label="Events on Tuesday 6 October">6</a></td><td><a href="#events-2026-10-07" aria-label="Events on Wednesday 7 October">7</a></td><td><a href="#events-2026-10-08" aria-label="Events on Thursday 8 October">8</a></td><td><a href="#events-2026-10-09" aria-label="Events on Friday 9 October">9</a></td><td><a href="#events-2026-10-10" aria-label="Events on Saturday 10 October">10</a></td></tr><tr><td><a href="#events-2026-10-11" aria-label="Events on Sunday 11 October">11</a></td><td><a href="#events-2026-10-12" aria-label="Events on Monday 12 October">12</a></td><td><a href="#events-2026-10-13" aria-label="Events on Tuesday 13 October">13</a></td><td><a href="#events-2026-10-14" aria-label="Events on Wednesday 14 October">14</a></td><td><a href="#events-2026-10-15" aria-label="Events on Thursday 15 October">15</a></td><td><a href="#events-2026-10-16" aria-label="Events on Friday 16 October">16</a></td><td><a href="#events-2026-10-17" aria-label="Events on Saturday 17 October">17</a></td></tr><tr><td><a href="#events-2026-10-18" aria-label="Events on Sunday 18 October">18</a></td><td><a href="#events-2026-10-19" aria-label="Events on Monday 19 October">19</a></td><td><a href="#events-2026-10-20" aria-label="Events on Tuesday 20 October">20</a></td><td><a href="#events-2026-10-21" aria-label="Events on Wednesday 21 October">21</a></td><td><a href="#events-2026-10-22" aria-label="Events on Thursday 22 October">22</a></td><td><a href="#events-2026-10-23" aria-label="Events on Friday 23 October">23</a></td><td><a href="#events-2026-10-24" aria-label="Events on Saturday 24 October">24</a></td></tr></tbody></table>
+  <ul class="small-links">
+    <li><a href="#help">Help and FAQ</a></li>
+    <li><a href="#scams">Avoid scams and fraud</a></li>
+    <li><a href="#safety">Personal safety tips</a></li>
+    <li><a href="#terms">Terms of use</a></li>
+    <li><a href="#privacy">Privacy policy</a></li>
+    <li><a href="#status">System status</a></li>
+  </ul>
+  <ul class="small-links">
+    <li><a href="#about">About Pasar Warga</a></li>
+    <li><a href="#app">Pasar Warga on your phone</a></li>
+    <li><a href="#best">Best of Pasar Warga</a></li>
+  </ul>
+</aside>
+
+<aside class="side pd-stack" aria-label="Language and other areas" style="--pd-stack-gap: var(--space-md)">
+  <div class="pd-stack" style="--pd-stack-gap: var(--space-xs)">
+    <label for="lang">Language</label>
+    <select id="lang"><option>English</option><option>Bahasa Indonesia</option><option>Basa Sunda</option><option>Basa Jawa</option></select>
+  </div>
+  <section class="pd-stack" style="--pd-stack-gap: var(--space-xs)" aria-labelledby="nb-h"><h2 id="nb-h">Nearby</h2><ul class="links"><li><a href="#jakarta">Jakarta</a></li><li><a href="#bogor">Bogor</a></li><li><a href="#bekasi">Bekasi</a></li><li><a href="#cirebon">Cirebon</a></li><li><a href="#tasikmalaya">Tasikmalaya</a></li><li><a href="#garut">Garut</a></li><li><a href="#sukabumi">Sukabumi</a></li><li><a href="#purwakarta">Purwakarta</a></li><li><a href="#karawang">Karawang</a></li><li><a href="#sumedang">Sumedang</a></li></ul></section>
+  <section class="pd-stack" style="--pd-stack-gap: var(--space-xs)" aria-labelledby="id-h"><h2 id="id-h">Indonesia</h2><ul class="links"><li><a href="#surabaya">Surabaya</a></li><li><a href="#semarang">Semarang</a></li><li><a href="#yogyakarta">Yogyakarta</a></li><li><a href="#solo">Solo</a></li><li><a href="#malang">Malang</a></li><li><a href="#denpasar">Denpasar</a></li><li><a href="#medan">Medan</a></li><li><a href="#makassar">Makassar</a></li><li><a href="#palembang">Palembang</a></li><li><a href="#balikpapan">Balikpapan</a></li></ul></section>
+  <a href="#all">All areas</a>
+</aside>
+
+<footer>
+  <span>© 2026 Pasar Warga</span>
+  <ul><li><a href="#help">help</a></li><li><a href="#safety">safety</a></li><li><a href="#privacy">privacy</a></li><li><a href="#feedback">feedback</a></li><li><a href="#terms">terms</a></li><li><a href="#about">about</a></li><li><a href="#accessibility">accessibility</a></li></ul>
+</footer>
+</body>
+</html>

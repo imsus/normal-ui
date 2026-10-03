@@ -1,0 +1,66 @@
+<!-- @dsCard level="pages" group="States" height=600 width=960 page subtitle="A confirmation page: what happened, the reference, what happens next" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Order placed · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .done { max-width:36rem; }
+  .done .ref { font:700 1.5rem var(--font-mono); }
+  .done ol li + li { margin-top:var(--space-xs); }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders" aria-current="page">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="done pd-content">
+  <div class="pd-alert" data-kind="success" role="status"><p><strong>Done:</strong> your order is placed.</p></div>
+  <h1>Thank you, Imam</h1>
+  <p>Your order number is</p>
+  <p class="ref">#1049</p>
+  <p>We’ve emailed a receipt to <b>imam@example.com</b>.</p>
+  <h2>What happens next</h2>
+  <ol>
+    <li>We pack your order today.</li>
+    <li>You get a tracking link by email when it ships, usually tomorrow.</li>
+    <li>It arrives in 3–5 days.</li>
+  </ol>
+  <p><a href="#track">Track this order</a> · <a href="#shop">Continue shopping</a></p>
+</div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

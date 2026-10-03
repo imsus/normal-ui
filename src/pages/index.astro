@@ -1,42 +1,39 @@
 ---
-import Base from "../layouts/Base.astro";
-import { linkClass } from "../components/link-class";
-
-// Atomic-design stages (Frost: atom → molecule → organism → template → page).
-// Only Atoms exist today; new stages slot in here as files land.
-const stages = [
-  {
-    name: "Atoms",
-    items: [
-      { label: "Button", href: "/buttons/" },
-      { label: "Link", href: "/link/" },
-    ],
-  },
-];
+import Docs from '../layouts/Docs.astro';
+import { Cover } from '../site/Cover';
+import LevelTrail from '../site/LevelTrail.astro';
+import { entriesIn, href, levels } from '../lib/site';
 ---
-
-<Base title="Components">
-  <header class="flex flex-col gap-2">
-    <h1 class="text-2xl font-semibold tracking-tight">normal-ui</h1>
-    <p class="text-sm text-zinc-500">
-      The browser's user-agent stylesheet, respecified as Tailwind utilities.
-    </p>
-  </header>
-
-  {
-    stages.map((stage) => (
-      <section class="flex flex-col gap-3">
-        <h2 class="font-mono text-xs tracking-widest text-zinc-500 uppercase">{stage.name}</h2>
-        <ul class="flex list-none flex-col items-start gap-2 p-0 text-sm">
-          {stage.items.map((item) => (
-            <li>
-              <a class={linkClass} href={item.href}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))
-  }
-</Base>
+<Docs title="Overview" description="The browser's own stylesheet, repaired to WCAG 2.2 AA. Astro, React and StyleX.">
+  <Cover />
+  <p>
+    Normal UI keeps the browser's built-in look (system font on white, blue underlined links, grey buttons, black
+    text) and repairs it wherever it falls short of WCAG 2.2 AA. Nothing is added for decoration.
+  </p>
+  <h2>How the docs are organised</h2>
+  <p>
+    By <a href="https://atomicdesign.bradfrost.com/chapter-2/">atomic design</a>: five levels, each built from the
+    one before it. Every component page says what it is made of and where it is used.
+  </p>
+  <LevelTrail />
+  <dl>
+    {levels.map((l) => (
+      <>
+        <dt><a href={href(`/${l.id}/`)}>{l.label}</a> <small>({entriesIn(l.id).length})</small></dt>
+        <dd>{l.intro}</dd>
+      </>
+    ))}
+  </dl>
+  <p>
+    Under them sit the foundations: the <a href={href('/guidelines/')}>Guidelines</a> (principles, colour, type,
+    rhythm, controls and states, ARIA coverage), the <a href={href('/tokens/')}>Tokens</a> every value comes from, and
+    <a href={href('/typography/')}>Typography</a>, every text element as plain HTML renders it.
+  </p>
+  <h2>How the code is layered</h2>
+  <ol>
+    <li><code>tokens.json</code> is the source of every value. <code>pnpm tokens</code> writes <code>src/styles/tokens.css</code> (custom properties, both themes) and <code>src/tokens.stylex.ts</code> (StyleX constants pointing at them).</li>
+    <li><code>src/styles/base.css</code> styles the elements themselves, in the <code>normal-ui</code> layer. Write plain semantic HTML and it already looks right.</li>
+    <li><code>src/components</code> holds the React components. They add the wiring (labels, ARIA, keyboard) and style themselves with StyleX, whose atomic layers sit above the base layer.</li>
+    <li><code>src/styles/patterns.css</code> is the same composite styling for hand-written HTML (<code>.pd-badge</code>, <code>[role=tab]</code>…). The templates and pages use it.</li>
+  </ol>
+</Docs>

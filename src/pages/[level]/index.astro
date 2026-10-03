@@ -1,0 +1,31 @@
+---
+// One atomic level: what it is, where it sits, and everything in it by group.
+import Docs from '../../layouts/Docs.astro';
+import LevelTrail from '../../site/LevelTrail.astro';
+import { entriesIn, levelOf, levels } from '../../lib/site';
+
+export function getStaticPaths() {
+  return levels.map((l) => ({ params: { level: l.id } }));
+}
+const level = levelOf(Astro.params.level!);
+const items = entriesIn(level.id);
+const groups = level.groups.filter((g) => items.some((i) => i.group === g));
+---
+<Docs title={level.label} description={level.intro}>
+  <h1>{level.label}</h1>
+  <p>{level.intro}</p>
+  <LevelTrail current={level.id} />
+  {groups.map((g) => (
+    <section aria-labelledby={`g-${g}`}>
+      <h2 id={`g-${g}`}>{g}</h2>
+      <dl>
+        {items.filter((i) => i.group === g).map((i) => (
+          <>
+            <dt><a href={i.href}>{i.title}</a></dt>
+            <dd>{i.text}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+  ))}
+</Docs>

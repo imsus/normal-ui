@@ -1,0 +1,73 @@
+<!-- @dsCard level="templates" group="Type" height=860 width=1100 subtitle="The same headings in content rhythm and in app rhythm, with an optional 24px line grid" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Heading rhythm</title>
+<style>
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--space-lg); align-items: start; }
+  .col-label { font: 700 .8125rem var(--font-sans); text-transform: uppercase; letter-spacing: .04em; color: var(--gray-text); }
+  .frame { border: 1px solid var(--control-border); padding: var(--space-md) var(--space-lg); }
+  .grid-on .frame { background-image: repeating-linear-gradient(to bottom, transparent 0 calc(1.5rem - 1px), color-mix(in oklab, var(--link) 35%, transparent) calc(1.5rem - 1px) 1.5rem); background-position: 0 var(--space-md); }
+  .toolbar { margin-bottom: var(--space-md); font-family: var(--font-sans); }
+  .app .kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-sm); }
+  .app .kpis > div { border: 1px solid var(--control-border); padding: var(--space-sm); }
+  .app .kpis dd { margin: 0; font-size: 1.25rem; font-weight: 700; }
+  .app .kpis dt { font: .8125rem var(--font-sans); color: var(--gray-text); }
+  .app .panel { border: 1px solid var(--control-border); padding: var(--space-sm) var(--space-md); }
+  .muted { color: var(--gray-text); }
+</style>
+</head>
+<body>
+<p class="toolbar"><label><input type="checkbox" id="grid"> Show the 24px line grid</label></p>
+<div class="cols" id="cols">
+  <div class="pd-stack" style="--pd-stack-gap: var(--space-xs)">
+    <span class="col-label">Content · default, or .pd-content</span>
+    <article class="frame pd-content">
+      <h1>Returning an item</h1>
+      <p>You can return most items within 30 days of delivery. Start from Your orders; you do not need to contact us first.</p>
+      <h2>How to return</h2>
+      <p>Open the order, choose Return items and tell us why. Show the QR code at any drop-off point.</p>
+      <h3>Drop-off points</h3>
+      <p>Any post office, and 1,200 partner shops in Java and Bali.</p>
+      <h4>Opening hours</h4>
+      <p>Most partner shops are open 08:00 to 21:00.</p>
+      <h5>Public holidays</h5>
+      <p>Hours may be shorter; check the shop page.</p>
+      <h6>Last updated</h6>
+      <p>30 September 2026.</p>
+    </article>
+  </div>
+  <div class="pd-stack" style="--pd-stack-gap: var(--space-xs)">
+    <span class="col-label">App · .pd-app, spacing from gap</span>
+    <div class="frame pd-app app">
+      <div class="pd-stack">
+        <div class="pd-stack" style="--pd-stack-gap: 2px">
+          <h1>Freight performance</h1>
+          <p class="muted">1–28 September 2026 · all origins</p>
+        </div>
+        <dl class="kpis"><div><dt>Shipments</dt><dd>1,284</dd></div><div><dt>On time</dt><dd>91.7%</dd></div><div><dt>Transit</dt><dd>3.2 days</dd></div></dl>
+        <section class="panel pd-stack" style="--pd-stack-gap: var(--space-sm)" aria-labelledby="a1">
+          <h2 id="a1">Exceptions</h2>
+          <p>5 of 37 need action today.</p>
+          <div class="pd-stack" style="--pd-stack-gap: var(--space-xs)">
+            <h3>Customs hold</h3>
+            <p class="muted">SHP-21004 · Jakarta → Singapore · Air</p>
+          </div>
+        </section>
+        <section class="panel pd-stack" style="--pd-stack-gap: var(--space-sm)" aria-labelledby="a2">
+          <h2 id="a2">Carriers</h2>
+          <h4>Sea</h4>
+          <p>Lintas Laut 86.2% on time, below target.</p>
+          <h5>Notes</h5>
+          <p class="muted">Tanjung Priok congestion this week.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.getElementById('grid').addEventListener('change',function(e){ document.getElementById('cols').classList.toggle('grid-on', e.target.checked); });
+</script>
+</body>
+</html>

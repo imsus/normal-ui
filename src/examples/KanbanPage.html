@@ -1,0 +1,125 @@
+<!-- @dsCard level="pages" group="App" height=440 width=960 page subtitle="A kanban board with a keyboard-friendly Move to control instead of drag and drop" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Board · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .page-head .actions { display:flex; gap:var(--space-sm); align-items:center; }
+  .board { display:grid; grid-template-columns:repeat(4, minmax(13rem, 1fr)); gap:var(--space-md); overflow-x:auto; padding-bottom:var(--space-sm); align-items:start; }
+  .col { border:1px solid var(--control-border); padding:var(--space-sm); min-width:0; }
+  .col h2 { font-size:1rem; margin:0 0 var(--space-sm); display:flex; justify-content:space-between; }
+  .col ol { list-style:none; margin:0; padding:0; display:grid; gap:var(--space-sm); min-height:3rem; }
+  .card { border:1px solid var(--rule); background:var(--canvas); padding:var(--space-sm); }
+  .card h3 { font-size:1rem; margin:0; }
+  .card .meta { margin:var(--space-xs) 0; font:0.83rem/1.4 var(--font-sans); color:var(--gray-text); }
+  .card .label { color:var(--canvas-text); font-weight:700; }
+  .card .move { display:flex; gap:var(--space-xs); align-items:center; font:0.83rem var(--font-sans); }
+  .card .move select { font-size:0.875rem; padding-block:2px; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board" aria-current="page">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="page-head">
+  <h1>Autumn sale launch</h1>
+  <div class="actions"><span class="muted">Launch <time datetime="2026-10-01">Thursday 1 October</time></span><button type="button">Add card</button></div>
+</div>
+<div class="board">
+  <section class="col" aria-labelledby="col-to-do" data-col="To do">
+      <h2 id="col-to-do">To do <span class="count muted">2</span></h2>
+      <ol>
+        <li><article class="card" aria-labelledby="k5482">
+          <h3 id="k5482">Write sale email</h3>
+          <p class="meta"><span class="label">Marketing</span> · Rina · <time datetime="2026-09-29">Due Tue 29 Sep</time></p>
+          <label class="move">Move to <select aria-describedby="k5482"><option selected>To do</option><option>In progress</option><option>Review</option><option>Done</option></select></label>
+        </article></li><li><article class="card" aria-labelledby="k169">
+          <h3 id="k169">Order extra packing boxes</h3>
+          <p class="meta"><span class="label">Warehouse</span> · Joko · <time datetime="2026-09-30">Due Wed 30 Sep</time></p>
+          <label class="move">Move to <select aria-describedby="k169"><option selected>To do</option><option>In progress</option><option>Review</option><option>Done</option></select></label>
+        </article></li>
+      </ol>
+    </section><section class="col" aria-labelledby="col-in-progress" data-col="In progress">
+      <h2 id="col-in-progress">In progress <span class="count muted">2</span></h2>
+      <ol>
+        <li><article class="card" aria-labelledby="k8043">
+          <h3 id="k8043">Photograph new linen range</h3>
+          <p class="meta"><span class="label">Content</span> · Maya · <time datetime="2026-09-28">Due today</time></p>
+          <label class="move">Move to <select aria-describedby="k8043"><option>To do</option><option selected>In progress</option><option>Review</option><option>Done</option></select></label>
+        </article></li><li><article class="card" aria-labelledby="k2300">
+          <h3 id="k2300">Set sale prices</h3>
+          <p class="meta"><span class="label">Pricing</span> · Imam · <time datetime="2026-09-29">Due Tue 29 Sep</time></p>
+          <label class="move">Move to <select aria-describedby="k2300"><option>To do</option><option selected>In progress</option><option>Review</option><option>Done</option></select></label>
+        </article></li>
+      </ol>
+    </section><section class="col" aria-labelledby="col-review" data-col="Review">
+      <h2 id="col-review">Review <span class="count muted">1</span></h2>
+      <ol>
+        <li><article class="card" aria-labelledby="k6102">
+          <h3 id="k6102">Update returns page</h3>
+          <p class="meta"><span class="label">Content</span> · Sari · <time datetime="2026-09-28">Due today</time></p>
+          <label class="move">Move to <select aria-describedby="k6102"><option>To do</option><option>In progress</option><option selected>Review</option><option>Done</option></select></label>
+        </article></li>
+      </ol>
+    </section><section class="col" aria-labelledby="col-done" data-col="Done">
+      <h2 id="col-done">Done <span class="count muted">2</span></h2>
+      <ol>
+        <li><article class="card" aria-labelledby="k2898">
+          <h3 id="k2898">Book extra courier pickups</h3>
+          <p class="meta"><span class="label">Warehouse</span> · Joko · <time datetime="2026-09-25">Done 25 Sep</time></p>
+          <label class="move">Move to <select aria-describedby="k2898"><option>To do</option><option>In progress</option><option>Review</option><option selected>Done</option></select></label>
+        </article></li><li><article class="card" aria-labelledby="k3469">
+          <h3 id="k3469">Choose sale products</h3>
+          <p class="meta"><span class="label">Pricing</span> · Imam · <time datetime="2026-09-24">Done 24 Sep</time></p>
+          <label class="move">Move to <select aria-describedby="k3469"><option>To do</option><option>In progress</option><option>Review</option><option selected>Done</option></select></label>
+        </article></li>
+      </ol>
+    </section>
+</div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+var live=document.getElementById('announce');
+document.querySelector('.board').addEventListener('change',function(e){
+  if(e.target.tagName!=='SELECT') return;
+  var li=e.target.closest('li'), to=document.querySelector('.col[data-col="'+e.target.value+'"] ol');
+  to.appendChild(li); e.target.focus();
+  document.querySelectorAll('.col').forEach(function(c){ c.querySelector('.count').textContent=c.querySelectorAll('li').length; });
+  live.textContent=li.querySelector('h3').textContent+' moved to '+e.target.value+'.';
+});
+</script>
+</body>
+</html>

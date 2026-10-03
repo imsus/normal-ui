@@ -1,0 +1,65 @@
+<!-- @dsCard level="pages" group="States" height=420 width=960 page subtitle="Loading: a busy region with words and a progress bar, and a button that shows it is saving" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orders · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .busy { border:1px solid var(--control-border); padding:var(--space-md); }
+  .busy progress { width:100%; }
+  .ph { display:grid; gap:var(--space-sm); margin-top:var(--space-md); }
+  .ph span { display:block; height:1rem; background:var(--surface-muted); }
+  .ph span:nth-child(2) { width:80%; } .ph span:nth-child(3) { width:60%; }
+  @media (prefers-reduced-motion: no-preference) { .ph span { animation:pulse 1.6s ease-in-out infinite; } }
+  @keyframes pulse { 50% { opacity:.5; } }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders" aria-current="page">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="page-head"><h1>Orders</h1></div>
+<section class="busy" aria-busy="true" aria-labelledby="l-h">
+  <h2 id="l-h" style="margin-top:0;font-size:1.17em">Loading orders…</h2>
+  <label for="lp" class="vh">Loading orders</label>
+  <progress id="lp">Loading</progress>
+  <div class="ph" aria-hidden="true"><span></span><span></span><span></span></div>
+</section>
+<p style="margin-top:var(--space-lg)"><button type="button" aria-disabled="true" id="sv">Saving…</button> <span class="muted" role="status">Saving your changes.</span></p>
+<p class="muted"><small>If loading takes more than 10 seconds: “This is taking longer than usual. <a href="#retry">Try again</a>.”</small></p>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

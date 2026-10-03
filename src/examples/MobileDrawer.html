@@ -1,0 +1,88 @@
+<!-- @dsCard level="templates" group="Mobile" height=844 width=390 page subtitle="A slide-out navigation drawer for more than four sections, built on a modal dialog" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Products · Toko Rumah</title>
+<style>
+  :root { --tap: 48px; --bar: 56px; }
+  *, *::before, *::after { box-sizing:border-box; }
+  body { margin:0; }
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:3; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+
+  /* Top app bar */
+  .m-bar { position:sticky; top:0; z-index:2; display:flex; align-items:center; gap:var(--space-sm);
+    min-height:var(--bar); padding:env(safe-area-inset-top, 0px) var(--space-md) 0; background:var(--canvas); border-bottom:1px solid var(--rule); }
+  .m-bar h1 { flex:1; margin:0; font-size:1.25rem; line-height:1.2; }
+  .m-bar .back { display:inline-flex; align-items:center; min-height:var(--tap); min-width:var(--tap); margin-inline-start:calc(-1 * var(--space-sm)); padding-inline:var(--space-sm); }
+  .m-bar .act { display:inline-flex; align-items:center; min-height:var(--tap); padding-inline:var(--space-sm); font:1rem var(--font-sans); }
+  .m-bar .back { font:1rem var(--font-sans); }
+
+  /* Content column: 16px gutters, room for the tab bar */
+  .m-main { padding:var(--space-md) var(--space-md) calc(var(--bar) + var(--space-lg) + env(safe-area-inset-bottom, 0px)); max-width:40rem; margin-inline:auto; }
+  .m-main.no-tabs { padding-bottom:calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)); }
+  .m-main > :first-child { margin-top:0; }
+
+  /* Bottom tab bar */
+  .m-tabs { position:fixed; inset:auto 0 0 0; z-index:2; background:var(--canvas); border-top:1px solid var(--control-border); padding-bottom:env(safe-area-inset-bottom, 0px); }
+  .m-tabs ul { display:grid; grid-template-columns:repeat(4, 1fr); list-style:none; margin:0; padding:0; }
+  .m-tabs a { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:var(--bar);
+    font:0.8125rem/1.2 var(--font-sans); color:var(--canvas-text); text-decoration:none; border-top:3px solid transparent; }
+  .m-tabs a[aria-current] { font-weight:700; border-top-color:var(--link); color:var(--link); }
+  .m-tabs svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* Touch sizing: 48px controls, 16px text so phones never zoom into fields */
+  .m-main :is(input:not([type=checkbox],[type=radio]), select, textarea) { width:100%; min-height:var(--tap); font-size:1rem; }
+  .m-main button { min-height:var(--tap); }
+  .block { width:100%; }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); }
+  .hint { font-size:.83em; color:var(--gray-text); }
+  .error { font-size:.83em; font-weight:700; }
+
+  .drawer { position:fixed; inset:0 auto 0 0; margin:0; width:min(18rem, 85vw); height:100%; max-height:100%; padding:0; border:0; border-inline-end:1px solid var(--control-border); }
+  .drawer header { display:flex; align-items:center; justify-content:space-between; min-height:56px; padding:0 var(--space-md); border-bottom:1px solid var(--rule); }
+  .drawer h2 { margin:0; font-size:1.125rem; }
+  .drawer nav h3 { font:700 .8125rem var(--font-sans); text-transform:uppercase; letter-spacing:.04em; color:var(--gray-text); margin:var(--space-md) var(--space-md) var(--space-xs); }
+  .drawer ul { list-style:none; margin:0; padding:0; }
+  .drawer a { display:flex; align-items:center; min-height:48px; padding:0 var(--space-md); }
+  .drawer a[aria-current] { background:var(--highlight); color:var(--highlight-text); font-weight:700; text-decoration:none; }
+  .menu-btn { min-height:44px; min-width:44px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .drawer { transition: translate .2s ease, overlay .2s allow-discrete, display .2s allow-discrete; }
+    @starting-style { .drawer:modal { translate:-100% 0; } }
+  }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="m-bar">
+<button type="button" class="menu-btn" id="open" aria-haspopup="dialog" aria-controls="drawer">Menu</button>
+  <h1>Products</h1>
+</header>
+<main id="main" class="m-main no-tabs">
+<p>128 products in 9 categories.</p>
+<dialog class="drawer" id="drawer" aria-labelledby="d-h" closedby="any" open>
+  <header><h2 id="d-h">Toko Rumah</h2><form method="dialog"><button class="pd-square" aria-label="Close menu" style="--pd-square:var(--tap)">×</button></form></header>
+  <nav aria-label="All sections">
+    <h3>Shop</h3>
+    <ul><li><a href="#home">Home</a></li><li><a href="#orders">Orders</a></li><li><a href="#products" aria-current="page">Products</a></li><li><a href="#customers">Customers</a></li></ul>
+    <h3>Grow</h3>
+    <ul><li><a href="#discounts">Discounts</a></li><li><a href="#reports">Reports</a></li></ul>
+    <h3>You</h3>
+    <ul><li><a href="#settings">Settings</a></li><li><a href="#help">Help</a></li><li><a href="#signout">Sign out</a></li></ul>
+  </nav>
+</dialog>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+var d=document.getElementById('drawer'), o=document.getElementById('open');
+o.addEventListener('click',function(){ if(d.open) d.close(); d.showModal(); });
+d.addEventListener('close',function(){ o.focus(); });
+</script>
+</body>
+</html>

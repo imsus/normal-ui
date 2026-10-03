@@ -1,0 +1,63 @@
+<!-- @dsCard level="pages" group="States" height=560 width=960 page subtitle="A first-run empty list with one clear action, plus a no-results variant" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orders · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .empty { max-width:32rem; margin:var(--space-lg) auto; text-align:center; border:1px dashed var(--control-border); padding:var(--space-lg) var(--space-md); }
+  .empty h2 { margin-top:0; }
+  .empty .acts { display:flex; flex-wrap:wrap; gap:var(--space-md); justify-content:center; align-items:center; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders" aria-current="page">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="page-head"><h1>Orders</h1></div>
+<section class="empty pd-content" aria-labelledby="e-h">
+  <h2 id="e-h">No orders yet</h2>
+  <p>When customers buy from your shop, their orders appear here. Share your shop link to get the first one.</p>
+  <div class="acts"><button type="button">Copy shop link</button><a href="#products">Add more products</a></div>
+</section>
+<section class="empty pd-content" aria-labelledby="n-h">
+  <h2 id="n-h">No orders match “batik” in Returned</h2>
+  <p>Check the spelling, or search all statuses.</p>
+  <div class="acts"><button type="button">Search all statuses</button><a href="#clear">Clear search</a></div>
+</section>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

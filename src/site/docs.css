@@ -1,0 +1,61 @@
+/* Docs-site chrome only, not part of the design system. Wrap guideline prose and
+   code samples in .docs-prose; the Typography specimen deliberately is not, so it
+   shows the system's own bare <pre>. */
+:where(.docs-prose) pre {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--surface-soft);
+  border: 1px solid var(--rule);
+}
+
+/* The way back from a standalone template or page preview to the docs: a small bar in the top
+   layer, bottom start corner, out of the example's layout. */
+.docs-return:popover-open {
+  inset: auto auto calc(var(--space-md) + env(safe-area-inset-bottom, 0px)) var(--space-md);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+  font: 0.875rem/1.5 var(--font-sans);
+  background: var(--surface-raised);
+  color: var(--canvas-text);
+  border: 1px solid var(--control-border);
+}
+
+/* Where a page sits: its level as a badge, its group, its React name. */
+.docs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
+  color: var(--gray-text);
+}
+.docs-meta > a.pd-badge { text-decoration: none; }
+.docs-meta > a.pd-badge:hover { text-decoration: underline; }
+
+/* The five atomic levels in a row, smallest first. Each step is a link; the arrows
+   between them are drawn, not read. Wraps onto more lines when narrow. */
+.docs-levels ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-lg);
+  padding: 0;
+  list-style: none;
+}
+.docs-levels li { display: flex; align-items: center; gap: var(--space-xs); }
+.docs-levels li + li::before { content: "→" / ""; color: var(--gray-text); }
+.docs-levels a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 2.75rem;
+  padding-inline: var(--space-sm);
+  border: 1px solid var(--control-border);
+  text-decoration: none;
+}
+.docs-levels a:hover b { text-decoration: underline; }
+.docs-levels small { color: var(--gray-text); font-variant-numeric: tabular-nums; }
+.docs-levels a[aria-current="page"] { background: var(--highlight); color: var(--highlight-text); border-color: var(--highlight); }
+.docs-levels a[aria-current="page"] small { color: inherit; }

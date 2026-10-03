@@ -1,0 +1,50 @@
+<!-- @dsCard level="pages" group="Marketing" height=840 width=960 page subtitle="A help centre home: search first, then popular topics and a way to contact a person" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>HelpCenterPage</title><style>
+  body { margin:0; }
+  .wrap { max-width:60rem; margin:0 auto; padding:0 var(--space-md); }
+  .top { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:center; justify-content:space-between; padding-block:var(--space-sm); border-bottom:1px solid var(--rule); }
+  .top ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; align-items:center; }
+  .top strong { font-size:1.17em; }
+  .muted { color:var(--gray-text); }
+  .cta { display:inline-flex; align-items:center; min-height:44px; padding:0 var(--space-md); background:var(--canvas-text); color:var(--canvas) !important; text-decoration:none; font:700 1rem var(--font-sans); }
+  .cta:hover { text-decoration:underline; }
+  .cta.alt { background:var(--button-face); color:var(--button-text) !important; border:1px solid var(--control-border); font-weight:400; }
+  footer { border-top:1px solid var(--rule); margin-top:var(--space-lg); padding-block:var(--space-md); }
+  footer ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; margin:0; }
+
+  .hs { padding-block:var(--space-lg); }
+  .hs h1 { margin:0 0 var(--space-sm); }
+  .hs form { display:flex; gap:var(--space-sm); max-width:36rem; }
+  .hs input { flex:1; min-height:44px; }
+  .topics { display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem,1fr)); gap:var(--space-lg); list-style:none; padding:0; }
+  .topics h2 { font-size:1.17em; margin:0 0 var(--space-xs); }
+  .topics ul { padding-inline-start:1.25em; margin:var(--space-xs) 0; }
+  .contact { border:1px solid var(--control-border); padding:var(--space-md); margin-top:var(--space-lg); }
+  .contact ul { list-style:none; padding:0; display:grid; gap:var(--space-xs); }
+</style></head>
+<body>
+<a href="#main" style="position:absolute;left:-999px" onfocus="this.style.left='8px'" onblur="this.style.left='-999px'">Skip to main content</a>
+<header class="wrap top"><strong>Toko Rumah</strong><nav aria-label="Main"><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#help">Help</a></li><li><a href="#signin">Sign in</a></li><li><a class="cta" href="#signup">Start free</a></li></ul></nav></header>
+<main id="main" class="wrap">
+<section class="hs" aria-labelledby="hc">
+  <h1 id="hc">How can we help?</h1>
+  <form role="search" onsubmit="return false"><label for="hq" class="vh" style="position:absolute;left:-999px">Search help articles</label><input id="hq" type="search" placeholder="For example: refund, courier, stock"><button type="submit">Search</button></form>
+  <p class="muted"><small>Popular: <a href="#r">returns</a>, <a href="#c">change courier</a>, <a href="#p">payouts</a></small></p>
+</section>
+<ul class="topics">
+  <li><h2><a href="#orders">Orders and delivery</a></h2><p class="muted">12 articles</p><ul><li><a href="#a1">Returning an item</a></li><li><a href="#a2">Tracking a parcel</a></li></ul></li>
+  <li><h2><a href="#payments">Payments and payouts</a></h2><p class="muted">8 articles</p><ul><li><a href="#a3">When do I get paid?</a></li><li><a href="#a4">Refunding a customer</a></li></ul></li>
+  <li><h2><a href="#products">Products and stock</a></h2><p class="muted">10 articles</p><ul><li><a href="#a5">Adding product photos</a></li><li><a href="#a6">Setting stock alerts</a></li></ul></li>
+  <li><h2><a href="#account">Your account</a></h2><p class="muted">6 articles</p><ul><li><a href="#a7">Resetting your password</a></li><li><a href="#a8">Adding staff</a></li></ul></li>
+</ul>
+<section class="contact" aria-labelledby="ct">
+  <h2 id="ct" style="margin-top:0">Talk to a person</h2>
+  <p>We answer every day from 08:00 to 20:00 WIB, usually within an hour.</p>
+  <ul><li><a href="#chat">Start a chat</a></li><li>Email: support@example.com</li><li>Phone: 021 555 0199</li></ul>
+</section>
+</main>
+<footer class="wrap"><ul><li><a href="#about">About</a></li><li><a href="#accessibility">Accessibility statement</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#terms">Terms</a></li></ul></footer>
+</body>
+</html>

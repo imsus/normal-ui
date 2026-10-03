@@ -1,0 +1,64 @@
+<!-- @dsCard level="pages" group="Marketing" height=1180 width=960 page subtitle="A product landing page: a plain promise, one call to action, a product view, features, steps and a closing call to action" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>LandingPage</title><style>
+  body { margin:0; }
+  .wrap { max-width:60rem; margin:0 auto; padding:0 var(--space-md); }
+  .top { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:center; justify-content:space-between; padding-block:var(--space-sm); border-bottom:1px solid var(--rule); }
+  .top ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; align-items:center; }
+  .top strong { font-size:1.17em; }
+  .muted { color:var(--gray-text); }
+  .cta { display:inline-flex; align-items:center; min-height:44px; padding:0 var(--space-md); background:var(--canvas-text); color:var(--canvas) !important; text-decoration:none; font:700 1rem var(--font-sans); }
+  .cta:hover { text-decoration:underline; }
+  .cta.alt { background:var(--button-face); color:var(--button-text) !important; border:1px solid var(--control-border); font-weight:400; }
+  footer { border-top:1px solid var(--rule); margin-top:var(--space-lg); padding-block:var(--space-md); }
+  footer ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; margin:0; }
+
+  .hero { padding-block:var(--space-indent) var(--space-lg); max-width:40rem; }
+  .hero h1 { font-size:3rem; line-height:1.05; margin:0 0 var(--space-md); }
+  .hero p { font-size:1.25rem; }
+  .acts { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:center; }
+  .features { display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem,1fr)); gap:var(--space-lg); padding:0; list-style:none; }
+  .features h3 { margin:0 0 var(--space-xs); font-size:1.17em; }
+  .features li { border-top:3px solid var(--canvas-text); padding-top:var(--space-sm); }
+  .shot { border:1px solid var(--control-border); padding:var(--space-md); font-family:var(--font-sans); }
+  .shot table { width:100%; }
+  .nums { display:flex; flex-wrap:wrap; gap:var(--space-lg); list-style:none; padding:0; }
+  .nums b { display:block; font-size:2rem; }
+  .close { border:2px solid var(--canvas-text); padding:var(--space-lg); margin-top:var(--space-lg); }
+</style></head>
+<body>
+<a href="#main" style="position:absolute;left:-999px" onfocus="this.style.left='8px'" onblur="this.style.left='-999px'">Skip to main content</a>
+<header class="wrap top"><strong>Toko Rumah</strong><nav aria-label="Main"><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#help">Help</a></li><li><a href="#signin">Sign in</a></li><li><a class="cta" href="#signup">Start free</a></li></ul></nav></header>
+<main id="main" class="wrap">
+<section class="hero" aria-labelledby="h">
+  <h1 id="h">Run your small shop from one plain page.</h1>
+  <p>Orders, stock and customer messages in one place. Works on any phone, any screen reader, any connection.</p>
+  <div class="acts"><a class="cta" href="#signup">Start free</a><a href="#tour">Take a 2-minute tour</a></div>
+  <p class="muted"><small>Free for your first 50 orders a month. No card needed.</small></p>
+</section>
+<figure class="shot" style="margin:0">
+  <figcaption class="muted"><small>Your orders page</small></figcaption>
+  <table><thead><tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Status</th></tr></thead><tbody><tr><td>#1048</td><td>Budi Hartono</td><td><span class="pd-badge">Paid</span></td></tr><tr><td>#1047</td><td>Sari Wulandari</td><td><span class="pd-badge">Packing</span></td></tr></tbody></table>
+</figure>
+<h2 id="features">What you get</h2>
+<ul class="features">
+  <li><h3>Orders in one list</h3><p>From your shop, WhatsApp and marketplaces, sorted by what to ship first.</p></li>
+  <li><h3>Stock that warns you</h3><p>An email before a product runs out, not after a customer finds out.</p></li>
+  <li><h3>Accessible by default</h3><p>Built to WCAG 2.2 AA, so staff and customers who use assistive tech can work without help.</p></li>
+</ul>
+<h2>How it works</h2>
+<ol>
+  <li>Add your products and photos.</li>
+  <li>Share your shop link, or connect the marketplaces you already sell on.</li>
+  <li>Pack and ship from one list. Customers get tracking by email.</li>
+</ol>
+<section class="close" aria-labelledby="c-h">
+  <h2 id="c-h" style="margin-top:0">Open your shop today</h2>
+  <p>Set up takes about ten minutes. Bring your product photos.</p>
+  <a class="cta" href="#signup">Start free</a>
+</section>
+</main>
+<footer class="wrap"><ul><li><a href="#about">About</a></li><li><a href="#accessibility">Accessibility statement</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#terms">Terms</a></li></ul></footer>
+</body>
+</html>

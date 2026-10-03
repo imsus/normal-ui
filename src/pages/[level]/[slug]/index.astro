@@ -1,0 +1,15 @@
+---
+// A component (atoms, molecules, organisms) or an example (templates, pages).
+import ComponentDoc from '../../../site/ComponentDoc.astro';
+import ExampleDoc from '../../../site/ExampleDoc.astro';
+import { components, examples } from '../../../lib/site';
+
+export function getStaticPaths() {
+  return [
+    ...components.map((c) => ({ params: { level: c.level, slug: c.slug }, props: { component: c.name } })),
+    ...examples.map((e) => ({ params: { level: e.level, slug: e.slug }, props: { example: e.name } })),
+  ];
+}
+const { component, example } = Astro.props as { component?: string; example?: string };
+---
+{component ? <ComponentDoc name={component} /> : <ExampleDoc name={example!} />}

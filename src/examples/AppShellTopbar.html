@@ -1,0 +1,54 @@
+<!-- @dsCard level="templates" group="App shells" height=420 width=1200 page subtitle="Top-bar-only shell: horizontal navigation, page header with actions, centred content and footer" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AppShellTopbar</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:10; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+
+  :root { --top-h:56px; --pd-sticky-top:calc(var(--top-h) + var(--space-sm)); }
+  body { margin:0; min-height:100dvh; display:flex; flex-direction:column; }
+  .g-offline { margin:0; padding:var(--space-xs) var(--space-md); background:var(--canvas-text); color:var(--canvas); font-family:var(--font-sans); }
+  .topbar { position:sticky; top:0; z-index:3; background:var(--canvas); border-bottom:1px solid var(--control-border); }
+  .topbar .in { max-width:72rem; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-xs) var(--space-lg); min-height:var(--top-h); padding:0 var(--space-md); }
+  .brand { font-weight:700; font-size:1.17em; }
+  .topbar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; flex:1; }
+  .topbar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:3px; text-underline-offset:.4em; }
+  main { flex:1; width:100%; max-width:72rem; margin:0 auto; padding:var(--space-md); box-sizing:border-box; }
+  main:focus { outline:none; }
+  .ph { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:end; justify-content:space-between; border-bottom:1px solid var(--rule); padding-bottom:var(--space-sm); }
+  .ph h1 { margin:var(--space-xs) 0 0; }
+  .ph .acts { display:flex; gap:var(--space-sm); }
+  table { width:100%; }
+  footer { border-top:1px solid var(--rule); } footer .in { max-width:72rem; margin:0 auto; padding:var(--space-sm) var(--space-md); font-size:.875rem; }
+  @media (max-width: 640px) { .topbar ul { order:3; flex-basis:100%; overflow-x:auto; flex-wrap:nowrap; padding-bottom:var(--space-xs); } }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<p class="g-offline" id="offline" role="status" hidden>You’re offline. Changes sync when you reconnect.</p>
+<header class="topbar"><div class="in">
+  <span class="brand">Toko Rumah</span>
+  <nav aria-label="Main"><ul><li><a href="#home">Dashboard</a></li><li><a href="#orders" aria-current="page">Orders</a></li><li><a href="#products">Products</a></li><li><a href="#reports">Reports</a></li></ul></nav>
+  <button type="button" popovertarget="acct" aria-haspopup="true">Imam <span class="pd-chevron" aria-hidden="true"></span></button>
+  <div popover id="acct" class="pd-menu"><ul><li><a href="#settings">Settings</a></li><li><a href="#signout">Sign out</a></li></ul></div>
+</div></header>
+<main id="main" class="pd-stack" tabindex="-1">
+  <nav aria-label="Breadcrumb"><ol><li><a href="#home">Dashboard</a></li><li><a href="#orders" aria-current="page">Orders</a></li></ol></nav>
+  <div class="ph"><h1>Orders</h1><div class="acts"><button type="button">Export CSV</button><button type="button">New order</button></div></div>
+  <table><caption class="vh">Latest orders</caption><thead><tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col" class="num">Total</th></tr></thead>
+  <tbody><tr><td><a href="#o1048">#1048</a></td><td>Budi Hartono</td><td>Paid</td><td class="num">Rp 289.000</td></tr><tr><td><a href="#o1047">#1047</a></td><td>Sari Wulandari</td><td>Packing</td><td class="num">Rp 412.000</td></tr><tr><td><a href="#o1046">#1046</a></td><td>Dewi Lestari</td><td>Awaiting payment</td><td class="num">Rp 150.000</td></tr></tbody></table>
+</main>
+<footer><div class="in"><a href="#accessibility">Accessibility statement</a> · <a href="#help">Help</a></div></footer>
+<div id="announce" class="vh" role="status" aria-live="polite"></div>
+<script>
+var off=document.getElementById('offline'); function net(){ off.hidden=navigator.onLine; } addEventListener('online',net); addEventListener('offline',net); net();
+</script>
+</body>
+</html>

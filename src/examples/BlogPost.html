@@ -1,0 +1,183 @@
+<!-- @dsCard level="pages" group="Content" height=2600 width=960 page subtitle="A long-form blog post using every text element in context: byline, lead, figure, pull quote, code, table, footnotes and related posts" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Why we stopped using bubble wrap</title>
+<style>
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .site { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:baseline; justify-content:space-between; }
+  .site ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; margin:0; }
+  .site strong { font-size:1.17em; }
+  .post { max-width:40rem; }
+  .byline { color:var(--gray-text); }
+  /* The header's last child loses its margin (no stray space at the end of a box),
+     so the header itself keeps one line before the lead. */
+  .post > header { margin-block-end:var(--pd-flow); }
+  .lead { font-size:1.17rem; line-height:1.5; }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .table-wrap { overflow-x:auto; margin-block-end:var(--pd-flow); }
+  .table-wrap table { margin:0; }
+  .figure-art { display:block; width:100%; border:1px solid var(--control-border); }
+  .notes { border-top:1px solid var(--rule); padding-top:var(--space-sm); }
+  /* Blocks that end a box lose their bottom margin, so the end of the post sets its
+     own: a line after the notes and the byline, two before the related posts. */
+  .notes, .post > footer { margin-block-end:var(--pd-flow); }
+  .post { margin-block-end:calc(var(--pd-flow) * 2); }
+  .notes ol { padding-inline-start:1.5em; }
+  .related ul { padding-inline-start:1.25em; }
+  footer ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="site">
+  <strong>Toko Rumah</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#journal" aria-current="page">Journal</a></li>
+      <li><a href="#help">Help</a></li>
+    </ul>
+  </nav>
+</header>
+<hr>
+
+<main id="main" class="pd-content">
+  <article class="post" aria-labelledby="post-title">
+    <header>
+      <p><small><a href="#journal">Journal</a> › <a href="#packing">Packing</a></small></p>
+      <h1 id="post-title">Why we stopped using bubble wrap</h1>
+      <p class="byline"><small>By <a href="#sari" rel="author">Sari Wulandari</a> · <time datetime="2026-09-30">30 September 2026</time> · 6 minute read</small></p>
+    </header>
+
+    <p class="lead">A year ago every rattan tray left our workshop in three layers of plastic. Today none of them do, and our breakage rate went <em>down</em>.</p>
+
+    <p>This is the story of how a small shop in <abbr title="Bandung, West Java">Bandung</abbr> replaced bubble wrap with recycled board and dried banana leaves, what it cost us, and the one mistake we made along the way. If you only read one thing, read this: <mark>breakages fell from 2.1% to 0.4% of orders</mark>.</p>
+
+    <h2>The problem with plastic</h2>
+    <p>Rattan is light but brittle at the rim. Bubble wrap protects the rim well, but it is bulky, it costs us about Rp 4.200 per tray, and most customers told us it went straight in the bin<sup id="r1"><a href="#n1" aria-describedby="notes-h">1</a></sup>. A <dfn>breakage</dfn>, in our numbers, is any item a customer reports as cracked or split on arrival, whether or not they ask for a refund.</p>
+
+    <h3>What customers said</h3>
+    <p>We asked 120 customers one question by email: <q>What would you change about how your order arrived?</q> Their answers, grouped:</p>
+    <ul>
+      <li><strong>Too much plastic</strong> (64 people), the most common answer by far.</li>
+      <li>Box too big for the item (31 people).</li>
+      <li>Nothing to change (25 people).</li>
+    </ul>
+
+    <h2>What we tried</h2>
+    <p>We tested three materials over eight weeks, shipping each to the same five cities:</p>
+    <ol>
+      <li>Shredded recycled paper, loose in the box.</li>
+      <li>Moulded pulp corners, made to fit each tray size.</li>
+      <li>Recycled board sleeves with a wrap of dried banana leaf.</li>
+    </ol>
+
+    <figure>
+      <svg class="figure-art" viewBox="0 0 640 220" role="img" aria-labelledby="f1-t">
+        <title id="f1-t">Breakage rate by packing material: bubble wrap 2.1%, shredded paper 3.4%, pulp corners 0.9%, board and leaf 0.4%</title>
+        <g font-family="system-ui, sans-serif" font-size="14" fill="var(--canvas-text)">
+          <text x="24" y="44">Bubble wrap</text><text x="24" y="94">Shredded paper</text>
+          <text x="24" y="144">Pulp corners</text><text x="24" y="194">Board and leaf</text>
+        </g>
+        <g fill="var(--link)">
+          <rect x="160" y="28" width="250" height="24" /><rect x="160" y="78" width="405" height="24" />
+          <rect x="160" y="128" width="107" height="24" /><rect x="160" y="178" width="48" height="24" />
+        </g>
+        <g font-family="system-ui, sans-serif" font-size="14" fill="var(--canvas-text)">
+          <text x="418" y="45">2.1%</text><text x="573" y="95">3.4%</text><text x="275" y="145">0.9%</text><text x="216" y="195">0.4%</text>
+        </g>
+      </svg>
+      <figcaption>Breakage rate by packing material, 1,200 orders over eight weeks. Lower is better.</figcaption>
+    </figure>
+
+    <p>Shredded paper was the cheapest and the worst: trays shifted in transit and the rims took the knocks. Pulp corners worked well but needed a different mould for each of our nine tray sizes. The board sleeve with a banana-leaf wrap won on breakage <em>and</em> on cost.</p>
+
+    <h3>The numbers</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>Cost and breakage per tray, by packing material</caption>
+        <thead><tr><th scope="col">Material</th><th scope="col" class="num">Cost</th><th scope="col" class="num">Breakage</th><th scope="col">Recyclable</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Bubble wrap</th><td class="num">Rp 4.200</td><td class="num">2.1%</td><td>No</td></tr>
+          <tr><th scope="row">Shredded paper</th><td class="num">Rp 1.100</td><td class="num">3.4%</td><td>Yes</td></tr>
+          <tr><th scope="row">Pulp corners</th><td class="num">Rp 3.800</td><td class="num">0.9%</td><td>Yes</td></tr>
+          <tr><th scope="row">Board and leaf</th><td class="num">Rp 2.600</td><td class="num">0.4%</td><td>Yes, and compostable</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure>
+      <blockquote>
+        <p>The leaves were my grandmother's idea. She wrapped everything in them. We just measured whether she was right.</p>
+      </blockquote>
+      <figcaption>Dewi Lestari, who runs our packing room</figcaption>
+    </figure>
+
+    <h2>The mistake</h2>
+    <p>Our first batch of leaves was not dry enough. In the wet season a few boxes arrived damp, and two customers in Bogor found mould on the leaf<sup id="r2"><a href="#n2" aria-describedby="notes-h">2</a></sup>. We now dry every batch for <del>three</del> <ins>five</ins> days and check it with a moisture meter before it reaches the packing table.</p>
+
+    <h3>How we log each batch</h3>
+    <p>Each batch gets a line in a shared sheet. The packing room exports it every Friday; this is the check that flags a damp batch:</p>
+    <pre><code>if batch.moisture_percent &gt; 12:
+    hold(batch, reason="too damp to pack")
+else:
+    release(batch)</code></pre>
+    <p>A held batch shows <samp>HOLD: too damp to pack</samp> on the packing room screen. To release one by hand, a supervisor presses <kbd>Ctrl</kbd> + <kbd>R</kbd> after a second reading. The threshold is <var>m</var> ≤ 12%, where <var>m</var> is the reading from the meter.</p>
+
+    <h2>What it means for your order</h2>
+    <dl>
+      <dt>Will my tray still arrive safely?</dt>
+      <dd>Yes. Breakage is now a fifth of what it was with plastic.</dd>
+      <dt>What do I do with the packing?</dt>
+      <dd>Put the board in paper recycling and the leaf in compost or general waste.</dd>
+      <dt>Does it cost more?</dt>
+      <dd>No. It costs us less than bubble wrap, so <s>Rp 15.000</s> standard delivery is now Rp 12.000.</dd>
+    </dl>
+
+    <details name="post-faq">
+      <summary>Where do the leaves come from?</summary>
+      <p>From two banana farms near Garut. They are leaves the farms would otherwise burn.</p>
+    </details>
+    <details name="post-faq">
+      <summary>Can I ask for plastic packing?</summary>
+      <p>Not any more. If something arrives damaged, we replace it at no cost.</p>
+    </details>
+
+    <section class="notes" aria-labelledby="notes-h">
+      <h2 id="notes-h">Notes</h2>
+      <ol>
+        <li id="n1"><small>From our 2025 customer survey, 412 replies. <a href="#r1">Back to the text</a></small></li>
+        <li id="n2"><small>Both customers got a replacement the same week. <a href="#r2">Back to the text</a></small></li>
+      </ol>
+    </section>
+
+    <footer>
+      <address>Written by <a href="#sari">Sari Wulandari</a>, Toko Rumah, Jl. Braga No. 12, Bandung. Questions: <a href="mailto:journal@example.com">journal@example.com</a></address>
+    </footer>
+  </article>
+
+  <aside class="related" aria-labelledby="related-h">
+    <h2 id="related-h">More from the journal</h2>
+    <ul>
+      <li><a href="#rattan">How a rattan tray is made, start to finish</a></li>
+      <li><a href="#batik">Choosing a batik runner for your table</a></li>
+      <li><a href="#returns">Our returns, by the numbers</a></li>
+    </ul>
+  </aside>
+</main>
+
+<hr>
+<footer>
+  <ul>
+    <li><a href="#about">About us</a></li>
+    <li><a href="#accessibility">Accessibility statement</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p><small>© 2026 Toko Rumah</small></p>
+</footer>
+</body>
+</html>

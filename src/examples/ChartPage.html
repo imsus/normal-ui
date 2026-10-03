@@ -1,0 +1,126 @@
+<!-- @dsCard level="pages" group="App" height=1000 width=960 page subtitle="Charts with filters, native tooltips, a crosshair and a table view" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reports · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .filters { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:end; margin-block:var(--space-md) var(--space-lg); }
+  .filters .field { display:grid; gap:var(--space-xs); }
+  .filters fieldset { margin:0; border:0; padding-inline:0; display:flex; gap:var(--space-md); padding-block:var(--space-xs); }
+  figure { margin:0 0 var(--space-lg); }
+  figcaption { margin-bottom:var(--space-sm); }
+  svg.chart { width:100%; height:auto; overflow:visible; display:block; }
+  .grid { stroke:var(--rule); stroke-opacity:.4; }
+  .tick { fill:var(--gray-text); font:12px var(--font-sans); }
+  .line { fill:none; stroke:var(--link); stroke-width:2; stroke-linejoin:round; }
+  .area { fill:var(--link); fill-opacity:.08; }
+  .dot { fill:var(--link); stroke:var(--canvas); stroke-width:2; }
+  .endlab { fill:var(--canvas-text); font:700 13px var(--font-sans); }
+  .hit { fill:transparent; }
+  .cross { stroke:var(--canvas-text); stroke-width:1; stroke-dasharray:3 3; }
+  .bar { fill:var(--link); }
+  .lab { fill:var(--canvas-text); font:14px var(--font-sans); }
+  .val { fill:var(--canvas-text); font:14px var(--font-sans); font-variant-numeric:tabular-nums; }
+  .readout { font:0.875rem var(--font-sans); min-height:1.5em; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports" aria-current="page">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="page-head">
+  <h1>Reports</h1>
+  <p class="muted">September 2026 · 1,135 orders</p>
+</div>
+
+<form class="filters" onsubmit="return false">
+  <div class="field">
+    <label for="period">Period</label>
+    <select id="period"><option>This month</option><option>Last month</option><option>Last 90 days</option></select>
+  </div>
+  <fieldset>
+    <legend class="vh">Measure</legend>
+    <label><input type="radio" name="measure" checked> Orders</label>
+    <label><input type="radio" name="measure"> Revenue</label>
+  </fieldset>
+  <button type="button">Download CSV</button>
+</form>
+
+<figure>
+  <figcaption><b>Orders per day</b> <span class="muted">· weekends are busiest</span></figcaption>
+  <p class="readout" id="readout" aria-live="polite">Move over the chart, or focus it and use the arrow keys, to read a day.</p>
+  <svg class="chart" id="line" viewBox="0 0 920 260" role="img" tabindex="0" aria-label="Line chart of orders per day in September. Rising from 30 on 1 September to 51 on 28 September, peak 61 on 27 September." aria-describedby="readout">
+    <line class="grid" x1="40" x2="864" y1="232.0" y2="232.0"/><text class="tick" x="34" y="236" text-anchor="end">0</text><line class="grid" x1="40" x2="864" y1="170.3" y2="170.3"/><text class="tick" x="34" y="174" text-anchor="end">20</text><line class="grid" x1="40" x2="864" y1="108.6" y2="108.6"/><text class="tick" x="34" y="113" text-anchor="end">40</text><line class="grid" x1="40" x2="864" y1="46.9" y2="46.9"/><text class="tick" x="34" y="51" text-anchor="end">60</text><text class="tick" x="40.0" y="252" text-anchor="middle">1 Sep</text><text class="tick" x="223.1" y="252" text-anchor="middle">7 Sep</text><text class="tick" x="436.7" y="252" text-anchor="middle">14 Sep</text><text class="tick" x="650.4" y="252" text-anchor="middle">21 Sep</text><text class="tick" x="864.0" y="252" text-anchor="middle">28 Sep</text>
+    <path class="area" d="M40.0,232.0 L40.0,139.4 L70.5,145.6 L101.0,133.3 L131.6,117.8 L162.1,114.7 L192.6,111.7 L223.1,117.8 L253.6,139.4 L284.1,124.0 L314.7,108.6 L345.2,136.3 L375.7,77.7 L406.2,93.1 L436.7,130.2 L467.3,124.0 L497.8,108.6 L528.3,105.5 L558.8,120.9 L589.3,80.8 L619.9,83.9 L650.4,93.1 L680.9,96.2 L711.4,114.7 L741.9,83.9 L772.4,105.5 L803.0,68.5 L833.5,43.8 L864.0,74.6 L864.0,232.0 Z"/>
+    <polyline class="line" points="40.0,139.4 70.5,145.6 101.0,133.3 131.6,117.8 162.1,114.7 192.6,111.7 223.1,117.8 253.6,139.4 284.1,124.0 314.7,108.6 345.2,136.3 375.7,77.7 406.2,93.1 436.7,130.2 467.3,124.0 497.8,108.6 528.3,105.5 558.8,120.9 589.3,80.8 619.9,83.9 650.4,93.1 680.9,96.2 711.4,114.7 741.9,83.9 772.4,105.5 803.0,68.5 833.5,43.8 864.0,74.6"/>
+    <line class="cross" id="cross" x1="0" x2="0" y1="16" y2="232" visibility="hidden"/>
+    <circle class="dot" id="focusdot" r="5" cx="0" cy="0" visibility="hidden"/>
+    <circle class="dot" r="5" cx="864.0" cy="74.6"/>
+    <text class="endlab" x="874.0" y="78.6">51</text>
+    <rect class="hit" x="24.7" y="16" width="30.5" height="216" data-i="0"><title>Tue 01 Sep: 30 orders</title></rect><rect class="hit" x="55.3" y="16" width="30.5" height="216" data-i="1"><title>Wed 02 Sep: 28 orders</title></rect><rect class="hit" x="85.8" y="16" width="30.5" height="216" data-i="2"><title>Thu 03 Sep: 32 orders</title></rect><rect class="hit" x="116.3" y="16" width="30.5" height="216" data-i="3"><title>Fri 04 Sep: 37 orders</title></rect><rect class="hit" x="146.8" y="16" width="30.5" height="216" data-i="4"><title>Sat 05 Sep: 38 orders</title></rect><rect class="hit" x="177.3" y="16" width="30.5" height="216" data-i="5"><title>Sun 06 Sep: 39 orders</title></rect><rect class="hit" x="207.9" y="16" width="30.5" height="216" data-i="6"><title>Mon 07 Sep: 37 orders</title></rect><rect class="hit" x="238.4" y="16" width="30.5" height="216" data-i="7"><title>Tue 08 Sep: 30 orders</title></rect><rect class="hit" x="268.9" y="16" width="30.5" height="216" data-i="8"><title>Wed 09 Sep: 35 orders</title></rect><rect class="hit" x="299.4" y="16" width="30.5" height="216" data-i="9"><title>Thu 10 Sep: 40 orders</title></rect><rect class="hit" x="329.9" y="16" width="30.5" height="216" data-i="10"><title>Fri 11 Sep: 31 orders</title></rect><rect class="hit" x="360.4" y="16" width="30.5" height="216" data-i="11"><title>Sat 12 Sep: 50 orders</title></rect><rect class="hit" x="391.0" y="16" width="30.5" height="216" data-i="12"><title>Sun 13 Sep: 45 orders</title></rect><rect class="hit" x="421.5" y="16" width="30.5" height="216" data-i="13"><title>Mon 14 Sep: 33 orders</title></rect><rect class="hit" x="452.0" y="16" width="30.5" height="216" data-i="14"><title>Tue 15 Sep: 35 orders</title></rect><rect class="hit" x="482.5" y="16" width="30.5" height="216" data-i="15"><title>Wed 16 Sep: 40 orders</title></rect><rect class="hit" x="513.0" y="16" width="30.5" height="216" data-i="16"><title>Thu 17 Sep: 41 orders</title></rect><rect class="hit" x="543.6" y="16" width="30.5" height="216" data-i="17"><title>Fri 18 Sep: 36 orders</title></rect><rect class="hit" x="574.1" y="16" width="30.5" height="216" data-i="18"><title>Sat 19 Sep: 49 orders</title></rect><rect class="hit" x="604.6" y="16" width="30.5" height="216" data-i="19"><title>Sun 20 Sep: 48 orders</title></rect><rect class="hit" x="635.1" y="16" width="30.5" height="216" data-i="20"><title>Mon 21 Sep: 45 orders</title></rect><rect class="hit" x="665.6" y="16" width="30.5" height="216" data-i="21"><title>Tue 22 Sep: 44 orders</title></rect><rect class="hit" x="696.1" y="16" width="30.5" height="216" data-i="22"><title>Wed 23 Sep: 38 orders</title></rect><rect class="hit" x="726.7" y="16" width="30.5" height="216" data-i="23"><title>Thu 24 Sep: 48 orders</title></rect><rect class="hit" x="757.2" y="16" width="30.5" height="216" data-i="24"><title>Fri 25 Sep: 41 orders</title></rect><rect class="hit" x="787.7" y="16" width="30.5" height="216" data-i="25"><title>Sat 26 Sep: 53 orders</title></rect><rect class="hit" x="818.2" y="16" width="30.5" height="216" data-i="26"><title>Sun 27 Sep: 61 orders</title></rect><rect class="hit" x="848.7" y="16" width="30.5" height="216" data-i="27"><title>Mon 28 Sep: 51 orders</title></rect>
+  </svg>
+  <details>
+    <summary>Show as table</summary>
+    <table><caption class="vh">Orders per day, September 2026</caption><thead><tr><th scope="col">Day</th><th scope="col" class="num">Orders</th></tr></thead><tbody><tr><th scope="row">Tue 01 Sep</th><td class="num">30</td></tr><tr><th scope="row">Wed 02 Sep</th><td class="num">28</td></tr><tr><th scope="row">Thu 03 Sep</th><td class="num">32</td></tr><tr><th scope="row">Fri 04 Sep</th><td class="num">37</td></tr><tr><th scope="row">Sat 05 Sep</th><td class="num">38</td></tr><tr><th scope="row">Sun 06 Sep</th><td class="num">39</td></tr><tr><th scope="row">Mon 07 Sep</th><td class="num">37</td></tr><tr><th scope="row">Tue 08 Sep</th><td class="num">30</td></tr><tr><th scope="row">Wed 09 Sep</th><td class="num">35</td></tr><tr><th scope="row">Thu 10 Sep</th><td class="num">40</td></tr><tr><th scope="row">Fri 11 Sep</th><td class="num">31</td></tr><tr><th scope="row">Sat 12 Sep</th><td class="num">50</td></tr><tr><th scope="row">Sun 13 Sep</th><td class="num">45</td></tr><tr><th scope="row">Mon 14 Sep</th><td class="num">33</td></tr><tr><th scope="row">Tue 15 Sep</th><td class="num">35</td></tr><tr><th scope="row">Wed 16 Sep</th><td class="num">40</td></tr><tr><th scope="row">Thu 17 Sep</th><td class="num">41</td></tr><tr><th scope="row">Fri 18 Sep</th><td class="num">36</td></tr><tr><th scope="row">Sat 19 Sep</th><td class="num">49</td></tr><tr><th scope="row">Sun 20 Sep</th><td class="num">48</td></tr><tr><th scope="row">Mon 21 Sep</th><td class="num">45</td></tr><tr><th scope="row">Tue 22 Sep</th><td class="num">44</td></tr><tr><th scope="row">Wed 23 Sep</th><td class="num">38</td></tr><tr><th scope="row">Thu 24 Sep</th><td class="num">48</td></tr><tr><th scope="row">Fri 25 Sep</th><td class="num">41</td></tr><tr><th scope="row">Sat 26 Sep</th><td class="num">53</td></tr><tr><th scope="row">Sun 27 Sep</th><td class="num">61</td></tr><tr><th scope="row">Mon 28 Sep</th><td class="num">51</td></tr></tbody></table>
+  </details>
+</figure>
+
+<figure>
+  <figcaption><b>Orders by category</b> <span class="muted">· September</span></figcaption>
+  <svg class="chart" viewBox="0 0 920 188" role="img" aria-label="Bar chart of orders by category. Clothing leads with 412 orders.">
+    <text class="lab" x="172" y="25" text-anchor="end">Clothing</text><rect class="bar" x="180" y="12" width="613" height="20" rx="2"><title>Clothing: 412 orders</title></rect><text class="val" x="799" y="27">412</text><text class="lab" x="172" y="61" text-anchor="end">Home and kitchen</text><rect class="bar" x="180" y="48" width="444" height="20" rx="2"><title>Home and kitchen: 298 orders</title></rect><text class="val" x="630" y="63">298</text><text class="lab" x="172" y="97" text-anchor="end">Electronics</text><rect class="bar" x="180" y="84" width="262" height="20" rx="2"><title>Electronics: 176 orders</title></rect><text class="val" x="448" y="99">176</text><text class="lab" x="172" y="133" text-anchor="end">Food</text><rect class="bar" x="180" y="120" width="143" height="20" rx="2"><title>Food: 96 orders</title></rect><text class="val" x="329" y="135">96</text><text class="lab" x="172" y="169" text-anchor="end">Gifts</text><rect class="bar" x="180" y="156" width="86" height="20" rx="2"><title>Gifts: 58 orders</title></rect><text class="val" x="272" y="171">58</text>
+  </svg>
+  <details>
+    <summary>Show as table</summary>
+    <table><caption class="vh">Orders by category</caption><thead><tr><th scope="col">Category</th><th scope="col" class="num">Orders</th></tr></thead><tbody><tr><th scope="row">Clothing</th><td class="num">412</td></tr><tr><th scope="row">Home and kitchen</th><td class="num">298</td></tr><tr><th scope="row">Electronics</th><td class="num">176</td></tr><tr><th scope="row">Food</th><td class="num">96</td></tr><tr><th scope="row">Gifts</th><td class="num">58</td></tr></tbody></table>
+  </details>
+</figure>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+var vals=[30, 28, 32, 37, 38, 39, 37, 30, 35, 40, 31, 50, 45, 33, 35, 40, 41, 36, 49, 48, 45, 44, 38, 48, 41, 53, 61, 51], days=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], svg=document.getElementById('line'), cross=document.getElementById('cross'), dot=document.getElementById('focusdot'), out=document.getElementById('readout');
+var PL=40,PR=56,PT=16,PB=28,W=920,H=260,YM=70,cur=vals.length-1;
+var names=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function x(i){return PL+(W-PL-PR)*i/(vals.length-1);} function y(v){return PT+(H-PT-PB)*(1-v/YM);}
+function show(i){cur=i; cross.setAttribute('x1',x(i)); cross.setAttribute('x2',x(i)); cross.setAttribute('visibility','visible');
+  dot.setAttribute('cx',x(i)); dot.setAttribute('cy',y(vals[i])); dot.setAttribute('visibility','visible');
+  var d=new Date(2026,8,days[i]); out.textContent=names[d.getDay()]+' '+days[i]+' September: '+vals[i]+' orders';}
+svg.querySelectorAll('.hit').forEach(function(r){r.addEventListener('mouseenter',function(){show(+r.dataset.i);});});
+svg.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'){show(Math.min(vals.length-1,cur+1));e.preventDefault();} if(e.key==='ArrowLeft'){show(Math.max(0,cur-1));e.preventDefault();} if(e.key==='Home'){show(0);e.preventDefault();} if(e.key==='End'){show(vals.length-1);e.preventDefault();} });
+svg.addEventListener('focus',function(){show(cur);});
+</script>
+</body>
+</html>

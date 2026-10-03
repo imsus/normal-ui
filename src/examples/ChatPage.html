@@ -1,0 +1,108 @@
+<!-- @dsCard level="pages" group="App" height=660 width=960 page subtitle="Customer support chat: conversation list, message log and composer" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Messages · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .chat { display:grid; grid-template-columns:16rem minmax(0,1fr); gap:var(--space-lg); align-items:start; margin-top:var(--space-md); }
+  @media (max-width:700px) { .chat { grid-template-columns:1fr; } }
+  .threads ul { list-style:none; margin:0; padding:0; border:1px solid var(--control-border); }
+  .threads li + li { border-top:1px solid var(--rule); }
+  .threads a { display:block; padding:var(--space-sm); min-height:var(--space-lg); }
+  .threads a[aria-current] { background:var(--highlight); color:var(--highlight-text); }
+  .threads .who { display:flex; justify-content:space-between; gap:var(--space-sm); }
+  .threads .preview { display:block; font-size:0.83em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .unread { font:700 0.83rem var(--font-sans); }
+  .log { list-style:none; margin:0; padding:0; display:grid; gap:var(--space-md); max-height:26rem; overflow-y:auto; border:1px solid var(--control-border); padding:var(--space-md); }
+  .msg { max-width:32rem; }
+  .msg p { margin:var(--space-xs) 0 0; padding:var(--space-sm) var(--space-md); border:1px solid var(--rule); }
+  .msg.me { justify-self:end; text-align:start; }
+  .msg.me p { background:var(--surface-muted); color:var(--canvas-text); }
+  .msg header { font-size:0.83em; color:var(--gray-text); }
+  .msg.me header { text-align:end; }
+  .composer { display:grid; gap:var(--space-xs); margin-top:var(--space-md); }
+  .composer .row { display:flex; gap:var(--space-sm); align-items:end; flex-wrap:wrap; }
+  .composer textarea { flex:1 1 20rem; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages" aria-current="page">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<h1 class="vh">Messages</h1>
+<div class="chat">
+  <nav class="threads" aria-label="Conversations">
+    <h2 style="font-size:1.17em;margin-block:0 var(--space-sm)">Conversations</h2>
+    <ul>
+      <li><a href="#c1" aria-current="true"><span class="who"><b>Sari Wulandari</b><span class="unread">2 new</span></span><span class="preview">Can I get the refund to a different account?</span></a></li>
+      <li><a href="#c2"><span class="who"><b>Budi Hartono</b><span class="muted"><small>14:02</small></span></span><span class="preview muted">Thanks, the shirt fits well.</span></a></li>
+      <li><a href="#c3"><span class="who"><b>Dewi Lestari</b><span class="muted"><small>Yesterday</small></span></span><span class="preview muted">Is the teak board food-safe?</span></a></li>
+    </ul>
+  </nav>
+
+  <section aria-labelledby="thread-h">
+    <h2 id="thread-h" style="margin-block:0 var(--space-sm);font-size:1.17em">Sari Wulandari <span class="muted" style="font-weight:400">· Order <a href="#o1047">#1047</a></span></h2>
+    <ol class="log" role="log" aria-label="Messages with Sari Wulandari">
+      <li class="msg"><header><b>Sari</b> · <time datetime="2026-09-28T13:10">13:10</time></header><p>Hello, the linen shirt is too small. I started a return this morning.</p></li>
+      <li class="msg me"><header><b>You</b> · <time datetime="2026-09-28T13:24">13:24</time></header><p>Thanks Sari. The return is approved. Drop the parcel at any post office; the label is in your email.</p></li>
+      <li class="msg"><header><b>Sari</b> · <time datetime="2026-09-28T13:40">13:40</time></header><p>Great. Can I get the refund to a different account?</p></li>
+      <li class="msg"><header><b>Sari</b> · <time datetime="2026-09-28T13:41">13:41</time></header><p>My old card was cancelled last week.</p></li>
+    </ol>
+    <form class="composer" id="composer">
+      <label for="reply">Reply to Sari</label>
+      <div class="row">
+        <textarea id="reply" placeholder="Write a reply"></textarea>
+        <button type="submit">Send</button>
+      </div>
+      <small class="muted">Press Send or Ctrl + Enter. Sari gets an email if she is offline.</small>
+    </form>
+  </section>
+</div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+var f=document.getElementById('composer'),t=document.getElementById('reply'),log=document.querySelector('.log');
+function send(e){ if(e) e.preventDefault(); var v=t.value.trim(); if(!v) { t.focus(); return; }
+  var li=document.createElement('li'); li.className='msg me';
+  var now=new Date(); var hm=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
+  var hd=document.createElement('header'); hd.innerHTML='<b>You</b> · '; var tm=document.createElement('time'); tm.textContent=hm; hd.appendChild(tm);
+  var p=document.createElement('p'); p.textContent=v; li.appendChild(hd); li.appendChild(p); log.appendChild(li);
+  log.scrollTop=log.scrollHeight; t.value=''; t.focus(); }
+f.addEventListener('submit',send);
+t.addEventListener('keydown',function(e){ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) send(e); });
+</script>
+</body>
+</html>

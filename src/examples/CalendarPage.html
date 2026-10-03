@@ -1,0 +1,93 @@
+<!-- @dsCard level="pages" group="App" height=700 width=960 page subtitle="A month grid built on a table, with today marked in words and an agenda list" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calendar · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .cal-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:center; justify-content:space-between; }
+  .cal-head h1 { margin-block:var(--space-md); }
+  .cal-head .nav { display:flex; gap:var(--space-sm); }
+  .layout { display:grid; grid-template-columns:minmax(0,1fr) 15rem; gap:var(--space-lg); align-items:start; }
+  @media (max-width:760px) { .layout { grid-template-columns:1fr; } }
+  .month { width:100%; table-layout:fixed; margin:0; }
+  .month th { text-align:start; font-family:var(--font-sans); font-size:.875rem; }
+  .month th abbr { text-decoration:none; }
+  .month td { height:5.5rem; padding:var(--space-xs); }
+  .month td.out .d { color:var(--gray-text); }
+  .month td.today { outline:2px solid var(--canvas-text); outline-offset:-2px; }
+  .month .d { display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; }
+  .month .now { font:700 .75rem var(--font-sans); text-transform:uppercase; letter-spacing:.04em; }
+  .month ul { list-style:none; margin:var(--space-xs) 0 0; padding:0; font:.8125rem/1.3 var(--font-sans); }
+  .month li + li { margin-top:2px; }
+  .agenda ol { list-style:none; margin:0; padding:0; }
+  .agenda li { padding-block:var(--space-xs); border-top:1px solid var(--rule); }
+  .agenda li:first-child { border-top:0; }
+  .agenda time { display:block; font:0.83rem var(--font-sans); color:var(--gray-text); }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#calendar" aria-current="page">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<div class="cal-head">
+  <h1>September 2026</h1>
+  <div class="nav">
+    <button type="button">‹ August</button>
+    <button type="button">Today</button>
+    <button type="button">October ›</button>
+    <button type="button">New event</button>
+  </div>
+</div>
+<div class="layout">
+  <table class="month">
+    <caption class="vh">September 2026, weeks starting Monday</caption>
+    <thead><tr><th scope="col"><abbr title="Monday">Mon</abbr></th><th scope="col"><abbr title="Tuesday">Tue</abbr></th><th scope="col"><abbr title="Wednesday">Wed</abbr></th><th scope="col"><abbr title="Thursday">Thu</abbr></th><th scope="col"><abbr title="Friday">Fri</abbr></th><th scope="col"><abbr title="Saturday">Sat</abbr></th><th scope="col"><abbr title="Sunday">Sun</abbr></th></tr></thead>
+    <tbody><tr><td class="out"><span class="d"><time datetime="2026-08-31"><span aria-hidden="true">31</span><span class="vh">Monday 31 August</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-01"><span aria-hidden="true">1</span><span class="vh">Tuesday 01 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-02"><span aria-hidden="true">2</span><span class="vh">Wednesday 02 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-03"><span aria-hidden="true">3</span><span class="vh">Thursday 03 September</span></time></span><ul><li><a href="#e3">10:00 Supplier call</a></li></ul></td><td class=""><span class="d"><time datetime="2026-09-04"><span aria-hidden="true">4</span><span class="vh">Friday 04 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-05"><span aria-hidden="true">5</span><span class="vh">Saturday 05 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-06"><span aria-hidden="true">6</span><span class="vh">Sunday 06 September</span></time></span></td></tr><tr><td class=""><span class="d"><time datetime="2026-09-07"><span aria-hidden="true">7</span><span class="vh">Monday 07 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-08"><span aria-hidden="true">8</span><span class="vh">Tuesday 08 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-09"><span aria-hidden="true">9</span><span class="vh">Wednesday 09 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-10"><span aria-hidden="true">10</span><span class="vh">Thursday 10 September</span></time></span><ul><li><a href="#e10">09:00 Photo shoot</a></li></ul></td><td class=""><span class="d"><time datetime="2026-09-11"><span aria-hidden="true">11</span><span class="vh">Friday 11 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-12"><span aria-hidden="true">12</span><span class="vh">Saturday 12 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-13"><span aria-hidden="true">13</span><span class="vh">Sunday 13 September</span></time></span></td></tr><tr><td class=""><span class="d"><time datetime="2026-09-14"><span aria-hidden="true">14</span><span class="vh">Monday 14 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-15"><span aria-hidden="true">15</span><span class="vh">Tuesday 15 September</span></time></span><ul><li><a href="#e15">Payroll</a></li></ul></td><td class=""><span class="d"><time datetime="2026-09-16"><span aria-hidden="true">16</span><span class="vh">Wednesday 16 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-17"><span aria-hidden="true">17</span><span class="vh">Thursday 17 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-18"><span aria-hidden="true">18</span><span class="vh">Friday 18 September</span></time></span><ul><li><a href="#e18">08:00 Stock count</a></li></ul></td><td class=""><span class="d"><time datetime="2026-09-19"><span aria-hidden="true">19</span><span class="vh">Saturday 19 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-20"><span aria-hidden="true">20</span><span class="vh">Sunday 20 September</span></time></span></td></tr><tr><td class=""><span class="d"><time datetime="2026-09-21"><span aria-hidden="true">21</span><span class="vh">Monday 21 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-22"><span aria-hidden="true">22</span><span class="vh">Tuesday 22 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-23"><span aria-hidden="true">23</span><span class="vh">Wednesday 23 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-24"><span aria-hidden="true">24</span><span class="vh">Thursday 24 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-25"><span aria-hidden="true">25</span><span class="vh">Friday 25 September</span></time></span><ul><li><a href="#e25">Tax filing due</a></li></ul></td><td class=""><span class="d"><time datetime="2026-09-26"><span aria-hidden="true">26</span><span class="vh">Saturday 26 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-27"><span aria-hidden="true">27</span><span class="vh">Sunday 27 September</span></time></span></td></tr><tr><td class="today" aria-current="date"><span class="d"><time datetime="2026-09-28"><span aria-hidden="true">28</span><span class="vh">Monday 28 September</span></time> <span class="now">Today</span></span><ul><li><a href="#e28">09:00 Team stand-up</a></li><li><a href="#e28">14:00 Sale planning</a></li></ul></td><td class=""><span class="d"><time datetime="2026-09-29"><span aria-hidden="true">29</span><span class="vh">Tuesday 29 September</span></time></span></td><td class=""><span class="d"><time datetime="2026-09-30"><span aria-hidden="true">30</span><span class="vh">Wednesday 30 September</span></time></span><ul><li><a href="#e30">Month close</a></li></ul></td><td class="out"><span class="d"><time datetime="2026-10-01"><span aria-hidden="true">1</span><span class="vh">Thursday 01 October</span></time></span><ul><li><a href="#e1">Autumn sale starts</a></li></ul></td><td class="out"><span class="d"><time datetime="2026-10-02"><span aria-hidden="true">2</span><span class="vh">Friday 02 October</span></time></span></td><td class="out"><span class="d"><time datetime="2026-10-03"><span aria-hidden="true">3</span><span class="vh">Saturday 03 October</span></time></span></td><td class="out"><span class="d"><time datetime="2026-10-04"><span aria-hidden="true">4</span><span class="vh">Sunday 04 October</span></time></span></td></tr></tbody>
+  </table>
+  <section class="agenda panel" aria-labelledby="ag-h">
+    <h2 id="ag-h">Coming up</h2>
+    <ol>
+      <li><time datetime="2026-09-28T09:00">Today, 09:00</time>Team stand-up</li>
+      <li><time datetime="2026-09-28T14:00">Today, 14:00</time>Sale planning with Rina</li>
+      <li><time datetime="2026-09-30">Wednesday 30 September</time>Month close</li>
+      <li><time datetime="2026-10-01">Thursday 1 October</time>Autumn sale starts</li>
+    </ol>
+  </section>
+</div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!-- @dsCard level="templates" group="App shells" height=844 width=390 page subtitle="Installed-app layout: safe areas, standalone and window-controls-overlay modes, install button, offline and update notices" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+<!-- <link rel="manifest" href="/manifest.webmanifest"> with "display": "standalone" or "display_override": ["window-controls-overlay"] -->
+<title>PWALayout</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:10; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+
+  :root { --bar:56px; --tabs:60px; --pd-sticky-top:calc(var(--bar) + env(safe-area-inset-top,0px)); --pd-sticky-bottom:calc(var(--tabs) + env(safe-area-inset-bottom,0px)); }
+  *, *::before, *::after { box-sizing:border-box; }
+  body { margin:0; min-height:100dvh; }
+  .appbar { position:sticky; top:0; z-index:3; display:flex; align-items:center; gap:var(--space-sm); min-height:calc(var(--bar) + env(safe-area-inset-top,0px));
+    padding:env(safe-area-inset-top,0px) calc(var(--space-md) + env(safe-area-inset-right,0px)) 0 calc(var(--space-md) + env(safe-area-inset-left,0px));
+    background:var(--canvas); border-bottom:1px solid var(--rule); }
+  .appbar h1 { flex:1; margin:0; font-size:1.25rem; }
+  /* Desktop installed app with Window Controls Overlay: keep clear of the OS buttons, and let the bar drag the window */
+  @media (display-mode: window-controls-overlay) {
+    .appbar { position:fixed; left:env(titlebar-area-x,0); top:env(titlebar-area-y,0); width:env(titlebar-area-width,100%); height:env(titlebar-area-height,var(--bar)); min-height:0; padding-top:0; app-region:drag; }
+    .appbar button { app-region:no-drag; }
+  }
+  /* Installed: the install button has done its job */
+  @media (display-mode: standalone), (display-mode: window-controls-overlay) { #install { display:none; } }
+  .offline { margin:0; padding:var(--space-xs) var(--space-md); background:var(--canvas-text); color:var(--canvas); font:0.875rem var(--font-sans); }
+  main { padding:var(--space-md) calc(var(--space-md) + env(safe-area-inset-right,0px)) calc(var(--tabs) + var(--space-lg) + env(safe-area-inset-bottom,0px)) calc(var(--space-md) + env(safe-area-inset-left,0px)); }
+  main:focus { outline:none; }
+  .list { list-style:none; margin:0; padding:0; border-top:1px solid var(--rule); }
+  .list li { border-bottom:1px solid var(--rule); }
+  .list a { display:flex; justify-content:space-between; gap:var(--space-sm); align-items:center; min-height:56px; color:var(--canvas-text); text-decoration:none; }
+  .list b { text-decoration:underline; text-decoration-color:var(--link); text-underline-offset:.15em; }
+  .list .amt { font:0.9375rem var(--font-sans); font-variant-numeric:tabular-nums; }
+  .tabs { position:fixed; inset:auto 0 0 0; z-index:3; background:var(--canvas); border-top:1px solid var(--control-border); padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px); }
+  .tabs ul { display:grid; grid-template-columns:repeat(3,1fr); list-style:none; margin:0; padding:0; }
+  .tabs a { display:flex; align-items:center; justify-content:center; min-height:var(--tabs); font:0.875rem var(--font-sans); color:var(--canvas-text); text-decoration:none; border-top:3px solid transparent; }
+  .tabs a[aria-current] { font-weight:700; color:var(--link); border-top-color:var(--link); }
+  .pd-toast { inset:auto var(--space-md) calc(var(--tabs) + var(--space-sm) + env(safe-area-inset-bottom,0px)) var(--space-md); max-width:none; }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="appbar">
+  <h1>Orders</h1>
+  <button type="button" id="install" hidden>Install app</button>
+  <button type="button" aria-label="Refresh orders" style="min-height:44px;min-width:44px">↻</button>
+</header>
+<p class="offline" id="offline" role="status">Example: You’re offline. New orders will appear when you reconnect.</p>
+<main id="main" tabindex="-1">
+  <ul class="list">
+    <li><a href="#o1048"><b>Budi Hartono</b><span class="amt">Rp 289.000</span></a></li>
+    <li><a href="#o1047"><b>Sari Wulandari</b><span class="amt">Rp 412.000</span></a></li>
+    <li><a href="#o1046"><b>Dewi Lestari</b><span class="amt">Rp 150.000</span></a></li>
+    <li><a href="#o1045"><b>Agus Pratama</b><span class="amt">Rp 96.000</span></a></li>
+  </ul>
+</main>
+<nav class="tabs" aria-label="Main"><ul><li><a href="#home">Home</a></li><li><a href="#orders" aria-current="page">Orders</a></li><li><a href="#account">Account</a></li></ul></nav>
+<div id="announce" class="vh" role="status" aria-live="polite"></div>
+<div popover="manual" class="pd-toast" id="update" role="status"><span>A new version is ready.</span><button type="button" id="reload">Reload</button><button type="button" id="later" class="pd-square" aria-label="Later">×</button></div>
+<script>
+var up=document.getElementById('update');
+try { up.showPopover(); } catch(e) {}
+document.getElementById('later').onclick=function(){ up.hidePopover(); };
+document.getElementById('reload').onclick=function(){ up.hidePopover(); document.getElementById('announce').textContent='Updated to the latest version.'; };
+var off=document.getElementById('offline');
+addEventListener('online',function(){ off.hidden=true; }); addEventListener('offline',function(){ off.hidden=false; off.textContent='You’re offline. New orders will appear when you reconnect.'; });
+var deferred=null, ib=document.getElementById('install');
+addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferred=e; ib.hidden=false; });
+ib.onclick=function(){ if(deferred){ deferred.prompt(); deferred=null; ib.hidden=true; } };
+</script>
+</body>
+</html>

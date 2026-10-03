@@ -1,0 +1,106 @@
+<!-- @dsCard level="pages" group="Flows" height=760 width=960 page subtitle="One order: summary, items, an activity timeline, a notes field and an actions menu" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Order #1047 · Toko Rumah Admin</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); z-index:2; }
+  .app-bar { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); align-items:baseline; padding-block:var(--space-xs); }
+  .app-bar strong { font-size:1.17em; }
+  .app-bar ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .app-bar a[aria-current] { color:var(--canvas-text); font-weight:700; text-decoration-thickness:2px; }
+  .app-bar .who { margin-inline-start:auto; }
+  .page-head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:baseline; justify-content:space-between; }
+  .page-head h1 { margin-block:var(--space-md) var(--space-xs); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .panel { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .panel > h2:first-child, .panel > header h2 { margin-block:0 var(--space-sm); font-size:1.17em; }
+
+  .head { display:flex; flex-wrap:wrap; gap:var(--space-sm) var(--space-md); align-items:center; justify-content:space-between; }
+  .head h1 { margin-block:var(--space-sm); }
+  .cols { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(16rem,1fr); gap:var(--space-lg); align-items:start; }
+  @media (max-width:760px) { .cols { grid-template-columns:1fr; } }
+  dl.facts { display:grid; grid-template-columns:auto 1fr; gap:var(--space-xs) var(--space-md); margin:0; }
+  dl.facts dt { color:var(--gray-text); }
+  dl.facts dd { margin:0; }
+  .timeline { list-style:none; margin:0; padding:0; }
+  .timeline li { position:relative; padding:0 0 var(--space-md) var(--space-lg); }
+  .timeline li::before { content:""; position:absolute; left:5px; top:.4em; width:9px; height:9px; border:2px solid var(--canvas-text); border-radius:50%; background:var(--canvas); }
+  .timeline li:not(:last-child)::after { content:""; position:absolute; left:10px; top:1.2em; bottom:0; border-left:1px solid var(--rule); }
+  .timeline li:first-child::before { background:var(--canvas-text); }
+  .timeline time { display:block; font:.83rem var(--font-sans); color:var(--gray-text); }
+  table { width:100%; }
+  textarea { width:100%; box-sizing:border-box; }
+  body.pd-app { padding: var(--space-sm) var(--space-md) var(--space-lg); }
+  body.pd-app > hr { margin-block: var(--space-xs) var(--space-md); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="app-bar">
+  <strong>Toko Rumah Admin</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#orders" aria-current="page">Orders</a></li>
+      <li><a href="#calendar">Calendar</a></li>
+      <li><a href="#board">Board</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+  <span class="who muted">Signed in as Imam</span>
+</header>
+<hr>
+<main id="main" class="pd-stack">
+<nav aria-label="Breadcrumb"><ol><li><a href="#orders">Orders</a></li><li><a href="#o1047" aria-current="page">#1047</a></li></ol></nav>
+<div class="head">
+  <h1>Order #1047 <span class="pd-badge">Packing</span></h1>
+  <div style="display:flex;gap:var(--space-sm)">
+    <button type="button">Mark as shipped</button>
+    <button type="button" popovertarget="acts" aria-haspopup="true">More actions <span class="pd-chevron" aria-hidden="true"></span></button>
+    <div popover id="acts" class="pd-menu"><ul><li><button type="button">Print packing slip</button></li><li><button type="button">Refund…</button></li><li><button type="button">Cancel order…</button></li></ul></div>
+  </div>
+</div>
+<div class="cols">
+  <div class="pd-stack">
+    <section class="panel" aria-labelledby="c-h">
+      <h2 id="c-h">Customer and delivery</h2>
+      <dl class="facts">
+        <dt>Customer</dt><dd>Sari Wulandari · <a href="#chat">Message</a></dd>
+        <dt>Email</dt><dd>sari@example.com</dd>
+        <dt>Deliver to</dt><dd>Jl. Riau No. 8, Bandung 40115</dd>
+        <dt>Method</dt><dd>Standard, 3–5 days</dd>
+        <dt>Placed</dt><dd><time datetime="2026-09-28T10:12">Monday 28 September, 10:12</time></dd>
+      </dl>
+    </section>
+    <h2>Items</h2>
+    <table>
+      <thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Price</th></tr></thead>
+      <tbody><tr><td>Linen shirt, M</td><td class="num">1</td><td class="num">Rp 289.000</td></tr><tr><td>Teak cutting board</td><td class="num">1</td><td class="num">Rp 123.000</td></tr></tbody>
+      <tfoot><tr><th scope="row" colspan="2">Total paid</th><td class="num"><b>Rp 412.000</b></td></tr></tfoot>
+    </table>
+    <form onsubmit="return false">
+      <div style="display:grid;gap:var(--space-xs);margin-top:var(--space-lg)"><label for="note">Private note</label><span class="muted" id="note-h"><small>Only your team sees this.</small></span><textarea id="note" aria-describedby="note-h">Customer asked for the shirt to be folded, not rolled.</textarea></div>
+      <p><button type="submit">Save note</button></p>
+    </form>
+  </div>
+  <section class="panel" aria-labelledby="a-h">
+    <h2 id="a-h">Activity</h2>
+    <ol class="timeline" reversed>
+      <li><time datetime="2026-09-28T13:24">Today, 13:24</time>Return requested for the linen shirt</li>
+      <li><time datetime="2026-09-28T11:02">Today, 11:02</time>Packing started by Joko</li>
+      <li><time datetime="2026-09-28T10:14">Today, 10:14</time>Payment received, Rp 412.000</li>
+      <li><time datetime="2026-09-28T10:12">Today, 10:12</time>Order placed</li>
+    </ol>
+  </section>
+</div>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

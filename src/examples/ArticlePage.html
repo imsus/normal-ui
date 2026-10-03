@@ -1,0 +1,96 @@
+<!-- @dsCard level="pages" group="Content" height=1120 width=960 page subtitle="A help-centre article built only from native elements" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Returning an item</title>
+<style>
+  .skip { position:absolute; left:var(--space-sm); top:-100px; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .site { display:flex; flex-wrap:wrap; gap:var(--space-md); align-items:baseline; justify-content:space-between; }
+  .site ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; margin:0; }
+  .site strong { font-size:1.17em; }
+  main { max-width:40rem; }
+  .meta { color:var(--gray-text); }
+  td.num, th.num { text-align:end; font-variant-numeric:tabular-nums; }
+  footer ul { display:flex; flex-wrap:wrap; gap:var(--space-md); list-style:none; padding:0; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="site">
+  <strong>Toko Rumah</strong>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#orders">Your orders</a></li>
+      <li><a href="#help" aria-current="page">Help</a></li>
+    </ul>
+  </nav>
+</header>
+<hr>
+
+<nav aria-label="Breadcrumb"><small><a href="#help">Help</a> › <a href="#orders-help">Orders and delivery</a> › Returning an item</small></nav>
+
+<main id="main" class="pd-content">
+  <h1>Returning an item</h1>
+  <p class="meta"><small>Updated 28 September 2026 · 3 minute read</small></p>
+
+  <p>You can return most items within <mark>30 days of delivery</mark> for a full refund. Start a return from <a href="#orders">Your orders</a>; you do not need to contact us first.</p>
+
+  <h2>How to return an item</h2>
+  <ol>
+    <li>Open <a href="#orders">Your orders</a> and choose the order.</li>
+    <li>Select <b>Return items</b>, pick the items and tell us why.</li>
+    <li>Print the label, or show the QR code at any drop-off point.</li>
+    <li>Keep the receipt until your refund arrives. It shows a tracking number like <code>TR-2026-0419-88</code>.</li>
+  </ol>
+
+  <p>The returns policy covers sale items too:</p>
+  <blockquote>
+    <p>Items bought at a reduced price are refunded at the price you paid, under the same return windows as full-price items.</p>
+  </blockquote>
+
+  <h2>Return windows</h2>
+  <table>
+    <caption>How long you have to return each kind of item</caption>
+    <thead>
+      <tr><th scope="col">Item</th><th scope="col" class="num">Days</th><th scope="col">Condition</th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">Clothing and shoes</th><td class="num">30</td><td>Unworn, tags attached</td></tr>
+      <tr><th scope="row">Home and kitchen</th><td class="num">30</td><td>Unused, in original box</td></tr>
+      <tr><th scope="row">Electronics</th><td class="num">14</td><td>All parts and cables included</td></tr>
+      <tr><th scope="row">Food</th><td class="num">0</td><td>Cannot be returned</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Refunds</h2>
+  <p>We refund to the way you paid within 5 working days of receiving the item. Bank transfers can take 2 more days to appear.</p>
+
+  <h3>Questions</h3>
+  <details name="faq">
+    <summary>Do I pay for return delivery?</summary>
+    <p>No. Every return label is free, whatever the reason for returning.</p>
+  </details>
+  <details name="faq">
+    <summary>Can I exchange instead of returning?</summary>
+    <p>Yes, for a different size or colour of the same item. Choose <b>Exchange</b> in step 2.</p>
+  </details>
+  <details name="faq">
+    <summary>What if the item arrived damaged?</summary>
+    <p>Choose <b>Arrived damaged</b> as the reason and add a photo. We refund as soon as you submit, before the parcel reaches us.</p>
+  </details>
+</main>
+
+<hr>
+<footer>
+  <ul>
+    <li><a href="#contact">Contact us</a></li>
+    <li><a href="#accessibility">Accessibility statement</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+  </ul>
+</footer>
+</body>
+</html>

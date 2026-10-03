@@ -1,0 +1,111 @@
+<!-- @dsCard level="templates" group="App shells" height=760 width=1200 page subtitle="Sidebar and top bar app shell with every global region: notice banner, offline status, toast, announcer and session warning" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AppShellSidebar</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:10; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+
+  :root { --top-h:56px; --pd-sticky-top:calc(var(--top-h) + var(--space-sm)); }
+  body { margin:0; min-height:100dvh; display:grid; grid-template-columns:15rem minmax(0,1fr); grid-template-rows:auto auto auto 1fr auto;
+    grid-template-areas:"notice notice" "offline offline" "top top" "side main" "side foot"; }
+  .g-notice { grid-area:notice; display:flex; gap:var(--space-md); align-items:center; justify-content:space-between; padding:var(--space-xs) var(--space-md); border-bottom:2px dashed var(--canvas-text); }
+  .g-notice p { margin:0; }
+  .g-offline { grid-area:offline; margin:0; padding:var(--space-xs) var(--space-md); background:var(--canvas-text); color:var(--canvas); font-family:var(--font-sans); }
+  .topbar { grid-area:top; position:sticky; top:0; z-index:3; display:flex; align-items:center; gap:var(--space-md); min-height:var(--top-h); padding:0 var(--space-md); background:var(--canvas); border-bottom:1px solid var(--control-border); }
+  .topbar .brand { font-weight:700; font-size:1.17em; margin-inline-end:auto; }
+  .topbar search { flex:0 1 20rem; }
+  .topbar search input { width:100%; box-sizing:border-box; }
+  .menu-btn, .menu-close { display:none; }
+  .menu-close { margin:0 0 var(--space-sm); }
+  #sidebar { grid-area:side; position:sticky; top:var(--top-h); align-self:start; height:calc(100dvh - var(--top-h)); overflow:auto; box-sizing:border-box;
+    display:block; inset:auto; width:auto; margin:0; padding:var(--space-md); border:0; border-inline-end:1px solid var(--control-border); background:var(--canvas); }
+  #sidebar h2 { font:700 .8125rem var(--font-sans); text-transform:uppercase; letter-spacing:.04em; color:var(--gray-text); margin:var(--space-md) 0 var(--space-xs); }
+  #sidebar h2:first-child { margin-top:0; }
+  #sidebar ul { list-style:none; margin:0; padding:0; }
+  #sidebar a { display:flex; align-items:center; min-height:2rem; padding-inline:var(--space-sm); }
+  #sidebar a[aria-current] { background:var(--highlight); color:var(--highlight-text); font-weight:700; text-decoration:none; }
+  main { grid-area:main; padding:var(--space-md) var(--space-lg) var(--space-lg); min-width:0; }
+  main:focus { outline:none; }
+  main h1 { margin:var(--space-sm) 0; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:var(--space-md); }
+  .cards section { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .cards h2 { font-size:1rem; margin:0 0 var(--space-xs); }
+  footer { grid-area:foot; padding:var(--space-sm) var(--space-lg); border-top:1px solid var(--rule); font-size:.875rem; }
+  @media (max-width: 800px) {
+    body { grid-template-columns:1fr; grid-template-areas:"notice" "offline" "top" "main" "foot"; }
+    .menu-btn { display:inline-flex; }
+    #sidebar:popover-open .menu-close { display:block; }
+    .topbar search { display:none; }
+    #sidebar:not(:popover-open) { display:none; }
+    #sidebar:popover-open { position:fixed; inset:0 auto 0 0; width:min(18rem,85vw); height:100dvh; border-inline-end:1px solid var(--control-border); }
+  }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<section class="g-notice" id="notice" aria-label="Service notice">
+  <p><strong>Note:</strong> payouts arrive one day later this week because of the 1 October holiday. <a href="#payouts">About payouts</a></p>
+  <button type="button" class="pd-square" aria-label="Dismiss notice">×</button>
+</section>
+<p class="g-offline" id="offline" role="status" hidden>You’re offline. Changes are saved on this device and sync when you reconnect.</p>
+<header class="topbar">
+  <button type="button" class="menu-btn pd-square" popovertarget="sidebar" aria-label="Menu">☰</button>
+  <span class="brand">Toko Rumah Admin</span>
+  <search><label for="gq" class="vh">Search everything</label><input id="gq" type="search" placeholder="Search orders, products, customers"></search>
+  <button type="button">Notifications <span class="pd-badge" data-tone="strong">3</span></button>
+  <button type="button" popovertarget="acct" aria-haspopup="true">Imam <span class="pd-chevron" aria-hidden="true"></span></button>
+  <div popover id="acct" class="pd-menu"><ul><li><a href="#profile">Profile</a></li><li><a href="#settings">Settings</a></li><li><button type="button" commandfor="session" command="show-modal">Preview session warning</button></li><li><a href="#signout">Sign out</a></li></ul></div>
+</header>
+<nav id="sidebar" popover aria-label="Main">
+  <p class="menu-close"><button type="button" popovertarget="sidebar" popovertargetaction="hide">Close menu</button></p>
+  <h2>Shop</h2>
+  <ul><li><a href="#home" aria-current="page">Dashboard</a></li><li><a href="#orders">Orders</a></li><li><a href="#products">Products</a></li><li><a href="#customers">Customers</a></li></ul>
+  <h2>Grow</h2>
+  <ul><li><a href="#discounts">Discounts</a></li><li><a href="#reports">Reports</a></li></ul>
+  <h2>Account</h2>
+  <ul><li><a href="#settings">Settings</a></li><li><a href="#help">Help</a></li></ul>
+</nav>
+<main id="main" class="pd-stack" tabindex="-1">
+  <nav aria-label="Breadcrumb"><ol><li><a href="#home" aria-current="page">Dashboard</a></li></ol></nav>
+  <h1>Today</h1>
+  <div class="cards">
+    <section aria-labelledby="c1"><h2 id="c1">Orders</h2><p style="margin:0">48, up 12% on last Monday</p></section>
+    <section aria-labelledby="c2"><h2 id="c2">To ship</h2><p style="margin:0">9 orders, 1 late</p></section>
+    <section aria-labelledby="c3"><h2 id="c3">Messages</h2><p style="margin:0">5 waiting, oldest 2 hours</p></section>
+  </div>
+  <p style="margin-top:var(--space-lg)"><button type="button" id="save">Save draft</button> <span class="muted"><small>Shows the global toast.</small></span></p>
+</main>
+<footer><a href="#accessibility">Accessibility statement</a> · <a href="#status">Service status</a> · <span class="muted">Version 4.2</span></footer>
+
+<div id="announce" class="vh" role="status" aria-live="polite"></div>
+<div popover="manual" class="pd-toast" id="toast" role="status"><span id="toast-t"></span><button type="button" id="toast-x" class="pd-square" aria-label="Dismiss">×</button></div>
+<dialog id="session" role="alertdialog" aria-labelledby="ss-h" aria-describedby="ss-d" style="max-width:26rem">
+  <h2 id="ss-h" style="margin-top:0;font-size:1.17em">Your session ends in 2 minutes</h2>
+  <p id="ss-d">You have been inactive for a while. Stay signed in to keep your unsaved changes.</p>
+  <p style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-bottom:0">
+    <button type="button" commandfor="session" command="close" autofocus>Stay signed in</button>
+    <button type="button" commandfor="session" command="close" value="out">Sign out</button>
+  </p>
+</dialog>
+<script>
+var toast=document.getElementById('toast'), tt=document.getElementById('toast-t'), timer;
+function showToast(msg){ tt.textContent=msg; try{ toast.showPopover(); }catch(e){} clearTimeout(timer); timer=setTimeout(function(){ if(!toast.matches(':hover,:focus-within')) toast.hidePopover(); },6000); }
+document.getElementById('toast-x').onclick=function(){ toast.hidePopover(); };
+var off=document.getElementById('offline');
+function net(){ off.hidden=navigator.onLine; }
+addEventListener('online',function(){ net(); showToast('Back online. Changes synced.'); }); addEventListener('offline',net); net();
+var ban=document.getElementById('notice');
+if(ban){ ban.querySelector('button').onclick=function(){ ban.remove(); document.getElementById('announce').textContent='Notice dismissed.'; document.getElementById('main').focus(); }; }
+if(!('commandForElement' in HTMLButtonElement.prototype)){ document.addEventListener('click',function(e){ var b=e.target.closest('button[commandfor]'); if(!b) return; var t=document.getElementById(b.getAttribute('commandfor')), c=b.getAttribute('command'); if(c==='show-modal') t.showModal(); else if(c==='close') t.close(); }); }
+
+document.getElementById('save').onclick=function(){ showToast('Draft saved.'); };
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!-- @dsCard level="pages" group="Mobile" height=1250 width=390 page subtitle="A reading page with a back link, comfortable measure and a feedback bar" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Returning an item · Toko Rumah</title>
+<style>
+  :root { --tap: 48px; --bar: 56px; }
+  *, *::before, *::after { box-sizing:border-box; }
+  body { margin:0; }
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:3; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+
+  /* Top app bar */
+  .m-bar { position:sticky; top:0; z-index:2; display:flex; align-items:center; gap:var(--space-sm);
+    min-height:var(--bar); padding:env(safe-area-inset-top, 0px) var(--space-md) 0; background:var(--canvas); border-bottom:1px solid var(--rule); }
+  .m-bar h1 { flex:1; margin:0; font-size:1.25rem; line-height:1.2; }
+  .m-bar .back { display:inline-flex; align-items:center; min-height:var(--tap); min-width:var(--tap); margin-inline-start:calc(-1 * var(--space-sm)); padding-inline:var(--space-sm); }
+  .m-bar .act { display:inline-flex; align-items:center; min-height:var(--tap); padding-inline:var(--space-sm); font:1rem var(--font-sans); }
+  .m-bar .back { font:1rem var(--font-sans); }
+
+  /* Content column: 16px gutters, room for the tab bar */
+  .m-main { padding:var(--space-md) var(--space-md) calc(var(--bar) + var(--space-lg) + env(safe-area-inset-bottom, 0px)); max-width:40rem; margin-inline:auto; }
+  .m-main.no-tabs { padding-bottom:calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)); }
+  .m-main > :first-child { margin-top:0; }
+
+  /* Bottom tab bar */
+  .m-tabs { position:fixed; inset:auto 0 0 0; z-index:2; background:var(--canvas); border-top:1px solid var(--control-border); padding-bottom:env(safe-area-inset-bottom, 0px); }
+  .m-tabs ul { display:grid; grid-template-columns:repeat(4, 1fr); list-style:none; margin:0; padding:0; }
+  .m-tabs a { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:var(--bar);
+    font:0.8125rem/1.2 var(--font-sans); color:var(--canvas-text); text-decoration:none; border-top:3px solid transparent; }
+  .m-tabs a[aria-current] { font-weight:700; border-top-color:var(--link); color:var(--link); }
+  .m-tabs svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* Touch sizing: 48px controls, 16px text so phones never zoom into fields */
+  .m-main :is(input:not([type=checkbox],[type=radio]), select, textarea) { width:100%; min-height:var(--tap); font-size:1rem; }
+  .m-main button { min-height:var(--tap); }
+  .block { width:100%; }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); }
+  .hint { font-size:.83em; color:var(--gray-text); }
+  .error { font-size:.83em; font-weight:700; }
+
+  article { font-size:1.0625rem; line-height:1.6; }
+  article h1 { font-size:1.75rem; line-height:1.2; margin:0 0 var(--space-xs); }
+  article h2 { font-size:1.25rem; margin-top:var(--space-lg); }
+  article ol, article ul { padding-inline-start:1.5em; }
+  article li + li { margin-top:var(--space-xs); }
+  article blockquote { margin-inline:0; padding-inline-start:var(--space-md); border-inline-start:3px solid var(--rule); }
+  .scroll { overflow-x:auto; }
+  table { width:100%; font-size:0.9375rem; }
+  details { border-top:1px solid var(--rule); }
+  details:last-of-type { border-bottom:1px solid var(--rule); }
+  summary { min-height:var(--tap); display:flex; align-items:center; gap:var(--space-sm); font-weight:700; }
+  summary::before { content:"+"; font:1.25rem var(--font-sans); width:1em; }
+  details[open] summary::before { content:"−"; }
+  summary::-webkit-details-marker { display:none; }
+  details p { margin-top:0; }
+  .feedback { margin-top:var(--space-lg); border:1px solid var(--control-border); padding:var(--space-md); }
+  .feedback fieldset { border:0; padding:0; margin:0; }
+  .feedback legend { font-weight:700; padding:0; margin-bottom:var(--space-sm); }
+  .feedback .row { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-sm); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="m-bar">
+<a class="back" href="#help"><span aria-hidden="true">‹&nbsp;</span>Help</a>
+</header>
+<main id="main" class="m-main no-tabs">
+<article class="pd-content">
+  <h1>Returning an item</h1>
+  <p class="muted"><small>Updated 28 September 2026 · 3 minute read</small></p>
+  <p>You can return most items within <mark>30 days of delivery</mark> for a full refund. Start from <a href="#orders">Your orders</a>; you do not need to contact us first.</p>
+  <h2>How to return an item</h2>
+  <ol>
+    <li>Open <a href="#orders">Your orders</a> and choose the order.</li>
+    <li>Tap <b>Return items</b>, pick the items and tell us why.</li>
+    <li>Show the QR code at any drop-off point, or print the label.</li>
+    <li>Keep the receipt until your refund arrives.</li>
+  </ol>
+  <p>The returns policy covers sale items too:</p>
+  <blockquote><p>Items bought at a reduced price are refunded at the price you paid.</p></blockquote>
+  <h2>Return windows</h2>
+  <div class="scroll">
+    <table>
+      <caption class="vh">Days to return each kind of item</caption>
+      <thead><tr><th scope="col">Item</th><th scope="col" class="num">Days</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Clothing and shoes</th><td class="num">30</td></tr>
+        <tr><th scope="row">Home and kitchen</th><td class="num">30</td></tr>
+        <tr><th scope="row">Electronics</th><td class="num">14</td></tr>
+        <tr><th scope="row">Food</th><td class="num">None</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Questions</h2>
+  <details name="faq"><summary>Do I pay for return delivery?</summary><p>No. Every return label is free.</p></details>
+  <details name="faq"><summary>Can I exchange instead?</summary><p>Yes, for another size or colour of the same item. Choose Exchange in step 2.</p></details>
+  <details name="faq"><summary>The item arrived damaged</summary><p>Choose Arrived damaged and add a photo. We refund straight away.</p></details>
+</article>
+
+<form class="feedback" id="fb">
+  <fieldset>
+    <legend>Did this answer your question?</legend>
+    <div class="row">
+      <button type="submit" value="yes">Yes</button>
+      <button type="submit" value="no">No</button>
+    </div>
+  </fieldset>
+</form>
+</main>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+<script>
+document.getElementById('fb').addEventListener('submit',function(e){ e.preventDefault();
+  var f=e.currentTarget; f.innerHTML='<p style="margin:0" tabindex="-1" id="thanks"><b>Thanks.</b> Your answer helps us improve this page.</p>'; document.getElementById('thanks').focus(); });
+</script>
+</body>
+</html>

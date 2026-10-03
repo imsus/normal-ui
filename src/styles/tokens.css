@@ -1,0 +1,127 @@
+/* Generated from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+:root {
+  color-scheme: light;
+  --canvas: #ffffff;
+  --canvas-text: #000000;
+  --surface-soft: #f8f8f8;
+  --surface-muted: #f2f2f2;
+  --surface-raised: #ffffff;
+  --link: #0000ee;
+  --link-visited: #551a8b;
+  --link-active: #ee0000;
+  --button-face: #efefef;
+  --button-text: #000000;
+  --field: #ffffff;
+  --field-text: #000000;
+  --control-border: #767676;
+  --placeholder: #6d6d6d;
+  --gray-text: #6d6d6d;
+  --accent: #0066dd;
+  --focus-ring: #005fcc;
+  --mark: #ffff00;
+  --mark-text: #000000;
+  --highlight: #b4d5fe;
+  --highlight-text: #000000;
+  --rule: var(--control-border);
+  --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
+  --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
+  --font-serif: "Times New Roman", Times, serif;
+  --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-indent: 40px;
+  --radius-none: 0;
+  --radius-control: 2px;
+  --radius-round: 50%;
+}
+
+/* No data-theme on <html>: follow the device. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --canvas: #121212;
+    --canvas-text: #ffffff;
+    --surface-soft: #1c1c1c;
+    --surface-muted: #262626;
+    --surface-raised: #303030;
+    --link: #9e9eff;
+    --link-visited: #d0adf0;
+    --link-active: #ff9e9e;
+    --button-face: #5a5a5a;
+    --button-text: #ffffff;
+    --field: #3b3b3b;
+    --field-text: #ffffff;
+    --control-border: #9a9a9a;
+    --placeholder: #adadad;
+    --gray-text: #adadad;
+    --accent: #99c8ff;
+    --focus-ring: #99c8ff;
+    --mark: #ffff00;
+    --mark-text: #000000;
+    --highlight: #264f78;
+    --highlight-text: #ffffff;
+    --rule: var(--control-border);
+    --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
+    --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #ffffff;
+  --canvas-text: #000000;
+  --surface-soft: #f8f8f8;
+  --surface-muted: #f2f2f2;
+  --surface-raised: #ffffff;
+  --link: #0000ee;
+  --link-visited: #551a8b;
+  --link-active: #ee0000;
+  --button-face: #efefef;
+  --button-text: #000000;
+  --field: #ffffff;
+  --field-text: #000000;
+  --control-border: #767676;
+  --placeholder: #6d6d6d;
+  --gray-text: #6d6d6d;
+  --accent: #0066dd;
+  --focus-ring: #005fcc;
+  --mark: #ffff00;
+  --mark-text: #000000;
+  --highlight: #b4d5fe;
+  --highlight-text: #000000;
+  --rule: var(--control-border);
+  --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
+  --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #121212;
+  --canvas-text: #ffffff;
+  --surface-soft: #1c1c1c;
+  --surface-muted: #262626;
+  --surface-raised: #303030;
+  --link: #9e9eff;
+  --link-visited: #d0adf0;
+  --link-active: #ff9e9e;
+  --button-face: #5a5a5a;
+  --button-text: #ffffff;
+  --field: #3b3b3b;
+  --field-text: #ffffff;
+  --control-border: #9a9a9a;
+  --placeholder: #adadad;
+  --gray-text: #adadad;
+  --accent: #99c8ff;
+  --focus-ring: #99c8ff;
+  --mark: #ffff00;
+  --mark-text: #000000;
+  --highlight: #264f78;
+  --highlight-text: #ffffff;
+  --rule: var(--control-border);
+  --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
+  --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
+}

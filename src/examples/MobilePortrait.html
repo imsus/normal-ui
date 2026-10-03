@@ -1,0 +1,74 @@
+<!-- @dsCard level="templates" group="Mobile" height=844 width=390 page subtitle="One phone layout held upright: top bar, list then detail, bottom tab bar" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MobilePortrait</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:10; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+
+  :root { --bar:56px; --tabs:56px; --pd-sticky-top:var(--bar); --pd-sticky-bottom:var(--tabs); }
+  *, *::before, *::after { box-sizing:border-box; }
+  body { margin:0; min-height:100dvh; }
+  .bar { position:sticky; top:0; z-index:3; display:flex; align-items:center; min-height:calc(var(--bar) + env(safe-area-inset-top,0px));
+    padding:env(safe-area-inset-top,0px) calc(var(--space-md) + env(safe-area-inset-right,0px)) 0 calc(var(--space-md) + env(safe-area-inset-left,0px)); background:var(--canvas); border-bottom:1px solid var(--rule); }
+  .bar h1 { margin:0; font-size:1.25rem; }
+  main { padding:var(--space-md) var(--space-md) calc(var(--tabs) + var(--space-lg) + env(safe-area-inset-bottom,0px)); }
+  main:focus { outline:none; }
+  .split { display:grid; gap:var(--space-md); }
+  .list { list-style:none; margin:0; padding:0; border-top:1px solid var(--rule); }
+  .list li { border-bottom:1px solid var(--rule); }
+  .list a { display:flex; justify-content:space-between; align-items:center; gap:var(--space-sm); min-height:52px; color:var(--canvas-text); text-decoration:none; }
+  .list a[aria-current] { background:var(--highlight); color:var(--highlight-text); padding-inline:var(--space-xs); }
+  .list b { text-decoration:underline; text-decoration-color:var(--link); text-underline-offset:.15em; }
+  .list .amt { font:0.9375rem var(--font-sans); font-variant-numeric:tabular-nums; }
+  .detail { border:1px solid var(--control-border); padding:var(--space-sm) var(--space-md); }
+  .detail h2 { font-size:1.125rem; margin:0 0 var(--space-xs); }
+  .detail dl { display:grid; grid-template-columns:auto 1fr; gap:2px var(--space-md); margin:0; }
+  .detail dt { color:var(--gray-text); } .detail dd { margin:0; }
+  .nav { position:fixed; inset:auto 0 0 0; z-index:3; background:var(--canvas); border-top:1px solid var(--control-border); padding-bottom:env(safe-area-inset-bottom,0px); }
+  .nav ul { display:grid; grid-template-columns:repeat(4,1fr); list-style:none; margin:0; padding:0; }
+  .nav a { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:var(--tabs); font:0.8125rem var(--font-sans); color:var(--canvas-text); text-decoration:none; border-top:3px solid transparent; }
+  .nav a[aria-current] { font-weight:700; color:var(--link); border-top-color:var(--link); }
+  .nav svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* Phone on its side: tabs become a rail on the start edge, the bar shrinks, list and detail sit side by side.
+     Notches are on the sides now, so the safe-area insets move to left and right. */
+  @media (orientation: landscape) and (max-height: 520px) {
+    :root { --bar:44px; --rail:76px; --pd-sticky-bottom:0px; }
+    body { padding-inline-start:calc(var(--rail) + env(safe-area-inset-left,0px)); }
+    .nav { inset:0 auto 0 0; width:calc(var(--rail) + env(safe-area-inset-left,0px)); border-top:0; border-inline-end:1px solid var(--control-border); padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px); }
+    .nav ul { grid-template-columns:1fr; align-content:center; height:100%; }
+    .nav a { border-top:0; border-inline-start:3px solid transparent; min-height:60px; }
+    .nav a[aria-current] { border-inline-start-color:var(--link); }
+    main { padding:var(--space-sm) calc(var(--space-md) + env(safe-area-inset-right,0px)) var(--space-md) var(--space-md); }
+    .split { grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); align-items:start; }
+    .detail { position:sticky; top:calc(var(--bar) + var(--space-sm)); }
+  }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="bar"><h1>Orders</h1></header>
+<main id="main" tabindex="-1">
+  <div class="split">
+    <ul class="list" aria-label="Orders">
+      <li><a href="#o1048"><b>Budi Hartono</b><span class="amt">Rp 289.000</span></a></li>
+      <li><a href="#o1047" aria-current="true"><b>Sari Wulandari</b><span class="amt">Rp 412.000</span></a></li>
+      <li><a href="#o1046"><b>Dewi Lestari</b><span class="amt">Rp 150.000</span></a></li>
+    </ul>
+    <section class="detail" aria-labelledby="d-h">
+      <h2 id="d-h">#1047 Sari Wulandari</h2>
+      <dl><dt>Status</dt><dd>Packing</dd><dt>Items</dt><dd>Linen shirt, Teak board</dd><dt>Total</dt><dd>Rp 412.000</dd></dl>
+      <p style="margin-bottom:0"><button type="button" style="min-height:44px">Mark as shipped</button></p>
+    </section>
+  </div>
+</main>
+<nav class="nav" aria-label="Main"><ul><li><a href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Home</a></li><li><a href="#orders" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Orders</a></li><li><a href="#help"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14"/><path d="M12 17.5v.01"/></svg>Help</a></li><li><a href="#account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Account</a></li></ul></nav>
+</body>
+</html>

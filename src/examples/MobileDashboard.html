@@ -1,0 +1,98 @@
+<!-- @dsCard level="pages" group="Mobile" height=860 width=390 page subtitle="Phone dashboard: key figures, target, attention list and a small chart, with a bottom tab bar" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Today · Toko Rumah</title>
+<style>
+  :root { --tap: 48px; --bar: 56px; }
+  *, *::before, *::after { box-sizing:border-box; }
+  body { margin:0; }
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:3; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+
+  /* Top app bar */
+  .m-bar { position:sticky; top:0; z-index:2; display:flex; align-items:center; gap:var(--space-sm);
+    min-height:var(--bar); padding:env(safe-area-inset-top, 0px) var(--space-md) 0; background:var(--canvas); border-bottom:1px solid var(--rule); }
+  .m-bar h1 { flex:1; margin:0; font-size:1.25rem; line-height:1.2; }
+  .m-bar .back { display:inline-flex; align-items:center; min-height:var(--tap); min-width:var(--tap); margin-inline-start:calc(-1 * var(--space-sm)); padding-inline:var(--space-sm); }
+  .m-bar .act { display:inline-flex; align-items:center; min-height:var(--tap); padding-inline:var(--space-sm); font:1rem var(--font-sans); }
+  .m-bar .back { font:1rem var(--font-sans); }
+
+  /* Content column: 16px gutters, room for the tab bar */
+  .m-main { padding:var(--space-md) var(--space-md) calc(var(--bar) + var(--space-lg) + env(safe-area-inset-bottom, 0px)); max-width:40rem; margin-inline:auto; }
+  .m-main.no-tabs { padding-bottom:calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)); }
+  .m-main > :first-child { margin-top:0; }
+
+  /* Bottom tab bar */
+  .m-tabs { position:fixed; inset:auto 0 0 0; z-index:2; background:var(--canvas); border-top:1px solid var(--control-border); padding-bottom:env(safe-area-inset-bottom, 0px); }
+  .m-tabs ul { display:grid; grid-template-columns:repeat(4, 1fr); list-style:none; margin:0; padding:0; }
+  .m-tabs a { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:var(--bar);
+    font:0.8125rem/1.2 var(--font-sans); color:var(--canvas-text); text-decoration:none; border-top:3px solid transparent; }
+  .m-tabs a[aria-current] { font-weight:700; border-top-color:var(--link); color:var(--link); }
+  .m-tabs svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* Touch sizing: 48px controls, 16px text so phones never zoom into fields */
+  .m-main :is(input:not([type=checkbox],[type=radio]), select, textarea) { width:100%; min-height:var(--tap); font-size:1rem; }
+  .m-main button { min-height:var(--tap); }
+  .block { width:100%; }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+  .field { display:grid; gap:var(--space-xs); margin-block:var(--space-md); }
+  .hint { font-size:.83em; color:var(--gray-text); }
+  .error { font-size:.83em; font-weight:700; }
+
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-sm); margin:0 0 var(--space-md); }
+  .stats > div { border:1px solid var(--control-border); padding:var(--space-sm); }
+  .stats dt { font:0.8125rem var(--font-sans); color:var(--gray-text); }
+  .stats dd { margin:0; font-size:1.375rem; font-weight:700; font-variant-numeric:tabular-nums; line-height:1.3; }
+  .stats small { display:block; font-weight:400; font-size:0.8125rem; color:var(--gray-text); }
+  progress { width:100%; height:1rem; }
+  h2 { font-size:1.125rem; margin:var(--space-lg) 0 var(--space-sm); }
+  .rows { list-style:none; margin:0; padding:0; border-top:1px solid var(--rule); }
+  .rows li { border-bottom:1px solid var(--rule); }
+  .rows a { display:flex; gap:var(--space-sm); align-items:center; min-height:var(--tap); padding-block:var(--space-xs); color:var(--canvas-text); text-decoration:none; }
+  .rows a span.t { flex:1; text-decoration:underline; text-decoration-color:var(--link); text-underline-offset:.15em; }
+  .rows a::after { content:"›"; font:1.25rem var(--font-sans); color:var(--gray-text); }
+  .tag { font:700 0.75rem var(--font-sans); border:1px solid var(--canvas-text); padding:0 var(--space-xs); text-transform:uppercase; letter-spacing:.04em; }
+  figure { margin:var(--space-lg) 0 0; }
+  svg.chart { width:100%; height:auto; display:block; }
+  .bar { fill:var(--link); } .gl { stroke:var(--rule); stroke-opacity:.4; } .tick { fill:var(--gray-text); font:11px var(--font-sans); }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="m-bar">
+<h1>Today</h1>
+  <button type="button" class="act" style="min-height:40px">Refresh</button>
+</header>
+<main id="main" class="m-main pd-stack">
+<p class="muted" style="margin-top:0"><small><time datetime="2026-09-28">Monday 28 September</time>, updated 15:42</small></p>
+<dl class="stats">
+  <div><dt>Orders</dt><dd>48 <small>up 12%</small></dd></div>
+  <div><dt>Revenue</dt><dd>Rp 12,5 jt <small>up 8%</small></dd></div>
+  <div><dt>Returns</dt><dd>3 <small>same as last Mon</small></dd></div>
+  <div><dt>Messages</dt><dd>5 <small>oldest 2 h ago</small></dd></div>
+</dl>
+<label for="target">Daily target: 48 of 60 orders</label>
+<progress id="target" max="60" value="48">80%</progress>
+
+<h2>Needs attention</h2>
+<ul class="rows">
+  <li><a href="#o1038"><span class="tag">Late</span><span class="t">Order #1038 not shipped</span></a></li>
+  <li><a href="#stock"><span class="tag">Stock</span><span class="t">Teak cutting board: 2 left</span></a></li>
+  <li><a href="#chat"><span class="tag">Reply</span><span class="t">Sari is waiting for an answer</span></a></li>
+</ul>
+
+<figure>
+  <figcaption><b>Orders by hour</b></figcaption>
+  <svg class="chart" viewBox="0 0 358 150" role="img" aria-label="Orders by hour today, busiest at 11:00 with 9 orders."><line class="gl" x1="24" x2="358" y1="128.0" y2="128.0"/><text class="tick" x="20" y="132" text-anchor="end">0</text><line class="gl" x1="24" x2="358" y1="68.0" y2="68.0"/><text class="tick" x="20" y="72" text-anchor="end">5</text><line class="gl" x1="24" x2="358" y1="8.0" y2="8.0"/><text class="tick" x="20" y="12" text-anchor="end">10</text><rect class="bar" x="29" y="104" width="32" height="24" rx="2"><title>08:00, 2 orders</title></rect><text class="tick" x="45" y="145" text-anchor="middle">08</text><rect class="bar" x="71" y="68" width="32" height="60" rx="2"><title>09:00, 5 orders</title></rect><text class="tick" x="87" y="145" text-anchor="middle">09</text><rect class="bar" x="112" y="44" width="32" height="84" rx="2"><title>10:00, 7 orders</title></rect><text class="tick" x="128" y="145" text-anchor="middle">10</text><rect class="bar" x="154" y="20" width="32" height="108" rx="2"><title>11:00, 9 orders</title></rect><text class="tick" x="170" y="145" text-anchor="middle">11</text><rect class="bar" x="196" y="56" width="32" height="72" rx="2"><title>12:00, 6 orders</title></rect><text class="tick" x="212" y="145" text-anchor="middle">12</text><rect class="bar" x="238" y="80" width="32" height="48" rx="2"><title>13:00, 4 orders</title></rect><text class="tick" x="254" y="145" text-anchor="middle">13</text><rect class="bar" x="280" y="32" width="32" height="96" rx="2"><title>14:00, 8 orders</title></rect><text class="tick" x="295" y="145" text-anchor="middle">14</text><rect class="bar" x="321" y="44" width="32" height="84" rx="2"><title>15:00, 7 orders</title></rect><text class="tick" x="337" y="145" text-anchor="middle">15</text></svg>
+  <details><summary>Show as table</summary><table style="width:100%"><thead><tr><th scope="col">Hour</th><th scope="col" class="num">Orders</th></tr></thead><tbody><tr><th scope="row">08:00</th><td class="num">2</td></tr><tr><th scope="row">09:00</th><td class="num">5</td></tr><tr><th scope="row">10:00</th><td class="num">7</td></tr><tr><th scope="row">11:00</th><td class="num">9</td></tr><tr><th scope="row">12:00</th><td class="num">6</td></tr><tr><th scope="row">13:00</th><td class="num">4</td></tr><tr><th scope="row">14:00</th><td class="num">8</td></tr><tr><th scope="row">15:00</th><td class="num">7</td></tr></tbody></table></details>
+</figure>
+</main>
+<nav class="m-tabs" aria-label="Main"><ul><li><a href="#home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Home</a></li><li><a href="#orders"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Orders</a></li><li><a href="#help"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14"/><path d="M12 17.5v.01"/></svg>Help</a></li><li><a href="#account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Account</a></li></ul></nav>
+<div class="vh" role="status" aria-live="polite" id="announce"></div>
+</body>
+</html>

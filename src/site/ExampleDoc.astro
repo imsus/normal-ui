@@ -1,0 +1,70 @@
+---
+// A template's or page's docs: a resizable preview of the example and its notes.
+import Docs from '../layouts/Docs.astro';
+import { examples, levelOf, loadExample } from '../lib/site';
+
+interface Props { name: string }
+const meta = examples.find((e) => e.name === Astro.props.name)!;
+const level = levelOf(meta.level);
+// Read per request, so edits to src/examples/*.html show on reload in dev.
+const { subtitle, width, height } = loadExample(meta.name);
+const docs = import.meta.glob<{ Content: any }>('../../docs/examples/*.md', { eager: true });
+const Readme = docs[`../../docs/examples/${meta.name}.md`]?.Content;
+
+// Widths the preview can switch between. The width the page was designed at comes
+// first (and is the default) unless it is already one of the presets.
+const presets = [
+  { label: 'Phone', width: 390 },
+  { label: 'Tablet', width: 768 },
+  { label: 'Desktop', width: 1280 },
+];
+const sizes = [
+  ...(presets.some((p) => p.width === width) ? [] : [{ label: 'As designed', width }]),
+  ...presets,
+  { label: 'Fit column', width: 0 },
+];
+---
+<Docs title={meta.title} description={subtitle}>
+  <p class="docs-meta">
+    <a href={level.href} class="pd-badge">{level.singular}</a>
+    <span>{meta.group}</span>
+  </p>
+  <p><a href={meta.preview}>Open {meta.title} on its own page</a> <small>({width}px wide as designed)</small></p>
+  <div class="pd-cluster" style="margin-block-end:var(--space-sm)">
+    <span id="pw-label">Preview width</span>
+    <div role="group" aria-labelledby="pw-label" class="pd-cluster" style="--pd-cluster-gap:var(--space-xs)" id="preview-widths">
+      {sizes.map((s) => (
+        <button type="button" data-width={s.width} aria-pressed={s.width === width ? 'true' : 'false'}>
+          {s.label}{s.width ? ` ${s.width}` : ''}
+        </button>
+      ))}
+    </div>
+    <small id="pw-status" role="status">Showing at {width}px wide.</small>
+  </div>
+  <div style="overflow:auto;border:1px solid var(--control-border);margin-block-end:var(--space-lg)">
+    <iframe id="preview" src={meta.preview} title={`${meta.title} example`} loading="lazy" data-height={height}
+      style={`display:block;border:0;width:${width}px;max-width:none;height:${height}px`}></iframe>
+  </div>
+  <div class="pd-content docs-prose">{Readme ? <Readme /> : <h1>{meta.title}</h1>}</div>
+  <script is:inline>
+    // The example measures the iframe, not the window, so its media queries follow
+    // the iframe's width. These buttons set that width.
+    (function () {
+      var group = document.getElementById('preview-widths');
+      var frame = document.getElementById('preview');
+      var status = document.getElementById('pw-status');
+      if (!group || !frame) return;
+      var designedHeight = +frame.dataset.height;
+      group.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-width]');
+        if (!b) return;
+        var w = +b.dataset.width;
+        group.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        frame.style.width = w ? w + 'px' : '100%';
+        // A desktop page squeezed onto a phone gets taller; give it at least a phone's height.
+        frame.style.height = (w && w <= 430 ? Math.max(designedHeight, 844) : designedHeight) + 'px';
+        status.textContent = 'Showing at ' + (w ? w + 'px' : 'the column width, ' + Math.round(frame.getBoundingClientRect().width) + 'px,') + ' wide.';
+      });
+    })();
+  </script>
+</Docs>

@@ -1,0 +1,19 @@
+---
+// The five atomic levels in order, smallest first, with how many things each holds.
+// Marks the current one, so a reader always sees where a level sits.
+import { entriesIn, href, levels } from '../lib/site';
+
+interface Props { current?: string }
+const { current } = Astro.props;
+---
+<nav aria-label="Atomic design levels" class="docs-levels">
+  <ol>
+    {levels.map((l) => (
+      <li>
+        <a href={href(`/${l.id}/`)} aria-current={l.id === current ? 'page' : undefined}>
+          <b>{l.label}</b> <small>{entriesIn(l.id).length}</small>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>

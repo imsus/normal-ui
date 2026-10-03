@@ -1,0 +1,13 @@
+---
+import Docs from '../layouts/Docs.astro';
+import { TokenTables } from '../site/TokenTables';
+---
+<Docs title="Tokens">
+  <h1>Tokens</h1>
+  <p>
+    Edit <code>tokens.json</code>, then run <code>pnpm tokens</code>. In CSS use the custom property
+    (<code>var(--canvas)</code>); in StyleX import the constant (<code>color.canvas</code> from <code>src/tokens.stylex.ts</code>),
+    which compiles to the same <code>var()</code>.
+  </p>
+  <TokenTables />
+</Docs>

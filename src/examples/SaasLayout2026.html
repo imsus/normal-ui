@@ -1,0 +1,317 @@
+<!-- @dsCard level="templates" group="App shells" height=900 width=1440 page subtitle="Icon rail, list sidebar, tabbed main content, details sidebar and status bar; the side panels become drawers and the rail a bottom tab bar on smaller screens" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SaasLayout2026</title>
+<style>
+  .vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .skip { position:absolute; left:var(--space-sm); top:-100px; z-index:10; }
+  .skip:focus { top:var(--space-sm); background:var(--canvas); padding:var(--space-xs) var(--space-sm); }
+  .muted { color:var(--gray-text); }
+  .num { text-align:end; font-variant-numeric:tabular-nums; }
+
+  /* Desktop: five regions on one screen. Each column scrolls on its own; the page never does. */
+  :root { --rail-w:4rem; --side-w:17rem; --aside-w:19rem; --tabbar-h:3.5rem; }
+  body { margin:0; height:100dvh; overflow:hidden; display:grid;
+    grid-template-columns:var(--rail-w) var(--side-w) minmax(0,1fr) var(--aside-w);
+    grid-template-rows:minmax(0,1fr) auto;
+    grid-template-areas:"rail side main aside" "bar bar bar bar"; }
+
+  /* Left rail: icon links, the account button at the foot. */
+  .rail { grid-area:rail; position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:var(--space-xs);
+    padding:var(--space-sm) 0; background:var(--surface-soft); border-inline-end:1px solid var(--control-border); }
+  .rail ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--space-xs); }
+  .rail .account { margin-top:auto; }
+  .rail a, .rail .account > button { position:relative; display:grid; place-items:center; width:44px; height:44px; min-height:0; padding:0;
+    color:var(--canvas-text); background:transparent; border:0; text-decoration:none; }
+  .rail a:hover { background:var(--surface-muted); }
+  .rail a[aria-current] { background:var(--highlight); color:var(--highlight-text); }
+  .rail svg { width:24px; height:24px; }
+  /* Each icon's name is real text: hidden, and shown as a tooltip on hover and focus. */
+  .rail .label { position:absolute; inset-inline-start:calc(100% + var(--space-xs)); top:50%; translate:0 -50%; white-space:nowrap; pointer-events:none;
+    padding:var(--space-xs) var(--space-sm); background:var(--canvas-text); color:var(--canvas); font:.875rem/1.25 var(--font-sans); clip-path:inset(50%); }
+  .rail :is(a, button):is(:hover, :focus-visible) .label { clip-path:none; }
+  .rail .count { position:absolute; top:5px; inset-inline-end:3px; min-width:1.125rem; padding:0 3px; box-sizing:border-box; border-radius:1rem;
+    background:var(--canvas-text); color:var(--canvas); font:700 .6875rem/1.125rem var(--font-sans); text-align:center; }
+  .rail .account .av { width:2.25rem; }
+  #acct { position-area:inline-end span-block-start; margin:0 var(--space-xs); }
+
+  /* Avatars: initials in a circle, decorative (the name is always next to them). */
+  .av { display:grid; place-items:center; width:2.5rem; aspect-ratio:1; border-radius:50%; flex:none;
+    background:var(--surface-muted); border:1px solid var(--control-border); font:700 .8125rem var(--font-sans); color:var(--canvas-text); }
+
+  /* The two side panels are popovers. Wide screens show them in place (these rules undo
+     the popover's own fixed positioning); narrower ones open them as drawers. */
+  #sidebar, #details { position:static; inset:auto; width:auto; height:auto; margin:0; box-sizing:border-box; overflow:auto;
+    display:flex; flex-direction:column; background:var(--canvas); color:var(--canvas-text); border:0; }
+  .drawer-close { display:none; margin:0; }
+
+  #sidebar { grid-area:side; gap:var(--space-sm); padding:var(--space-sm); border-inline-end:1px solid var(--control-border); }
+  .switcher { display:flex; align-items:center; justify-content:space-between; width:100%; background:var(--surface-muted); font-weight:700; }
+  #views { min-width:14rem; }
+  .people { list-style:none; margin:0; padding:0; }
+  .people a { display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-rows:auto auto; column-gap:var(--space-sm); align-items:center;
+    min-height:3.25rem; padding:var(--space-xs) var(--space-sm); color:inherit; text-decoration:none; }
+  .people a .av { grid-row:span 2; }
+  .people a:hover { background:var(--surface-muted); }
+  .people a[aria-current] { background:var(--highlight); color:var(--highlight-text); }
+  .people .name, .people .last { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .people .name { font-weight:700; align-self:end; }
+  .people .last { font-size:.875rem; color:var(--gray-text); align-self:start; }
+  .people a[aria-current] .last { color:inherit; }
+
+  /* Main: the tab bar stays put while the panel scrolls under it. */
+  main { grid-area:main; min-width:0; overflow:auto; }
+  main:focus { outline:none; }
+  .main-bar { position:sticky; top:0; z-index:1; display:flex; align-items:end; gap:var(--space-sm); padding:var(--space-sm) var(--space-lg) 0; background:var(--canvas); }
+  .main-bar [role="tablist"] { flex:1; }
+  .main-bar [role="tab"] { flex:1; }
+  .panel-toggle { display:none; margin-block-end:var(--space-xs); }
+  .content { display:flex; flex-direction:column; gap:var(--space-lg); max-width:64rem; padding:var(--space-lg); }
+  .content > section:not(.assign), .page-head { display:flex; flex-direction:column; gap:var(--space-sm); }
+  .page-head p, .content p { margin:0; }
+  .orders { display:grid; grid-template-columns:repeat(auto-fill, minmax(13rem, 1fr)); gap:var(--space-md); }
+  .orders h3 { margin:0; }
+  /* Image placeholders: a picture's frame, named for what it would show. */
+  .ph { display:grid; place-items:center; aspect-ratio:16 / 10; background:var(--surface-muted); border:1px solid var(--rule); color:var(--gray-text); }
+  .ph svg { width:3rem; height:3rem; }
+  .assign { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:var(--space-xs) var(--space-md); align-items:center; }
+  .assign h2 { margin:0; font-size:1rem; }
+  table { width:100%; }
+
+  /* Right sidebar: details about what is open in main. */
+  #details { grid-area:aside; gap:var(--space-lg); padding:var(--space-lg) var(--space-md); border-inline-start:1px solid var(--control-border); }
+  #details section { display:flex; flex-direction:column; gap:var(--space-sm); }
+  #details h2 { margin:0; font-size:1rem; }
+  #details p { margin:0; }
+  .checks { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--space-xs); }
+  .checks label { display:flex; gap:var(--space-sm); align-items:center; min-height:2rem; }
+  .ph.map { aspect-ratio:16 / 9; }
+  .watchers { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--space-sm); }
+  .watchers li { display:flex; align-items:center; gap:var(--space-sm); }
+  .watchers .av { width:2rem; font-size:.75rem; }
+
+  /* Bottom bar: quiet app status, full width. */
+  .statusbar { grid-area:bar; display:flex; align-items:center; justify-content:space-between; gap:var(--space-md); min-height:2rem; padding:0 var(--space-md);
+    background:var(--surface-soft); border-top:1px solid var(--control-border); font-size:.8125rem; color:var(--gray-text); }
+  .statusbar p { margin:0; }
+  .statusbar ul { display:flex; gap:var(--space-md); list-style:none; margin:0; padding:0; }
+  .statusbar a { color:inherit; }
+
+  /* Under 1280px: the details sidebar becomes a drawer from the right. */
+  @media (max-width: 1280px) {
+    body { grid-template-columns:var(--rail-w) var(--side-w) minmax(0,1fr); grid-template-areas:"rail side main" "bar bar bar"; }
+    .panel-toggle.for-details { display:inline-flex; }
+    #details:not(:popover-open) { display:none; }
+    #details:popover-open { position:fixed; inset:0 0 0 auto; width:min(22rem, 90vw); height:100dvh; }
+    #details:popover-open .drawer-close { display:block; }
+  }
+  /* Under 960px: the list sidebar becomes a drawer from the left too. */
+  @media (max-width: 960px) {
+    body { grid-template-columns:var(--rail-w) minmax(0,1fr); grid-template-areas:"rail main" "bar bar"; }
+    .panel-toggle.for-sidebar { display:inline-flex; }
+    #sidebar:not(:popover-open) { display:none; }
+    #sidebar:popover-open { position:fixed; inset:0 auto 0 0; width:min(20rem, 85vw); height:100dvh; }
+    #sidebar:popover-open .drawer-close { display:block; }
+  }
+  /* Phones: the page scrolls as a whole, the rail becomes a bottom tab bar with visible
+     labels, and the status bar steps aside for it. */
+  @media (max-width: 640px) {
+    body { height:auto; min-height:100dvh; overflow:visible; grid-template-columns:minmax(0,1fr); grid-template-rows:auto; grid-template-areas:"main";
+      padding-bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
+    main { overflow:visible; }
+    .statusbar { display:none; }
+    .rail { position:fixed; inset:auto 0 0 0; flex-direction:row; align-items:stretch; gap:0; padding:0 0 env(safe-area-inset-bottom);
+      border-inline-end:0; border-top:1px solid var(--control-border); }
+    .rail ul { flex-direction:row; flex:4; gap:0; }
+    .rail li, .rail .account { flex:1; margin:0; display:flex; }
+    .rail a, .rail .account > button { flex:1; width:auto; height:var(--tabbar-h); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
+    .rail .label { position:static; translate:none; clip-path:none; padding:0; background:none; color:inherit; font-size:.6875rem; }
+    .rail .count { inset-inline-end:calc(50% - 22px); top:4px; }
+    .rail .account .av { width:1.75rem; font-size:.6875rem; }
+    /* Settings is in the account menu, so the bar keeps five items. */
+    .rail .settings { display:none; }
+    #acct { position-area:block-start span-inline-start; margin:var(--space-xs) 0; }
+    .main-bar { flex-wrap:wrap; justify-content:space-between; padding:var(--space-xs) var(--space-md) 0; }
+    .main-bar [role="tablist"] { order:3; flex-basis:100%; }
+    .content { padding:var(--space-md); }
+    /* Order cards turn into rows: thumbnail, then the text beside it. */
+    .orders { grid-template-columns:minmax(0,1fr); gap:var(--space-sm); }
+    .orders .pd-card { display:grid; grid-template-columns:4.5rem minmax(0,1fr); align-content:center; gap:2px var(--space-sm); }
+    .orders .ph { grid-row:span 2; aspect-ratio:1; }
+    .orders .ph svg { width:2rem; height:2rem; }
+    .assign { grid-template-columns:auto minmax(0,1fr); }
+    .assign > button { grid-column:1 / -1; justify-self:start; }
+  }
+</style>
+</head>
+<body class="pd-app">
+<a class="skip" href="#main">Skip to main content</a>
+
+<nav class="rail" aria-label="Primary">
+  <ul>
+    <li><a href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg><span class="label">Home</span></a></li>
+    <li><a href="#search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><span class="label">Search</span></a></li>
+    <li><a href="#customers" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg><span class="label">Inbox<span class="vh">, 3 new</span></span><span class="count" aria-hidden="true">3</span></a></li>
+    <li><a href="#documents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg><span class="label">Documents</span></a></li>
+    <li class="settings"><a href="#settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg><span class="label">Settings</span></a></li>
+  </ul>
+  <div class="account">
+    <button type="button" popovertarget="acct" aria-haspopup="true"><span class="av" aria-hidden="true">IM</span><span class="label">Account</span></button>
+    <div popover id="acct" class="pd-menu"><ul><li><a href="#profile">Profile</a></li><li><a href="#settings">Settings</a></li><li><a href="#signout">Sign out</a></li></ul></div>
+  </div>
+</nav>
+
+<nav id="sidebar" popover aria-label="Customers">
+  <p class="drawer-close"><button type="button" popovertarget="sidebar" popovertargetaction="hide">Close customers</button></p>
+  <button type="button" class="switcher" popovertarget="views" aria-haspopup="true"><span id="view-name">All customers</span> <span class="pd-chevron" aria-hidden="true"></span></button>
+  <div popover id="views" class="pd-menu"><ul><li><button type="button">All customers</button></li><li><button type="button">Waiting on reply</button></li><li><button type="button">Repeat buyers</button></li></ul></div>
+  <ul class="people">
+    <li><a href="#c-sari" aria-current="page"><span class="av" aria-hidden="true">SW</span><span class="name">Sari Wulandari</span><span class="last">Can the runner ship before Friday?</span></a></li>
+    <li><a href="#c-budi"><span class="av" aria-hidden="true">BS</span><span class="name">Budi Santoso</span><span class="last">Thanks, it arrived today.</span></a></li>
+    <li><a href="#c-ayu"><span class="av" aria-hidden="true">AP</span><span class="name">Ayu Pratiwi</span><span class="last">Is the indigo one back in stock?</span></a></li>
+    <li><a href="#c-rizky"><span class="av" aria-hidden="true">RH</span><span class="name">Rizky Hidayat</span><span class="last">Order 1043 · paid</span></a></li>
+    <li><a href="#c-dewi"><span class="av" aria-hidden="true">DL</span><span class="name">Dewi Lestari</span><span class="last">Could I change the address?</span></a></li>
+    <li><a href="#c-agus"><span class="av" aria-hidden="true">AK</span><span class="name">Agus Kurniawan</span><span class="last">Refund sent to BCA account</span></a></li>
+    <li><a href="#c-putri"><span class="av" aria-hidden="true">PN</span><span class="name">Putri Nugraha</span><span class="last">Two more for my sister, please</span></a></li>
+  </ul>
+</nav>
+
+<main id="main" tabindex="-1">
+  <div class="main-bar">
+    <button type="button" class="panel-toggle for-sidebar" popovertarget="sidebar">‹ Customers</button>
+    <div role="tablist" aria-label="Customer">
+      <button type="button" role="tab" id="t-overview" aria-controls="p-overview" aria-selected="true">Overview</button>
+      <button type="button" role="tab" id="t-orders" aria-controls="p-orders" aria-selected="false" tabindex="-1">Orders</button>
+      <button type="button" role="tab" id="t-messages" aria-controls="p-messages" aria-selected="false" tabindex="-1">Messages</button>
+    </div>
+    <button type="button" class="panel-toggle for-details" popovertarget="details">Details</button>
+  </div>
+
+  <div role="tabpanel" id="p-overview" aria-labelledby="t-overview" class="content">
+    <div class="page-head">
+      <h1 id="who">Sari Wulandari</h1>
+      <p class="muted">Customer since March 2024 · Bandung · 14 orders, Rp 3.120.000 in total</p>
+    </div>
+    <section aria-labelledby="recent-h">
+      <h2 id="recent-h">Recent orders</h2>
+      <div class="orders">
+        <article class="pd-card" data-size="sm">
+          <div class="ph" role="img" aria-label="Photo of the batik table runner"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="9" width="36" height="30"/><circle cx="16" cy="18" r="3"/><path d="m6 35 12-12 9 9 5-5 10 10"/></svg></div>
+          <h3>Batik table runner</h3>
+          <p class="muted">Order 1051 · Rp 245.000 · <strong>To ship</strong></p>
+        </article>
+        <article class="pd-card" data-size="sm">
+          <div class="ph" role="img" aria-label="Photo of the rattan basket set"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="9" width="36" height="30"/><circle cx="16" cy="18" r="3"/><path d="m6 35 12-12 9 9 5-5 10 10"/></svg></div>
+          <h3>Rattan basket set</h3>
+          <p class="muted">Order 1038 · Rp 410.000 · Delivered</p>
+        </article>
+        <article class="pd-card" data-size="sm">
+          <div class="ph" role="img" aria-label="Photo of the teak serving board"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="9" width="36" height="30"/><circle cx="16" cy="18" r="3"/><path d="m6 35 12-12 9 9 5-5 10 10"/></svg></div>
+          <h3>Teak serving board</h3>
+          <p class="muted">Order 1022 · Rp 185.000 · Delivered</p>
+        </article>
+      </div>
+    </section>
+    <section aria-labelledby="notes-h">
+      <h2 id="notes-h">Notes</h2>
+      <p>Prefers delivery after 17:00 on weekdays. Buys gifts in batches before Lebaran and asks for gift wrap with no price tags. Last time the courier left a parcel with the neighbour; send a WhatsApp message before dispatch.</p>
+    </section>
+    <section class="pd-card assign" aria-labelledby="assign-h">
+      <span class="av" aria-hidden="true">DR</span>
+      <div>
+        <h2 id="assign-h">Assigned to Dimas Ramadhan</h2>
+        <p class="muted">Replies within 2 hours on average. Sari’s question about Friday delivery is waiting for him.</p>
+      </div>
+      <button type="button">Reassign</button>
+    </section>
+  </div>
+
+  <div role="tabpanel" id="p-orders" aria-labelledby="t-orders" class="content" hidden>
+    <h2>All orders</h2>
+    <table>
+      <thead><tr><th scope="col">Order</th><th scope="col">Date</th><th scope="col">Status</th><th scope="col" class="num">Total</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#o1051">1051</a></td><td>2 Oct 2026</td><td>To ship</td><td class="num">Rp 245.000</td></tr>
+        <tr><td><a href="#o1038">1038</a></td><td>14 Sep 2026</td><td>Delivered</td><td class="num">Rp 410.000</td></tr>
+        <tr><td><a href="#o1022">1022</a></td><td>30 Aug 2026</td><td>Delivered</td><td class="num">Rp 185.000</td></tr>
+        <tr><td><a href="#o0987">987</a></td><td>2 Jul 2026</td><td>Refunded</td><td class="num">Rp 95.000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div role="tabpanel" id="p-messages" aria-labelledby="t-messages" class="content" hidden>
+    <h2>Messages</h2>
+    <p><strong>Sari, 09:12:</strong> Can the runner ship before Friday? It’s a gift.</p>
+    <p class="muted">No reply yet. Assigned to Dimas.</p>
+  </div>
+</main>
+
+<aside id="details" popover aria-label="Customer details">
+  <p class="drawer-close"><button type="button" popovertarget="details" popovertargetaction="hide">Close details</button></p>
+  <section aria-labelledby="glance-h">
+    <h2 id="glance-h">At a glance</h2>
+    <p class="muted">Repeat buyer · usually orders every 6 weeks</p>
+  </section>
+  <section class="pd-card" data-size="sm" aria-labelledby="todo-h">
+    <h2 id="todo-h">Before dispatch</h2>
+    <ul class="checks">
+      <li><label><input type="checkbox" checked> Payment confirmed</label></li>
+      <li><label><input type="checkbox"> Gift wrap, no price tag</label></li>
+      <li><label><input type="checkbox"> WhatsApp before sending</label></li>
+    </ul>
+  </section>
+  <section aria-labelledby="addr-h">
+    <h2 id="addr-h">Delivery address</h2>
+    <div class="ph map" role="img" aria-label="Map of the delivery address in Bandung"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l13-5 14 5 13-5v29l-13 5-14-5-13 5z"/><path d="M17 7v29M31 12v29"/></svg></div>
+    <p>Jl. Cihampelas 112, Bandung 40131</p>
+  </section>
+  <section aria-labelledby="watch-h">
+    <h2 id="watch-h">Watching</h2>
+    <ul class="watchers">
+      <li><span class="av" aria-hidden="true">DR</span> Dimas Ramadhan</li>
+      <li><span class="av" aria-hidden="true">IM</span> Imam (you)</li>
+      <li><span class="av" aria-hidden="true">NF</span> Nadia Fitri</li>
+    </ul>
+  </section>
+</aside>
+
+<footer class="statusbar">
+  <p role="status">All changes saved · synced 2 minutes ago</p>
+  <ul><li><a href="#shortcuts">Keyboard shortcuts</a></li><li><a href="#help">Help</a></li><li>Version 5.0</li></ul>
+</footer>
+
+<script>
+// Tabs: arrow keys, Home and End move between them (APG tabs, automatic activation).
+document.querySelectorAll('[role=tablist]').forEach(function(list){
+  var tabs=[].slice.call(list.querySelectorAll('[role=tab]'));
+  function sel(t,focus){ tabs.forEach(function(x){ var on=x===t; x.setAttribute('aria-selected',String(on)); x.tabIndex=on?0:-1;
+    document.getElementById(x.getAttribute('aria-controls')).hidden=!on; }); if(focus) t.focus(); }
+  tabs.forEach(function(t,i){ t.addEventListener('click',function(){ sel(t); });
+    t.addEventListener('keydown',function(e){ var j=null;
+      if(e.key==='ArrowRight') j=(i+1)%tabs.length; if(e.key==='ArrowLeft') j=(i-1+tabs.length)%tabs.length;
+      if(e.key==='Home') j=0; if(e.key==='End') j=tabs.length-1;
+      if(j!==null){ e.preventDefault(); sel(tabs[j],true); } }); });
+});
+
+// Choosing a customer marks it current, names it in main and closes the drawer (if it is one).
+var sidebar=document.getElementById('sidebar');
+sidebar.querySelectorAll('.people a').forEach(function(a){ a.addEventListener('click',function(e){
+  e.preventDefault();
+  sidebar.querySelectorAll('.people a').forEach(function(x){ x.removeAttribute('aria-current'); });
+  a.setAttribute('aria-current','page');
+  document.getElementById('who').textContent=a.querySelector('.name').textContent;
+  if(sidebar.matches(':popover-open')) sidebar.hidePopover();
+  document.getElementById('main').focus();
+}); });
+
+// The view switcher renames itself to the chosen view.
+var views=document.getElementById('views');
+views.querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){
+  document.getElementById('view-name').textContent=b.textContent; views.hidePopover();
+}); });
+</script>
+</body>
+</html>
