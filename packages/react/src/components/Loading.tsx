@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { color, radius, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 /*
  * Loading at every level. Status is always said in words first; the spinner, the
@@ -17,8 +17,13 @@ const pulse = stylex.keyframes({ '50%': { opacity: 0.5 } });
  * A small ring in currentColor, 1em, so it matches the text beside it. Decorative:
  * always put the words ("Saving…") next to it.
  */
-export function Spinner({ xstyle }: { xstyle?: StyleXStyles }) {
-  return <span aria-hidden="true" {...stylex.props(styles.spinner, xstyle)} />;
+export function Spinner({ xstyle, className, style }: { xstyle?: StyleXStyles;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
+  return <span aria-hidden="true" {...mergeRootProps(stylex.props(styles.spinner, xstyle), { className, style })} />;
 }
 
 /**
@@ -31,16 +36,22 @@ export function Skeleton({
   lines = 1,
   width,
   height,
+  className,
+  style,
 }: {
   shape?: 'text' | 'block' | 'circle';
   lines?: number;
   /** Any CSS length. Text defaults to the full width; block and circle to 3rem. */
   width?: string;
   height?: string;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   if (shape === 'text') {
     return (
-      <span aria-hidden="true" {...stylex.props(styles.lines)}>
+      <span aria-hidden="true" {...mergeRootProps(stylex.props(styles.lines), { className, style })}>
         {Array.from({ length: lines }, (_, i) => (
           <span key={i} {...stylex.props(styles.bone, styles.line, styles.size(
             i === lines - 1 && lines > 1 ? '60%' : (width ?? '100%'), height ?? '1em'))} />
@@ -51,7 +62,7 @@ export function Skeleton({
   const w = width ?? '3rem';
   return (
     <span aria-hidden="true"
-      {...stylex.props(styles.bone, styles.size(w, height ?? w), shape === 'circle' && styles.circle)} />
+      {...mergeRootProps(stylex.props(styles.bone, styles.size(w, height ?? w), shape === 'circle' && styles.circle), { className, style })} />
   );
 }
 
@@ -69,6 +80,8 @@ export function Loading({
   size = 'region',
   children,
   xstyle,
+  className,
+  style,
 }: {
   busy: boolean;
   /** What is loading, in words: "Loading orders…". */
@@ -78,9 +91,13 @@ export function Loading({
   size?: 'region' | 'page';
   children?: ReactNode;
   xstyle?: StyleXStyles;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   return (
-    <div aria-busy={busy} {...stylex.props(styles.region, xstyle)}>
+    <div aria-busy={busy} {...mergeRootProps(stylex.props(styles.region, xstyle), { className, style })}>
       {/* Exists from the first render, so the first message is not missed. */}
       <span role="status" {...stylex.props(shared.visuallyHidden)}>{busy ? label : ''}</span>
       {!busy ? (

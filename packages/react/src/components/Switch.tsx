@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 /**
  * A checkbox with role="switch", drawn 44×24 with a sliding knob. For settings that
@@ -13,17 +13,23 @@ export function Switch({
   label,
   description,
   id,
+  className,
+  style,
   ...rest
 }: Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'style' | 'type' | 'role'> & {
   /** Names the setting, not the state: "Holiday mode". */
   label: ReactNode;
   description?: ReactNode;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const auto = useId();
   const inputId = id ?? auto;
   const descId = description ? `${inputId}-d` : undefined;
   return (
-    <div {...stylex.props(styles.wrap)}>
+    <div {...mergeRootProps(stylex.props(styles.wrap), { className, style })}>
       <p {...stylex.props(styles.row)}>
         <input type="checkbox" role="switch" id={inputId} aria-describedby={descId} {...rest} {...stylex.props(styles.track)} />
         <label htmlFor={inputId}>{label}</label>

@@ -1,14 +1,20 @@
 import * as stylex from '@stylexjs/stylex';
+import type { CSSProperties } from 'react';
 import { color, font, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 /**
  * "On this page" links that highlight the section in view with no script, where
  * scroll-target-group is supported (Chromium). Elsewhere a plain list of links.
  */
-export function TableOfContents({ items, label = 'On this page' }: { items: { href: string; label: string }[]; label?: string }) {
+export function TableOfContents({ items, label = 'On this page', className, style }: { items: { href: string; label: string }[]; label?: string;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
-    <nav aria-label={label}>
+    <nav aria-label={label} {...mergeRootProps(undefined, { className, style })}>
       <p {...stylex.props(shared.eyebrow, styles.title)}>{label}</p>
       <ol {...stylex.props(styles.list)}>
         {items.map((i) => (

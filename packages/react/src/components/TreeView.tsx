@@ -1,8 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { Chevron } from './Chevron';
+import { mergeRootProps } from './shared';
 
 export type TreeNode = { id: string; label: string; children?: TreeNode[] };
 
@@ -16,11 +17,17 @@ export function TreeView({
   items,
   defaultExpanded = [],
   onSelect,
+  className,
+  style,
 }: {
   label: ReactNode;
   items: TreeNode[];
   defaultExpanded?: string[];
   onSelect?: (node: TreeNode) => void;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const [expanded, setExpanded] = useState(() => new Set(defaultExpanded));
   const [selected, setSelected] = useState<string | null>(null);
@@ -109,7 +116,7 @@ export function TreeView({
   );
 
   return (
-    <div>
+    <div {...mergeRootProps(undefined, { className, style })}>
       <p id={labelId} {...stylex.props(styles.title)}><b>{label}</b></p>
       {render(items, 'tree')}
     </div>

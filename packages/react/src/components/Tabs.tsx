@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { wrap } from './shared';
+import { mergeRootProps, wrap } from './shared';
 
 export type Tab = { label: ReactNode; content: ReactNode };
 
@@ -10,7 +10,12 @@ export type Tab = { label: ReactNode; content: ReactNode };
  * The ARIA tabs pattern for 2–6 peer views of one thing. Only the selected tab is in
  * the tab order; Left/Right move and select, Home/End jump. Panels are focusable.
  */
-export function Tabs({ label, tabs, defaultIndex = 0 }: { label: string; tabs: Tab[]; defaultIndex?: number }) {
+export function Tabs({ label, tabs, defaultIndex = 0, className, style }: { label: string; tabs: Tab[]; defaultIndex?: number;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const id = useId();
   const [sel, setSel] = useState(defaultIndex);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -30,7 +35,7 @@ export function Tabs({ label, tabs, defaultIndex = 0 }: { label: string; tabs: T
     select(j, true);
   };
   return (
-    <div>
+    <div {...mergeRootProps(undefined, { className, style })}>
       <div role="tablist" aria-label={label} {...stylex.props(styles.list)}>
         {tabs.map((t, i) => (
           <button

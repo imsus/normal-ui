@@ -4,8 +4,9 @@ import type { ButtonHTMLAttributes, Ref } from 'react';
 import { color, font, radius, shape, space, text } from '@imsus/normal-ui-css/tokens.stylex';
 import { buttonGroupItem, useInButtonGroup } from './ButtonGroup';
 import { Spinner } from './Loading';
+import { mergeRootProps } from './shared';
 
-export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className' | 'style'> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Makes it a toggle button: sets aria-pressed and inverts when pressed. */
   pressed?: boolean;
   /**
@@ -39,7 +40,7 @@ export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'classNa
  * The native button. In Normal UI one look for every button, whatever its `variant`:
  * order and wording carry the emphasis. `type` defaults to "button".
  */
-export function Button({ type = 'button', pressed, variant, loading = false, loadingText, square = false, xstyle, children, onClick, ...rest }: ButtonProps) {
+export function Button({ type = 'button', pressed, variant, loading = false, loadingText, square = false, xstyle, className, style, children, onClick, ...rest }: ButtonProps) {
   // Inside a ButtonGroup, join the neighbouring buttons.
   const grouped = useInButtonGroup();
   return (
@@ -51,14 +52,17 @@ export function Button({ type = 'button', pressed, variant, loading = false, loa
       {...rest}
       // While loading, swallow clicks (and form submission) without losing focus.
       onClick={loading ? (e) => e.preventDefault() : onClick}
-      {...stylex.props(
-        styles.button,
-        square && styles.square,
-        pressed && styles.pressed,
-        loading && styles.loading,
-        grouped && buttonGroupItem.item,
-        grouped && pressed && buttonGroupItem.raised,
-        xstyle,
+      {...mergeRootProps(
+        stylex.props(
+          styles.button,
+          square && styles.square,
+          pressed && styles.pressed,
+          loading && styles.loading,
+          grouped && buttonGroupItem.item,
+          grouped && pressed && buttonGroupItem.raised,
+          xstyle,
+        ),
+        { className, style },
       )}
     >
       {loading ? (

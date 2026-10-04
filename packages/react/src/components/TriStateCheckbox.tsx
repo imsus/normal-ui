@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Fieldset } from './Field';
 
 /**
@@ -13,12 +13,18 @@ export function TriStateCheckbox({
   options,
   defaultChecked = [],
   onChange,
+  className,
+  style,
 }: {
   legend: ReactNode;
   parentLabel: ReactNode;
   options: string[];
   defaultChecked?: string[];
   onChange?: (checked: string[]) => void;
+  /** Extra classes, forwarded to the Fieldset. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, forwarded to the Fieldset. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const [checked, setChecked] = useState(() => new Set(defaultChecked));
   const parent = useRef<HTMLInputElement>(null);
@@ -32,7 +38,7 @@ export function TriStateCheckbox({
     onChange?.(options.filter((o) => next.has(o)));
   };
   return (
-    <Fieldset legend={legend}>
+    <Fieldset legend={legend} className={className} style={style}>
       <p {...stylex.props(styles.p)}>
         <label>
           <input ref={parent} type="checkbox" checked={all} onChange={() => update(new Set(all ? [] : options))} />{' '}

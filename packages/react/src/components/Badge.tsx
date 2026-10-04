@@ -1,14 +1,20 @@
 import * as stylex from '@stylexjs/stylex';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 /**
  * A short status word in a 1px box. The word carries the meaning: there are no
  * coloured badges. `tone="strong"` inverts it for the one status per screen that
  * most needs attention.
  */
-export function Badge({ tone = 'default', children }: { tone?: 'default' | 'strong'; children: ReactNode }) {
-  return <span {...stylex.props(styles.badge, tone === 'strong' && styles.strong)}>{children}</span>;
+export function Badge({ tone = 'default', children, className, style }: { tone?: 'default' | 'strong'; children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
+  return <span {...mergeRootProps(stylex.props(styles.badge, tone === 'strong' && styles.strong), { className, style })}>{children}</span>;
 }
 
 const styles = stylex.create({

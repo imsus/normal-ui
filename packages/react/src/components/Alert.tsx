@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
-import type { AriaRole, ReactNode } from 'react';
+import type { AriaRole, CSSProperties, ReactNode } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 export type AlertKind = 'info' | 'success' | 'warning' | 'error';
 
@@ -20,15 +21,21 @@ export function Alert({
   label = words[kind],
   role,
   children,
+  className,
+  style,
 }: {
   kind?: AlertKind;
   /** The leading word. Defaults to Note:, Done:, Warning: or Error:. */
   label?: string;
   role?: AriaRole;
   children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   return (
-    <div role={role} {...stylex.props(styles.alert, styles[kind])}>
+    <div role={role} {...mergeRootProps(stylex.props(styles.alert, styles[kind]), { className, style })}>
       <p {...stylex.props(styles.body)}>
         <strong {...stylex.props(styles.label)}>{label}</strong> {children}
       </p>

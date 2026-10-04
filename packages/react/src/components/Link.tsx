@@ -2,8 +2,9 @@ import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import type { AnchorHTMLAttributes } from 'react';
 import { color } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
-export type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'style'> & {
+export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string;
   xstyle?: StyleXStyles;
 };
@@ -12,8 +13,8 @@ export type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className
  * An underlined link: blue, purple once visited, red while pressed. The underline
  * stays, so colour never marks a link alone (WCAG 1.4.1). Text names the destination.
  */
-export function Link({ xstyle, ...rest }: LinkProps) {
-  return <a {...rest} {...stylex.props(styles.link, xstyle)} />;
+export function Link({ xstyle, className, style, ...rest }: LinkProps) {
+  return <a {...rest} {...mergeRootProps(stylex.props(styles.link, xstyle), { className, style })} />;
 }
 
 const styles = stylex.create({

@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { optionStyles as o } from './Options';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 /**
  * An editable combobox with list autocomplete. Focus stays in the input;
@@ -16,6 +16,8 @@ export function Combobox({
   defaultValue = '',
   noun = ['result', 'results'],
   onSelect,
+  className,
+  style,
 }: {
   label: ReactNode;
   options: string[];
@@ -24,6 +26,10 @@ export function Combobox({
   /** Singular and plural for the announcement: "3 cities found". */
   noun?: [string, string];
   onSelect?: (value: string) => void;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [value, setValue] = useState(defaultValue);
@@ -79,7 +85,7 @@ export function Combobox({
   };
 
   return (
-    <div {...stylex.props(shared.field)}>
+    <div {...mergeRootProps(stylex.props(shared.field), { className, style })}>
       <label htmlFor={id}>{label}</label>
       <div {...stylex.props(styles.combo)}>
         <input

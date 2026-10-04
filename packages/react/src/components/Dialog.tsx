@@ -1,8 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { useEffect, useId, useRef } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { space } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 /**
  * A native <dialog> opened with showModal(): the browser traps focus, makes the page
@@ -18,6 +19,8 @@ export function Dialog({
   children,
   actions,
   xstyle,
+  className,
+  style,
 }: {
   open: boolean;
   onClose: (returnValue: string) => void;
@@ -29,6 +32,10 @@ export function Dialog({
   /** Buttons for the footer. A <button value="x"> closes the dialog with that value. */
   actions?: ReactNode;
   xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const ref = useRef<HTMLDialogElement>(null);
@@ -52,7 +59,7 @@ export function Dialog({
         e.currentTarget.returnValue = '';
         (opener.current as HTMLElement | null)?.focus?.();
       }}
-      {...stylex.props(styles.dialog, xstyle)}
+      {...mergeRootProps(stylex.props(styles.dialog, xstyle), { className, style })}
     >
       <form method="dialog">
         <h2 id={`${id}-h`} {...stylex.props(styles.title)}>{title}</h2>
@@ -75,6 +82,8 @@ export function AlertDialog({
   description,
   cancel,
   confirm,
+  className,
+  style,
 }: {
   open: boolean;
   onClose: (confirmed: boolean) => void;
@@ -84,6 +93,10 @@ export function AlertDialog({
   cancel: string;
   /** The destructive choice: "Discard changes". */
   confirm: string;
+  /** Extra classes, forwarded to the dialog. */
+  className?: string;
+  /** Inline style, forwarded to the dialog. */
+  style?: CSSProperties;
 }) {
   return (
     <Dialog
@@ -92,6 +105,8 @@ export function AlertDialog({
       onClose={(v) => onClose(v === 'confirm')}
       title={title}
       description={description}
+      className={className}
+      style={style}
       actions={
         <>
           <button value="cancel" autoFocus>{cancel}</button>

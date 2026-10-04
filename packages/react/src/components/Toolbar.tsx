@@ -1,14 +1,20 @@
 import * as stylex from '@stylexjs/stylex';
 import { useRef } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 /**
  * A group of controls for one target. One Tab stop: Left/Right move between
  * controls, Home/End jump (roving tabindex, managed here). Use <Button pressed> for
  * toggles and <ToolbarSeparator /> between groups.
  */
-export function Toolbar({ label, controls, children }: { label: string; /** id of what the toolbar acts on. */ controls?: string; children: ReactNode }) {
+export function Toolbar({ label, controls, children, className, style }: { label: string; /** id of what the toolbar acts on. */ controls?: string; children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const buttons = () => [...(ref.current?.querySelectorAll<HTMLButtonElement>('button') ?? [])];
   const focusAt = (i: number) => {
@@ -42,15 +48,20 @@ export function Toolbar({ label, controls, children }: { label: string; /** id o
         const b = (e.target as Element).closest('button');
         if (b) buttons().forEach((x) => (x.tabIndex = x === b ? 0 : -1));
       }}
-      {...stylex.props(styles.toolbar)}
+      {...mergeRootProps(stylex.props(styles.toolbar), { className, style })}
     >
       {children}
     </div>
   );
 }
 
-export function ToolbarSeparator() {
-  return <span role="separator" {...stylex.props(styles.separator)} />;
+export function ToolbarSeparator({ className, style }: {
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+} = {}) {
+  return <span role="separator" {...mergeRootProps(stylex.props(styles.separator), { className, style })} />;
 }
 
 const styles = stylex.create({

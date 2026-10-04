@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useRef, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import type { CSSProperties, KeyboardEvent } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { wrap } from './shared';
+import { mergeRootProps, wrap } from './shared';
 
 export type MenubarItem =
   | { type?: 'item'; label: string; shortcut?: string; keyshortcuts?: string; onSelect?: () => void }
@@ -17,7 +17,12 @@ export type MenubarMenu = { label: string; items: MenubarItem[] };
  * switch open menus), Down or Enter opens, Up/Down move in a menu, Home/End jump,
  * Esc closes, Tab leaves. For a few actions use MenuButton instead.
  */
-export function Menubar({ label, menus }: { label: string; menus: MenubarMenu[] }) {
+export function Menubar({ label, menus, className, style }: { label: string; menus: MenubarMenu[];
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const id = useId();
   const [top, setTop] = useState(0);
   const [open, setOpen] = useState<number | null>(null);
@@ -77,7 +82,7 @@ export function Menubar({ label, menus }: { label: string; menus: MenubarMenu[] 
   };
 
   return (
-    <ul ref={bar} role="menubar" aria-label={label} {...stylex.props(styles.bar)}>
+    <ul ref={bar} role="menubar" aria-label={label} {...mergeRootProps(stylex.props(styles.bar), { className, style })}>
       {menus.map((m, i) => (
         <li key={m.label} {...stylex.props(styles.top)}>
           <span

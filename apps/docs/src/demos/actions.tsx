@@ -39,6 +39,9 @@ export const Actions = {
       <Button disabled>Unavailable</Button>
       <Button square aria-label="Close">×</Button>
       <Button square aria-label="More options">⋯</Button>
+      {/* className lands after the component's own classes; this unlayered rule wins. */}
+      <Button className="demo-override">Overridden</Button>
+      <style>{`.demo-override { background: var(--button-primary-face); color: var(--button-primary-text); }`}</style>
     </Cluster>
   ),
   Link: () => (

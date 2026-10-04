@@ -1,9 +1,10 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { Chevron } from './Chevron';
 import { chevron } from './chevron.stylex';
+import { mergeRootProps } from './shared';
 
 export type AccordionItem = { title: ReactNode; content: ReactNode };
 
@@ -16,11 +17,17 @@ export function Accordion({
   items,
   level = 3,
   defaultOpen = [0],
+  className,
+  style,
 }: {
   items: AccordionItem[];
   /** Heading level of the section titles. */
   level?: 2 | 3 | 4;
   defaultOpen?: number[];
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [open, setOpen] = useState(() => new Set(defaultOpen));
@@ -33,7 +40,7 @@ export function Accordion({
       return next;
     });
   return (
-    <div {...stylex.props(styles.accordion)}>
+    <div {...mergeRootProps(stylex.props(styles.accordion), { className, style })}>
       {items.map((item, i) => (
         <AccordionSection key={i} H={H} id={`${id}-${i}`} title={item.title} open={open.has(i)} onToggle={(on) => set(i, on)}
           regions={items.length <= 6}>
@@ -85,9 +92,14 @@ function AccordionSection({ H, id, title, open, onToggle, regions, children }: {
  * where opening one closes the others. Opening animates its height unless the
  * reader asked for reduced motion (base.css).
  */
-export function Details({ summary, children, open, name }: { summary: ReactNode; children: ReactNode; open?: boolean; name?: string }) {
+export function Details({ summary, children, open, name, className, style }: { summary: ReactNode; children: ReactNode; open?: boolean; name?: string;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
-    <details open={open} name={name}>
+    <details open={open} name={name} {...mergeRootProps(undefined, { className, style })}>
       <summary>{summary}</summary>
       <div {...stylex.props(styles.details)}>{children}</div>
     </details>

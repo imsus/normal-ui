@@ -1,8 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { Children, createContext, isValidElement, useContext, useId } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 /*
  * Card: a container for related content, such as a form, a list or a summary.
@@ -34,6 +35,8 @@ function CardRoot({
   as: As = 'div',
   children,
   xstyle,
+  className,
+  style,
 }: {
   /** How the header, body and footer are set apart. */
   body?: CardBodyTreatment;
@@ -55,6 +58,10 @@ function CardRoot({
   as?: 'div' | 'section' | 'article' | 'li';
   children?: ReactNode;
   xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const headingId = `${useId()}-heading`;
   const insetDivider = body === 'divided' && divider === 'inset';
@@ -63,7 +70,7 @@ function CardRoot({
     <CardContext.Provider value={{ body, insetDivider, headingId, nested: false }}>
       <As
         aria-labelledby={named ? headingId : undefined}
-        {...stylex.props(
+        {...mergeRootProps(stylex.props(
           styles.card,
           styles.pad(pads[size]),
           variant === 'outline' && styles.outline,
@@ -75,7 +82,7 @@ function CardRoot({
           insetDivider && styles.padInline,
           (body === 'divided' || body === 'separated') && styles.noGap,
           xstyle,
-        )}
+        ), { className, style })}
       >
         {children}
       </As>
@@ -89,7 +96,12 @@ function CardRoot({
  * Inside a Card.Body it becomes a bare sub-section heading; outside a card it works
  * on its own, above the card it introduces.
  */
-export function CardHeader({ children, xstyle }: { children: ReactNode; xstyle?: StyleXStyles }) {
+export function CardHeader({ children, xstyle, className, style }: { children: ReactNode; xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const ctx = useContext(CardContext);
   const items = Children.toArray(children);
   const isActions = (c: unknown) => isValidElement(c) && c.type === CardActions;
@@ -97,7 +109,7 @@ export function CardHeader({ children, xstyle }: { children: ReactNode; xstyle?:
   const titles = items.filter((c) => !isActions(c));
   const actionsFirst = items.findIndex(isActions) === 0 && titles.length > 0;
   return (
-    <div {...stylex.props(styles.header, ...partStyles(ctx, 'header'), xstyle)}>
+    <div {...mergeRootProps(stylex.props(styles.header, ...partStyles(ctx, 'header'), xstyle), { className, style })}>
       {actionsFirst ? actions : null}
       <div {...stylex.props(styles.titles)}>{titles}</div>
       {actionsFirst ? null : actions}
@@ -112,54 +124,75 @@ export function CardHeading({
   level = 2,
   size = 'base',
   children,
+  className,
+  style,
 }: {
   /** The heading level to render: 2 for an h2. */
   level?: 2 | 3 | 4 | 5 | 6;
   size?: 'base' | 'lg' | 'xl';
   children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const ctx = useContext(CardContext);
   const H = `h${level}` as const;
   // The card's own heading names the card; a sub-section heading inside the body does not.
   const id = ctx && !ctx.nested ? ctx.headingId : undefined;
   return (
-    <H id={id} {...stylex.props(styles.heading, styles.headingSize(headingSizes[size]))}>
+    <H id={id} {...mergeRootProps(stylex.props(styles.heading, styles.headingSize(headingSizes[size])), { className, style })}>
       {children}
     </H>
   );
 }
 
 /** Supporting text tucked under the heading. */
-export function CardSubheading({ children }: { children: ReactNode }) {
-  return <p {...stylex.props(styles.subheading)}>{children}</p>;
+export function CardSubheading({ children, className, style }: { children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
+  return <p {...mergeRootProps(stylex.props(styles.subheading), { className, style })}>{children}</p>;
 }
 
 /**
  * Buttons or other controls. In a header they line up with the heading and tuck into
  * the corner instead of making the header taller; in a footer they sit at the end.
  */
-export function CardActions({ children }: { children: ReactNode }) {
-  return <div {...stylex.props(styles.actions)}>{children}</div>;
+export function CardActions({ children, className, style }: { children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
+  return <div {...mergeRootProps(stylex.props(styles.actions), { className, style })}>{children}</div>;
 }
 
 /**
  * The card's main content. It can hold its own Card.Header and Card.Footer, which then
  * act as titled sub-sections.
  */
-export function CardBody({ children, xstyle }: { children: ReactNode; xstyle?: StyleXStyles }) {
+export function CardBody({ children, xstyle, className, style }: { children: ReactNode; xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const ctx = useContext(CardContext);
   const body = ctx?.body ?? 'seamless';
   return (
     <CardContext.Provider value={ctx ? { ...ctx, nested: true } : null}>
       <div
-        {...stylex.props(
+        {...mergeRootProps(stylex.props(
           styles.body,
           body === 'seamless' && styles.bodySeamless,
           body === 'inset' && styles.bodyInset,
           body === 'flush' && styles.bodyFlush,
           (body === 'divided' || body === 'separated') && (ctx?.insetDivider ? styles.bodyPadBlock : styles.bodyPad),
           xstyle,
-        )}
+        ), { className, style })}
       >
         {children}
       </div>
@@ -168,9 +201,14 @@ export function CardBody({ children, xstyle }: { children: ReactNode; xstyle?: S
 }
 
 /** Supporting text and optional Card.Actions, under the body. */
-export function CardFooter({ children, xstyle }: { children: ReactNode; xstyle?: StyleXStyles }) {
+export function CardFooter({ children, xstyle, className, style }: { children: ReactNode; xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const ctx = useContext(CardContext);
-  return <div {...stylex.props(styles.footer, ...partStyles(ctx, 'footer'), xstyle)}>{children}</div>;
+  return <div {...mergeRootProps(stylex.props(styles.footer, ...partStyles(ctx, 'footer'), xstyle), { className, style })}>{children}</div>;
 }
 
 /**
@@ -178,8 +216,13 @@ export function CardFooter({ children, xstyle }: { children: ReactNode; xstyle?:
  * the sides, and reaches the top or bottom when it is the first or last thing in the
  * body. Give an image `display: block; width: 100%`.
  */
-export function CardBleed({ children }: { children: ReactNode }) {
-  return <div {...stylex.props(cardBleed.bleed)}>{children}</div>;
+export function CardBleed({ children, className, style }: { children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
+  return <div {...mergeRootProps(stylex.props(cardBleed.bleed), { className, style })}>{children}</div>;
 }
 
 /** How a header or footer sits in the card, from the card's body treatment. */

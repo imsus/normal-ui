@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 export type UploadItem = { name: string; size: number; progress?: number; status: string };
 
@@ -18,6 +18,8 @@ export function FileUpload({
   multiple = true,
   files = [],
   onFiles,
+  className,
+  style,
 }: {
   label: ReactNode;
   /** The words inside the zone. */
@@ -29,6 +31,10 @@ export function FileUpload({
   /** Files to list under the zone, each with progress and a status word. */
   files?: UploadItem[];
   onFiles?: (files: File[]) => void;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [dragging, setDragging] = useState(false);
@@ -37,7 +43,7 @@ export function FileUpload({
     setDragging(on);
   };
   return (
-    <div {...stylex.props(shared.field, styles.wrap)}>
+    <div {...mergeRootProps(stylex.props(shared.field, styles.wrap), { className, style })}>
       <span id={`${id}-l`}>{label}</span>
       <label
         onDragEnter={drag(true)}

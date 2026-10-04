@@ -1,9 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { useId } from 'react';
-import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import type { CSSProperties, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import { color, space, text } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 /*
  * Text fields, selects, checkboxes, radios and fieldsets. The native elements get
@@ -36,14 +36,18 @@ function useFieldIds(id: string | undefined, hint: unknown, error: unknown, desc
   return { fieldId, hintId, errorId, describedBy: ids };
 }
 
-function FieldFrame({ fieldId, label, hint, hintId, error, errorId, layout = 'stacked', xstyle, children }: FieldBits & {
+function FieldFrame({ fieldId, label, hint, hintId, error, errorId, layout = 'stacked', xstyle, className, style, children }: FieldBits & {
   fieldId: string;
   hintId?: string;
   errorId?: string;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
   children: ReactNode;
 }) {
   return (
-    <div {...stylex.props(shared.field, layout === 'inline' ? styles.inline : styles.frame, xstyle)}>
+    <div {...mergeRootProps(stylex.props(shared.field, layout === 'inline' ? styles.inline : styles.frame, xstyle), { className, style })}>
       <label htmlFor={fieldId}>{label}</label>
       {children}
       {error ? <small id={errorId} {...stylex.props(styles.error, layout === 'inline' && styles.under)}>{error}</small> : null}
@@ -53,16 +57,16 @@ function FieldFrame({ fieldId, label, hint, hintId, error, errorId, layout = 'st
 }
 
 export type TextFieldProps = FieldBits &
-  Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'style'> & {
+  InputHTMLAttributes<HTMLInputElement> & {
     /** Render a growing textarea (3 to 12 lines) instead of an input. */
     multiline?: false;
   };
 export type TextAreaFieldProps = FieldBits &
-  Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className' | 'style'> & { multiline: true };
+  TextareaHTMLAttributes<HTMLTextAreaElement> & { multiline: true };
 
 /** A label above an input or textarea, with optional hint and error text. */
 export function TextField(props: TextFieldProps | TextAreaFieldProps) {
-  const { label, hint, error, layout, xstyle, id, multiline, ...rest } = props;
+  const { label, hint, error, layout, xstyle, id, multiline, className, style, ...rest } = props;
   const ids = useFieldIds(id, hint, error, rest['aria-describedby']);
   const common = {
     id: ids.fieldId,
@@ -70,7 +74,7 @@ export function TextField(props: TextFieldProps | TextAreaFieldProps) {
     'aria-invalid': error ? true : rest['aria-invalid'],
   };
   return (
-    <FieldFrame label={label} hint={hint} error={error} layout={layout} xstyle={xstyle} {...ids}>
+    <FieldFrame label={label} hint={hint} error={error} layout={layout} xstyle={xstyle} className={className} style={style} {...ids}>
       {multiline ? (
         <textarea {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)} {...common} />
       ) : (
@@ -80,13 +84,13 @@ export function TextField(props: TextFieldProps | TextAreaFieldProps) {
   );
 }
 
-export type SelectProps = FieldBits & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className' | 'style'>;
+export type SelectProps = FieldBits & SelectHTMLAttributes<HTMLSelectElement>;
 
 /** The native select, with the browser's own popup. Use for eight or more choices. */
-export function Select({ label, hint, error, layout, xstyle, id, children, ...rest }: SelectProps) {
+export function Select({ label, hint, error, layout, xstyle, id, children, className, style, ...rest }: SelectProps) {
   const ids = useFieldIds(id, hint, error, rest['aria-describedby']);
   return (
-    <FieldFrame label={label} hint={hint} error={error} layout={layout} xstyle={xstyle} {...ids}>
+    <FieldFrame label={label} hint={hint} error={error} layout={layout} xstyle={xstyle} className={className} style={style} {...ids}>
       {/* base.css draws the system arrow; the select keeps the browser's own popup. */}
       <select {...rest} id={ids.fieldId} aria-describedby={ids.describedBy} aria-invalid={error ? true : rest['aria-invalid']}>
         {children}
@@ -95,33 +99,38 @@ export function Select({ label, hint, error, layout, xstyle, id, children, ...re
   );
 }
 
-type ChoiceProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'style' | 'type'> & {
+type ChoiceProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   label: ReactNode;
   xstyle?: StyleXStyles;
 };
 
 /** A checkbox wrapped in its label, so the whole label is the target. */
-export function Checkbox({ label, xstyle, ...rest }: ChoiceProps) {
+export function Checkbox({ label, xstyle, className, style, ...rest }: ChoiceProps) {
   return (
-    <label {...stylex.props(styles.choice, xstyle)}>
+    <label {...mergeRootProps(stylex.props(styles.choice, xstyle), { className, style })}>
       <input type="checkbox" {...rest} /> {label}
     </label>
   );
 }
 
 /** A radio wrapped in its label. Always inside a Fieldset whose legend asks the question. */
-export function Radio({ label, xstyle, ...rest }: ChoiceProps) {
+export function Radio({ label, xstyle, className, style, ...rest }: ChoiceProps) {
   return (
-    <label {...stylex.props(styles.choice, xstyle)}>
+    <label {...mergeRootProps(stylex.props(styles.choice, xstyle), { className, style })}>
       <input type="radio" {...rest} /> {label}
     </label>
   );
 }
 
 /** A fieldset with a legend that states the question or group name. */
-export function Fieldset({ legend, children, xstyle }: { legend: ReactNode; children: ReactNode; xstyle?: StyleXStyles }) {
+export function Fieldset({ legend, children, xstyle, className, style }: { legend: ReactNode; children: ReactNode; xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
-    <fieldset {...stylex.props(styles.fieldset, xstyle)}>
+    <fieldset {...mergeRootProps(stylex.props(styles.fieldset, xstyle), { className, style })}>
       <legend>{legend}</legend>
       {children}
     </fieldset>

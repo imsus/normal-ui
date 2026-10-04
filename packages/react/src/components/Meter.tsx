@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
-import type { MeterHTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, MeterHTMLAttributes, ReactNode } from 'react';
 import { color, shape } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 /**
  * A native meter for a measurement in a known range. The bar is always `link`
@@ -13,16 +13,22 @@ export function Meter({
   label,
   description,
   children,
+  className,
+  style,
   ...rest
 }: Omit<MeterHTMLAttributes<HTMLMeterElement>, 'className' | 'style'> & {
   label: ReactNode;
   description: ReactNode;
   /** Fallback text inside the meter, e.g. "9.2 GB of 10 GB". */
   children?: ReactNode;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   return (
-    <div {...stylex.props(shared.field, styles.wrap)}>
+    <div {...mergeRootProps(stylex.props(shared.field, styles.wrap), { className, style })}>
       <label htmlFor={id}>{label}</label>
       <meter id={id} aria-describedby={`${id}-d`} {...rest} {...stylex.props(styles.meter)}>
         {children}

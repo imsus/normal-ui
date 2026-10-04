@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { Fragment, useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared, clamp } from './shared';
+import { shared, mergeRootProps, clamp } from './shared';
 import { Chevron } from './Chevron';
 import { cardBleed } from './Card';
 
@@ -45,6 +45,8 @@ export function Table<Row extends Record<string, ReactNode>>({
   rows,
   rowKey,
   bleed = false,
+  className,
+  style,
 }: {
   caption: ReactNode;
   columns: Column<Row>[];
@@ -55,6 +57,10 @@ export function Table<Row extends Record<string, ReactNode>>({
    * lined up with the card's. Lines between rows only; the card draws the edges.
    */
   bleed?: boolean;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const last = columns.length - 1;
   // Per cell: in a bleeding table, drop the side lines, pad the outer cells to the
@@ -69,7 +75,7 @@ export function Table<Row extends Record<string, ReactNode>>({
       bleed && final && styles.bleedBottom,
     );
   return (
-    <div {...stylex.props(styles.scroll, bleed && cardBleed.bleed, bleed && styles.bleedWrap)}>
+    <div {...mergeRootProps(stylex.props(styles.scroll, bleed && cardBleed.bleed, bleed && styles.bleedWrap), { className, style })}>
       <table {...stylex.props(bleed && styles.bleedTable)}>
         <caption {...stylex.props(bleed && styles.bleedCaption)}>{caption}</caption>
         <thead>
@@ -111,6 +117,8 @@ export function Grid<Row extends Record<string, string | number>>({
   editable = [],
   rowName,
   onEdit,
+  className,
+  style,
 }: {
   label: ReactNode;
   hint?: ReactNode;
@@ -120,6 +128,10 @@ export function Grid<Row extends Record<string, string | number>>({
   /** Names a row in announcements: "Stock for Linen shirt set to 10". */
   rowName: (row: Row) => string;
   onEdit?: (row: Row, key: keyof Row, value: number) => void;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const [rows, setRows] = useState(initial);
   const [pos, setPos] = useState<[number, number]>([1, 0]);
@@ -170,7 +182,7 @@ export function Grid<Row extends Record<string, string | number>>({
   });
 
   return (
-    <div>
+    <div {...mergeRootProps(undefined, { className, style })}>
       <p id={labelId} {...stylex.props(styles.title)}>
         <b>{label}</b> {hint ? <small {...stylex.props(shared.muted)}>{hint}</small> : null}
       </p>
@@ -221,11 +233,17 @@ export function Treegrid({
   columns,
   groups,
   defaultExpanded = [0],
+  className,
+  style,
 }: {
   label: string;
   columns: [ReactNode, ReactNode];
   groups: TreegridGroup[];
   defaultExpanded?: number[];
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const [expanded, setExpanded] = useState(() => new Set(defaultExpanded));
   const [focus, setFocus] = useState('0');
@@ -267,7 +285,7 @@ export function Treegrid({
     ...stylex.props(styles.cell),
   });
   return (
-    <table role="treegrid" aria-label={label} {...stylex.props(styles.wide, tg.table)}>
+    <table role="treegrid" aria-label={label} {...mergeRootProps(stylex.props(styles.wide, tg.table), { className, style })}>
       <thead>
         <tr><th scope="col">{columns[0]}</th><th scope="col" {...stylex.props(shared.numeric)}>{columns[1]}</th></tr>
       </thead>

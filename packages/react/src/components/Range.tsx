@@ -1,11 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { Button } from './Button';
 import { ButtonGroup, buttonGroupItem } from './ButtonGroup';
 import { Fieldset } from './Field';
-import { clamp, shared } from './shared';
+import { clamp, mergeRootProps, shared } from './shared';
 
 const styles = stylex.create({
   range: { width: '100%', minHeight: shape.targetMin, margin: 0 },
@@ -26,6 +26,8 @@ export function Slider({
   onChange,
   describe,
   valueText = String,
+  className,
+  style,
 }: {
   label: ReactNode;
   min?: number;
@@ -35,11 +37,15 @@ export function Slider({
   onChange?: (value: number) => void;
   describe: (value: number) => ReactNode;
   valueText?: (value: number) => string;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [value, setValue] = useState(defaultValue);
   return (
-    <div {...stylex.props(shared.field, styles.wrap)}>
+    <div {...mergeRootProps(stylex.props(shared.field, styles.wrap), { className, style })}>
       <label htmlFor={id}>{label}</label>
       <input
         type="range"
@@ -76,6 +82,8 @@ export function RangeSlider({
   format = String,
   labels = ['Minimum', 'Maximum'],
   onChange,
+  className,
+  style,
 }: {
   legend: ReactNode;
   min?: number;
@@ -85,6 +93,10 @@ export function RangeSlider({
   format?: (value: number) => string;
   labels?: [string, string];
   onChange?: (value: [number, number]) => void;
+  /** Extra classes, forwarded to the Fieldset. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, forwarded to the Fieldset. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [[lo, hi], setRange] = useState(defaultValue);
@@ -93,7 +105,7 @@ export function RangeSlider({
     onChange?.(next);
   };
   return (
-    <Fieldset legend={legend} xstyle={styles.wrap}>
+    <Fieldset legend={legend} xstyle={styles.wrap} className={className} style={style}>
       <div {...stylex.props(shared.field)}>
         <label htmlFor={`${id}-lo`}>{labels[0]}</label>
         <input type="range" id={`${id}-lo`} min={min} max={max} step={step} value={lo} aria-valuetext={format(lo)}
@@ -122,6 +134,8 @@ export function Spinbutton({
   hint,
   noun = 'quantity',
   onChange,
+  className,
+  style,
 }: {
   label: ReactNode;
   min: number;
@@ -132,6 +146,10 @@ export function Spinbutton({
   /** Used in the button names: "Decrease quantity". */
   noun?: string;
   onChange?: (value: number) => void;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [value, setValue] = useState(defaultValue);
@@ -145,7 +163,7 @@ export function Spinbutton({
   };
   const stepBy = (d: number) => set(clamp(latest.current + d, min, max));
   return (
-    <div {...stylex.props(shared.field)}>
+    <div {...mergeRootProps(stylex.props(shared.field), { className, style })}>
       <label htmlFor={id}>{label}</label>
       {/* One joined control: the buttons are extra 44px square targets around the native field. */}
       <ButtonGroup>

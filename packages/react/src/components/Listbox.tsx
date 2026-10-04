@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { optionStyles as o } from './Options';
-import { clamp } from './shared';
+import { clamp, mergeRootProps } from './shared';
 
 /**
  * A single-select list where every option stays visible. Selection follows focus:
@@ -14,11 +14,17 @@ export function Listbox({
   options,
   defaultValue,
   onChange,
+  className,
+  style,
 }: {
   label: ReactNode;
   options: string[];
   defaultValue?: string;
   onChange?: (value: string) => void;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const [cur, setCur] = useState(Math.max(0, defaultValue ? options.indexOf(defaultValue) : 0));
@@ -47,7 +53,7 @@ export function Listbox({
     e.preventDefault();
   };
   return (
-    <div>
+    <div {...mergeRootProps(undefined, { className, style })}>
       <p id={`${id}-l`} {...stylex.props(styles.label)}>{label}</p>
       <ul
         ref={list}

@@ -1,8 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { createContext, useContext } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { radius } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 /** True inside a ButtonGroup. <Button> reads it to join its neighbours. */
 const InGroup = createContext(false);
@@ -25,15 +26,21 @@ export function ButtonGroup({
   label,
   children,
   xstyle,
+  className,
+  style,
 }: {
   /** Names the group for screen readers ("Text style"). */
   label?: string;
   children: ReactNode;
   xstyle?: StyleXStyles;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   return (
     <InGroup.Provider value={true}>
-      <div role={label ? 'group' : undefined} aria-label={label} {...stylex.props(styles.group, xstyle)}>
+      <div role={label ? 'group' : undefined} aria-label={label} {...mergeRootProps(stylex.props(styles.group, xstyle), { className, style })}>
         {children}
       </div>
     </InGroup.Provider>

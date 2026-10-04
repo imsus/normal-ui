@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
-import type { ReactNode, SelectHTMLAttributes } from 'react';
+import type { CSSProperties, ReactNode, SelectHTMLAttributes } from 'react';
 import { color, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 import { chevron } from './chevron.stylex';
 
 export type CustomSelectOption = { value: string; label: string; detail?: string };
@@ -15,14 +15,20 @@ export type CustomSelectOption = { value: string; label: string; detail?: string
 export function CustomSelect({
   label,
   options,
+  className,
+  style,
   ...rest
 }: Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className' | 'style' | 'children'> & {
   label: ReactNode;
   options: CustomSelectOption[];
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   return (
-    <div {...stylex.props(shared.field, styles.wrap)}>
+    <div {...mergeRootProps(stylex.props(shared.field, styles.wrap), { className, style })}>
       <label htmlFor={id}>{label}</label>
       <select id={id} {...rest} {...stylex.props(styles.select)}>
         {/* @ts-expect-error <selectedcontent> is newer than React's JSX types */}

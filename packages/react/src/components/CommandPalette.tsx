@@ -1,9 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import type { CSSProperties, KeyboardEvent } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { optionStyles as o } from './Options';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 export type Command = {
   /** What it does or where it goes, in words: "Go to orders", "Text field". */
@@ -40,6 +40,8 @@ export function CommandPalette({
   placeholder = 'Type a command or search…',
   shortcut,
   noun = ['result', 'results'],
+  className,
+  style,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -51,6 +53,10 @@ export function CommandPalette({
   shortcut?: string;
   /** Singular and plural for the announcement: "3 pages". */
   noun?: [string, string];
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const dialog = useRef<HTMLDialogElement>(null);
@@ -126,7 +132,7 @@ export function CommandPalette({
       }}
       // A click on the backdrop (the dialog box itself, outside its content) closes it.
       onClick={(e) => { if (e.target === e.currentTarget) e.currentTarget.close(); }}
-      {...stylex.props(styles.dialog)}
+      {...mergeRootProps(stylex.props(styles.dialog), { className, style })}
     >
       <div {...stylex.props(styles.inner)}>
         <input

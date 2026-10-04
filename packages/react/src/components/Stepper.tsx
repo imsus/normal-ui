@@ -1,14 +1,21 @@
 import * as stylex from '@stylexjs/stylex';
+import type { CSSProperties } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
+import { mergeRootProps } from './shared';
 
 /**
  * An ordered list of steps. Finished steps show a tick read as "Done:", the current
  * step is bold with a 2px ring, later steps are gray-text. Also say "Step 3 of 4"
  * in the page heading.
  */
-export function Stepper({ label, steps, current }: { label: string; steps: string[]; /** Index of the current step. */ current: number }) {
+export function Stepper({ label, steps, current, className, style }: { label: string; steps: string[]; /** Index of the current step. */ current: number;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
-    <ol aria-label={label} {...stylex.props(styles.list)}>
+    <ol aria-label={label} {...mergeRootProps(stylex.props(styles.list), { className, style })}>
       {steps.map((s, i) => {
         const done = i < current;
         const now = i === current;

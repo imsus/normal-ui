@@ -1,5 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
+import type { CSSProperties } from 'react';
 import { chevron } from './chevron.stylex';
+import { mergeRootProps } from './shared';
 
 /**
  * The system's state arrow, decorative (aria-hidden): the state itself is announced by
@@ -11,18 +13,23 @@ import { chevron } from './chevron.stylex';
  *   flips up while open.
  * - `spacer`: same size, invisible, to keep leaf rows aligned with their parents.
  */
-export function Chevron({ kind, open = false }: { kind: 'disclosure' | 'dropdown' | 'spacer'; open?: boolean }) {
+export function Chevron({ kind, open = false, className, style }: { kind: 'disclosure' | 'dropdown' | 'spacer'; open?: boolean;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
     <span
       aria-hidden="true"
-      {...stylex.props(
+      {...mergeRootProps(stylex.props(
         styles.base,
         kind === 'spacer' && styles.spacer,
         kind === 'disclosure' && styles.leading,
         kind === 'disclosure' && !open && styles.closed,
         kind === 'dropdown' && styles.trailing,
         kind === 'dropdown' && open && styles.flipped,
-      )}
+      ), { className, style })}
     />
   );
 }

@@ -1,9 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { buttonStyles } from './Button';
-import { shared } from './shared';
+import { mergeRootProps, shared } from './shared';
 
 export type Slide = { title: ReactNode; body: ReactNode };
 
@@ -14,7 +14,12 @@ export type Slide = { title: ReactNode; body: ReactNode };
  * starting is visible at once. A status line says which slide is showing and whether
  * it is rotating. Consider a plain list first.
  */
-export function Carousel({ label, slides, interval = 5000 }: { label: string; slides: Slide[]; interval?: number }) {
+export function Carousel({ label, slides, interval = 5000, className, style }: { label: string; slides: Slide[]; interval?: number;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const [i, setI] = useState(0);
   const [want, setWant] = useState(false);
   const [hover, setHover] = useState(false);
@@ -36,7 +41,7 @@ export function Carousel({ label, slides, interval = 5000 }: { label: string; sl
   };
   const state = !want ? 'Rotation off' : paused ? 'Paused while you look at it' : `Rotating every ${interval / 1000} seconds`;
   return (
-    <section aria-roledescription="carousel" aria-label={label} {...stylex.props(carousel.box)}>
+    <section aria-roledescription="carousel" aria-label={label} {...mergeRootProps(stylex.props(carousel.box), { className, style })}>
       <div {...stylex.props(carousel.controls)}>
         <button type="button" onClick={() => setWant(!want)} {...stylex.props(buttonStyles.button)}>
           {want ? 'Stop slide rotation' : 'Start slide rotation'}
@@ -88,10 +93,15 @@ const carousel = stylex.create({
  * ::scroll-marker exist (Chromium), the browser adds Previous/Next and numbered
  * markers. Nothing moves on its own.
  */
-export function ScrollCarousel({ label, items }: { label: string; items: Slide[] }) {
+export function ScrollCarousel({ label, items, className, style }: { label: string; items: Slide[];
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const id = useId();
   return (
-    <section aria-labelledby={id} {...stylex.props(scroller.section)}>
+    <section aria-labelledby={id} {...mergeRootProps(stylex.props(scroller.section), { className, style })}>
       <h2 id={id} {...stylex.props(scroller.heading)}>{label}</h2>
       <ul aria-labelledby={id} {...stylex.props(scroller.list)}>
         {items.map((s, k) => (
@@ -197,6 +207,8 @@ export function Feed({
   total = -1,
   onLoadMore,
   loadMoreLabel = 'Load more',
+  className,
+  style,
 }: {
   label: ReactNode;
   articles: FeedArticle[];
@@ -205,6 +217,10 @@ export function Feed({
   total?: number;
   onLoadMore?: () => void;
   loadMoreLabel?: string;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const id = useId();
   const onKeyDown = (e: KeyboardEvent) => {
@@ -217,7 +233,7 @@ export function Feed({
     }
   };
   return (
-    <div>
+    <div {...mergeRootProps(undefined, { className, style })}>
       <h2 id={id} {...stylex.props(feed.heading)}>{label}</h2>
       <p {...stylex.props(shared.muted, feed.hint)}><small>In the list, Page Down and Page Up move between items.</small></p>
       <div role="feed" aria-labelledby={id} aria-busy={busy} onKeyDown={onKeyDown}>
@@ -252,9 +268,14 @@ const feed = stylex.create({
 });
 
 /** A suggested replacement, named in hidden text since ARIA 1.3 support varies. */
-export function Suggestion({ remove, insert }: { remove?: ReactNode; insert?: ReactNode }) {
+export function Suggestion({ remove, insert, className, style }: { remove?: ReactNode; insert?: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
-    <span role="suggestion">
+    <span role="suggestion" {...mergeRootProps(undefined, { className, style })}>
       {remove ? (
         <del {...stylex.props(review.del)}><span {...stylex.props(shared.visuallyHidden)}>Suggested deletion: </span>{remove}</del>
       ) : null}
@@ -266,14 +287,24 @@ export function Suggestion({ remove, insert }: { remove?: ReactNode; insert?: Re
 }
 
 /** Text a comment is about. `commentId` points at the <Comment>. */
-export function Commented({ commentId, children }: { commentId: string; children: ReactNode }) {
-  return <mark role="mark" aria-details={commentId}>{children}</mark>;
+export function Commented({ commentId, children, className, style }: { commentId: string; children: ReactNode;
+  /** Extra classes on the mark. */
+  className?: string;
+  /** Inline style on the mark. */
+  style?: CSSProperties;
+}) {
+  return <mark role="mark" aria-details={commentId} className={className} style={style}>{children}</mark>;
 }
 
 /** A review comment, labelled with its author. */
-export function Comment({ id, author, time, children }: { id: string; author: string; time: { iso: string; label: string }; children: ReactNode }) {
+export function Comment({ id, author, time, children, className, style }: { id: string; author: string; time: { iso: string; label: string }; children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return (
-    <div role="comment" id={id} aria-label={`Comment by ${author}`} {...stylex.props(review.comment)}>
+    <div role="comment" id={id} aria-label={`Comment by ${author}`} {...mergeRootProps(stylex.props(review.comment), { className, style })}>
       <p {...stylex.props(review.meta)}><b>{author}</b> · <time dateTime={time.iso}>{time.label}</time></p>
       <p {...stylex.props(review.text)}>{children}</p>
     </div>

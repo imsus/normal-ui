@@ -1,9 +1,10 @@
 import * as stylex from '@stylexjs/stylex';
 import { cloneElement, useEffect, useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactElement, ReactNode } from 'react';
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { buttonStyles } from './Button';
 import { Chevron } from './Chevron';
+import { mergeRootProps } from './shared';
 
 /*
  * Popovers: MenuButton, Tooltip, HintPopover and Toast. They use the browser's
@@ -41,7 +42,12 @@ const popover = stylex.create({
  * Built on popover="auto", so the menu sits in the top layer and closes on an
  * outside click without script. Put destructive actions last, after <MenuSeparator />.
  */
-export function MenuButton({ label, children }: { label: ReactNode; children: ReactNode }) {
+export function MenuButton({ label, children, className, style }: { label: ReactNode; children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const id = useId();
   // A per-instance anchor name, so the menu sits under its own button however it opened.
   const anchor = `--menu-${id.replace(/[^\w-]/g, '')}`;
@@ -131,7 +137,7 @@ export function MenuButton({ label, children }: { label: ReactNode; children: Re
         aria-expanded={open}
         aria-controls={id}
         onKeyDown={onButtonKeyDown}
-        {...stylex.props(buttonStyles.button, menu.anchorName(anchor))}
+        {...mergeRootProps(stylex.props(buttonStyles.button, menu.anchorName(anchor)), { className, style })}
       >
         {label}
         <Chevron kind="dropdown" open={open} />
@@ -153,16 +159,26 @@ export function MenuButton({ label, children }: { label: ReactNode; children: Re
 }
 
 /** An item in a MenuButton: a link with `href`, otherwise a button. Activating it closes the menu. */
-export function MenuItem({ href, onClick, children }: { href?: string; onClick?: () => void; children: ReactNode }) {
+export function MenuItem({ href, onClick, children, className, style }: { href?: string; onClick?: () => void; children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   return href ? (
-    <a href={href} role="menuitem" tabIndex={-1} {...stylex.props(menu.item)}>{children}</a>
+    <a href={href} role="menuitem" tabIndex={-1} {...mergeRootProps(stylex.props(menu.item), { className, style })}>{children}</a>
   ) : (
-    <button type="button" role="menuitem" tabIndex={-1} onClick={onClick} {...stylex.props(menu.item)}>{children}</button>
+    <button type="button" role="menuitem" tabIndex={-1} onClick={onClick} {...mergeRootProps(stylex.props(menu.item), { className, style })}>{children}</button>
   );
 }
 
-export function MenuSeparator() {
-  return <div role="separator" {...stylex.props(menu.separator)} />;
+export function MenuSeparator({ className, style }: {
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+} = {}) {
+  return <div role="separator" {...mergeRootProps(stylex.props(menu.separator), { className, style })} />;
 }
 
 const menu = stylex.create({
@@ -202,7 +218,12 @@ const menu = stylex.create({
  * A one-sentence hint above its trigger, on hover and on keyboard focus; Esc hides it
  * (WCAG 1.4.13). The trigger gets aria-describedby. Never the only label.
  */
-export function Tooltip({ content, children }: { content: ReactNode; children: ReactElement<{ 'aria-describedby'?: string }> }) {
+export function Tooltip({ content, children, className, style }: { content: ReactNode; children: ReactElement<{ 'aria-describedby'?: string }>;
+  /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style on the wrap, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const id = useId();
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -215,7 +236,7 @@ export function Tooltip({ content, children }: { content: ReactNode; children: R
       onFocus={() => setFocus(true)}
       onBlur={() => { setFocus(false); setDismissed(false); }}
       onKeyDown={(e) => { if (e.key === 'Escape') setDismissed(true); }}
-      {...stylex.props(tip.wrap)}
+      {...mergeRootProps(stylex.props(tip.wrap), { className, style })}
     >
       {cloneElement(children, { 'aria-describedby': id })}
       <span role="tooltip" id={id} {...stylex.props(tip.tip, shown && tip.shown)}>{content}</span>
@@ -255,12 +276,17 @@ const tip = stylex.create({
  * A hint built on popover="hint" + interestfor: shown on hover or focus where
  * interest invokers exist (Chromium), toggled by click everywhere else.
  */
-export function HintPopover({ label, hint }: { /** Accessible name of the "?" trigger. */ label: string; hint: ReactNode }) {
+export function HintPopover({ label, hint, className, style }: { /** Accessible name of the "?" trigger. */ label: string; hint: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
+}) {
   const id = useId();
   return (
     <>
       <button type="button" popoverTarget={id} aria-label={label} {...{ interestfor: id }}
-        {...stylex.props(buttonStyles.button, buttonStyles.square, hintStyles.trigger)}>
+        {...mergeRootProps(stylex.props(buttonStyles.button, buttonStyles.square, hintStyles.trigger), { className, style })}>
         ?
       </button>
       <div popover={'hint' as 'auto'} id={id} {...stylex.props(hintStyles.hint)}>{hint}</div>
@@ -293,6 +319,8 @@ export function Toast({
   action,
   duration = 6000,
   children,
+  className,
+  style,
 }: {
   open: boolean;
   onDismiss: () => void;
@@ -300,6 +328,10 @@ export function Toast({
   action?: { label: string; onClick: () => void };
   duration?: number;
   children: ReactNode;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -318,7 +350,7 @@ export function Toast({
     return () => clearInterval(timer);
   }, [open, action, duration, onDismiss]);
   return (
-    <div ref={ref} popover="manual" role="status" {...stylex.props(toast.toast)}>
+    <div ref={ref} popover="manual" role="status" {...mergeRootProps(stylex.props(toast.toast), { className, style })}>
       <span>{children}</span>
       {action ? <button type="button" onClick={action.onClick} {...stylex.props(buttonStyles.button, toast.button)}>{action.label}</button> : null}
       <button type="button" aria-label="Dismiss" onClick={onDismiss} {...stylex.props(buttonStyles.button, buttonStyles.square, toast.button)}>×</button>

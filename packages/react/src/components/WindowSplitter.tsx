@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';
 import { color, shape } from '@imsus/normal-ui-css/tokens.stylex';
-import { clamp } from './shared';
+import { clamp, mergeRootProps } from './shared';
 
 /**
  * A movable divider between two panes: a focusable role="separator" whose value is
@@ -17,6 +17,8 @@ export function WindowSplitter({
   max = 80,
   defaultValue = 40,
   height = '220px',
+  className,
+  style,
 }: {
   /** Names what is resized: "Resize order list". */
   label: string;
@@ -26,6 +28,10 @@ export function WindowSplitter({
   max?: number;
   defaultValue?: number;
   height?: string;
+  /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
+  className?: string;
+  /** Inline style, spread after StyleX output. Wins property by property. */
+  style?: CSSProperties;
 }) {
   const [v, setV] = useState(defaultValue);
   const last = useRef(defaultValue);
@@ -44,7 +50,7 @@ export function WindowSplitter({
     e.preventDefault();
   };
   return (
-    <div ref={wrapRef} {...stylex.props(styles.wrap, styles.height(height))}>
+    <div ref={wrapRef} {...mergeRootProps(stylex.props(styles.wrap, styles.height(height)), { className, style })}>
       <section id={startId} {...stylex.props(styles.pane, styles.basis(`${v}%`))}>{start}</section>
       <div
         role="separator"
