@@ -4,3 +4,6 @@ dist/
 .DS_Store
 .wrangler/
 .scratch/
+.next/
+fixtures/tarballs/
+fixtures/*/pnpm-lock.yaml
