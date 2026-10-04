@@ -4,6 +4,20 @@
   "description": "Normal UI tokens, base styles, patterns and themes as plain CSS.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imsus/normal-ui.git",
+    "directory": "packages/css"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs"
   },
@@ -11,13 +25,15 @@
     "@stylexjs/stylex": "^0.19.1"
   },
   "exports": {
-    "./tokens.css": "./src/styles/tokens.css",
-    "./base.css": "./src/styles/base.css",
-    "./patterns.css": "./src/styles/patterns.css",
-    "./themes.css": "./src/styles/themes.css",
-    "./tokens.json": "./tokens.json",
-    "./tokens.stylex": "./src/tokens.stylex.ts",
-    "./themes": "./src/themes.ts",
-    "./themes.stylex": "./src/themes.stylex.ts"
+    ".": "./dist/index.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./themes.css": "./dist/themes.css",
+    "./themes/govuk.css": "./dist/themes/govuk.css",
+    "./themes/mcmaster.css": "./dist/themes/mcmaster.css",
+    "./themes/usgraphics.css": "./dist/themes/usgraphics.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./tokens.stylex": "./dist/tokens.stylex.ts",
+    "./themes": "./dist/themes.ts",
+    "./themes.stylex": "./dist/themes.stylex.ts"
   }
 }
