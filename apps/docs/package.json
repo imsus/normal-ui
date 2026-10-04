@@ -1,0 +1,31 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Normal UI docs site (Astro + React + StyleX), consuming the workspace packages.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro sync && tsc --noEmit && astro build",
+    "check": "astro sync && tsc --noEmit",
+    "preview": "astro preview",
+    "deploy": "pnpm run build && wrangler pages deploy"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.0",
+    "@imsus/normal-ui-css": "workspace:*",
+    "@imsus/normal-ui-react": "workspace:*",
+    "@stylexjs/stylex": "^0.19.1",
+    "astro": "^7.3.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@stylexjs/unplugin": "^0.19.1",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.147.0"
+  }
+}

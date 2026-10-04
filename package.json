@@ -5,31 +5,16 @@
   "type": "module",
   "description": "Normal UI: the browser's own stylesheet, repaired to WCAG 2.2 AA. Astro + React + StyleX.",
   "scripts": {
-    "tokens": "node scripts/build-tokens.mjs",
-    "dev": "node scripts/build-tokens.mjs && astro dev",
-    "check": "tsc --noEmit",
-    "build": "node scripts/build-tokens.mjs && { tsc --noEmit & tsc=$!; astro build && wait $tsc; }",
-    "preview": "astro preview",
-    "deploy": "pnpm build && wrangler pages deploy"
+    "tokens": "pnpm --filter @imsus/normal-ui-css run tokens",
+    "dev": "pnpm tokens && pnpm --filter docs run dev",
+    "check": "pnpm --filter docs run check",
+    "build": "pnpm tokens && pnpm --filter docs run build",
+    "preview": "pnpm --filter docs run preview",
+    "deploy": "pnpm --filter docs run deploy"
   },
   "browserslist": [
     "last 2 Chrome versions",
     "last 2 Firefox versions",
     "last 2 Safari versions"
-  ],
-  "dependencies": {
-    "@astrojs/react": "^7.0.0",
-    "@stylexjs/stylex": "^0.19.1",
-    "astro": "^7.3.5",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
-  },
-  "devDependencies": {
-    "@stylexjs/unplugin": "^0.19.1",
-    "@types/node": "^26.6.4",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "typescript": "^7.0.2",
-    "wrangler": "^4.147.0"
-  }
+  ]
 }

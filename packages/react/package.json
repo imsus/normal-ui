@@ -1,0 +1,57 @@
+{
+  "name": "@imsus/normal-ui-react",
+  "version": "0.1.0",
+  "description": "Normal UI React components, styled with StyleX.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/Alert": "./src/components/Alert.tsx",
+    "./components/Badge": "./src/components/Badge.tsx",
+    "./components/Breadcrumb": "./src/components/Breadcrumb.tsx",
+    "./components/Button": "./src/components/Button.tsx",
+    "./components/ButtonGroup": "./src/components/ButtonGroup.tsx",
+    "./components/Card": "./src/components/Card.tsx",
+    "./components/Chevron": "./src/components/Chevron.tsx",
+    "./components/Combobox": "./src/components/Combobox.tsx",
+    "./components/CommandPalette": "./src/components/CommandPalette.tsx",
+    "./components/Content": "./src/components/Content.tsx",
+    "./components/CustomSelect": "./src/components/CustomSelect.tsx",
+    "./components/Dialog": "./src/components/Dialog.tsx",
+    "./components/Disclosure": "./src/components/Disclosure.tsx",
+    "./components/Field": "./src/components/Field.tsx",
+    "./components/FileUpload": "./src/components/FileUpload.tsx",
+    "./components/Layout": "./src/components/Layout.tsx",
+    "./components/Link": "./src/components/Link.tsx",
+    "./components/Listbox": "./src/components/Listbox.tsx",
+    "./components/Loading": "./src/components/Loading.tsx",
+    "./components/Menubar": "./src/components/Menubar.tsx",
+    "./components/Meter": "./src/components/Meter.tsx",
+    "./components/Options": "./src/components/Options.tsx",
+    "./components/Popups": "./src/components/Popups.tsx",
+    "./components/Range": "./src/components/Range.tsx",
+    "./components/Stepper": "./src/components/Stepper.tsx",
+    "./components/Switch": "./src/components/Switch.tsx",
+    "./components/Table": "./src/components/Table.tsx",
+    "./components/TableOfContents": "./src/components/TableOfContents.tsx",
+    "./components/Tabs": "./src/components/Tabs.tsx",
+    "./components/Toolbar": "./src/components/Toolbar.tsx",
+    "./components/TreeView": "./src/components/TreeView.tsx",
+    "./components/TriStateCheckbox": "./src/components/TriStateCheckbox.tsx",
+    "./components/WindowSplitter": "./src/components/WindowSplitter.tsx",
+    "./components/chevron.stylex": "./src/components/chevron.stylex.ts",
+    "./components/shared": "./src/components/shared.ts"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0"
+  },
+  "dependencies": {
+    "@imsus/normal-ui-css": "workspace:*",
+    "@stylexjs/stylex": "^0.19.1"
+  }
+}

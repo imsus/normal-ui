@@ -1,0 +1,23 @@
+{
+  "name": "@imsus/normal-ui-css",
+  "version": "0.1.0",
+  "description": "Normal UI tokens, base styles, patterns and themes as plain CSS.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs"
+  },
+  "dependencies": {
+    "@stylexjs/stylex": "^0.19.1"
+  },
+  "exports": {
+    "./tokens.css": "./src/styles/tokens.css",
+    "./base.css": "./src/styles/base.css",
+    "./patterns.css": "./src/styles/patterns.css",
+    "./themes.css": "./src/styles/themes.css",
+    "./tokens.json": "./tokens.json",
+    "./tokens.stylex": "./src/tokens.stylex.ts",
+    "./themes": "./src/themes.ts",
+    "./themes.stylex": "./src/themes.stylex.ts"
+  }
+}
