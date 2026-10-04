@@ -1,54 +1,183 @@
 {
   "name": "@imsus/normal-ui-react",
   "version": "0.1.0",
-  "description": "Normal UI React components, styled with StyleX.",
+  "description": "Normal UI React components, precompiled: no StyleX setup needed.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imsus/normal-ui.git",
+    "directory": "packages/react"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && node scripts/finish-build.mjs && tsc -p tsconfig.build.json"
+  },
   "exports": {
-    ".": "./src/index.ts",
-    "./components/Alert": "./src/components/Alert.tsx",
-    "./components/Badge": "./src/components/Badge.tsx",
-    "./components/Breadcrumb": "./src/components/Breadcrumb.tsx",
-    "./components/Button": "./src/components/Button.tsx",
-    "./components/ButtonGroup": "./src/components/ButtonGroup.tsx",
-    "./components/Card": "./src/components/Card.tsx",
-    "./components/Chevron": "./src/components/Chevron.tsx",
-    "./components/Combobox": "./src/components/Combobox.tsx",
-    "./components/CommandPalette": "./src/components/CommandPalette.tsx",
-    "./components/Content": "./src/components/Content.tsx",
-    "./components/CustomSelect": "./src/components/CustomSelect.tsx",
-    "./components/Dialog": "./src/components/Dialog.tsx",
-    "./components/Disclosure": "./src/components/Disclosure.tsx",
-    "./components/Field": "./src/components/Field.tsx",
-    "./components/FileUpload": "./src/components/FileUpload.tsx",
-    "./components/Layout": "./src/components/Layout.tsx",
-    "./components/Link": "./src/components/Link.tsx",
-    "./components/Listbox": "./src/components/Listbox.tsx",
-    "./components/Loading": "./src/components/Loading.tsx",
-    "./components/Menubar": "./src/components/Menubar.tsx",
-    "./components/Meter": "./src/components/Meter.tsx",
-    "./components/Options": "./src/components/Options.tsx",
-    "./components/Popups": "./src/components/Popups.tsx",
-    "./components/Range": "./src/components/Range.tsx",
-    "./components/Stepper": "./src/components/Stepper.tsx",
-    "./components/Switch": "./src/components/Switch.tsx",
-    "./components/Table": "./src/components/Table.tsx",
-    "./components/TableOfContents": "./src/components/TableOfContents.tsx",
-    "./components/Tabs": "./src/components/Tabs.tsx",
-    "./components/Toolbar": "./src/components/Toolbar.tsx",
-    "./components/TreeView": "./src/components/TreeView.tsx",
-    "./components/TriStateCheckbox": "./src/components/TriStateCheckbox.tsx",
-    "./components/WindowSplitter": "./src/components/WindowSplitter.tsx",
-    "./components/chevron.stylex": "./src/components/chevron.stylex.ts",
-    "./components/shared": "./src/components/shared.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./tokens.stylex": {
+      "types": "./dist/tokens.stylex.d.ts",
+      "default": "./dist/tokens.stylex.js"
+    },
+    "./components/Alert": {
+      "types": "./dist/components/Alert.d.ts",
+      "default": "./dist/components/Alert.js"
+    },
+    "./components/Badge": {
+      "types": "./dist/components/Badge.d.ts",
+      "default": "./dist/components/Badge.js"
+    },
+    "./components/Breadcrumb": {
+      "types": "./dist/components/Breadcrumb.d.ts",
+      "default": "./dist/components/Breadcrumb.js"
+    },
+    "./components/Button": {
+      "types": "./dist/components/Button.d.ts",
+      "default": "./dist/components/Button.js"
+    },
+    "./components/ButtonGroup": {
+      "types": "./dist/components/ButtonGroup.d.ts",
+      "default": "./dist/components/ButtonGroup.js"
+    },
+    "./components/Card": {
+      "types": "./dist/components/Card.d.ts",
+      "default": "./dist/components/Card.js"
+    },
+    "./components/Chevron": {
+      "types": "./dist/components/Chevron.d.ts",
+      "default": "./dist/components/Chevron.js"
+    },
+    "./components/Combobox": {
+      "types": "./dist/components/Combobox.d.ts",
+      "default": "./dist/components/Combobox.js"
+    },
+    "./components/CommandPalette": {
+      "types": "./dist/components/CommandPalette.d.ts",
+      "default": "./dist/components/CommandPalette.js"
+    },
+    "./components/Content": {
+      "types": "./dist/components/Content.d.ts",
+      "default": "./dist/components/Content.js"
+    },
+    "./components/CustomSelect": {
+      "types": "./dist/components/CustomSelect.d.ts",
+      "default": "./dist/components/CustomSelect.js"
+    },
+    "./components/Dialog": {
+      "types": "./dist/components/Dialog.d.ts",
+      "default": "./dist/components/Dialog.js"
+    },
+    "./components/Disclosure": {
+      "types": "./dist/components/Disclosure.d.ts",
+      "default": "./dist/components/Disclosure.js"
+    },
+    "./components/Field": {
+      "types": "./dist/components/Field.d.ts",
+      "default": "./dist/components/Field.js"
+    },
+    "./components/FileUpload": {
+      "types": "./dist/components/FileUpload.d.ts",
+      "default": "./dist/components/FileUpload.js"
+    },
+    "./components/Layout": {
+      "types": "./dist/components/Layout.d.ts",
+      "default": "./dist/components/Layout.js"
+    },
+    "./components/Link": {
+      "types": "./dist/components/Link.d.ts",
+      "default": "./dist/components/Link.js"
+    },
+    "./components/Listbox": {
+      "types": "./dist/components/Listbox.d.ts",
+      "default": "./dist/components/Listbox.js"
+    },
+    "./components/Loading": {
+      "types": "./dist/components/Loading.d.ts",
+      "default": "./dist/components/Loading.js"
+    },
+    "./components/Menubar": {
+      "types": "./dist/components/Menubar.d.ts",
+      "default": "./dist/components/Menubar.js"
+    },
+    "./components/Meter": {
+      "types": "./dist/components/Meter.d.ts",
+      "default": "./dist/components/Meter.js"
+    },
+    "./components/Options": {
+      "types": "./dist/components/Options.d.ts",
+      "default": "./dist/components/Options.js"
+    },
+    "./components/Popups": {
+      "types": "./dist/components/Popups.d.ts",
+      "default": "./dist/components/Popups.js"
+    },
+    "./components/Range": {
+      "types": "./dist/components/Range.d.ts",
+      "default": "./dist/components/Range.js"
+    },
+    "./components/Stepper": {
+      "types": "./dist/components/Stepper.d.ts",
+      "default": "./dist/components/Stepper.js"
+    },
+    "./components/Switch": {
+      "types": "./dist/components/Switch.d.ts",
+      "default": "./dist/components/Switch.js"
+    },
+    "./components/Table": {
+      "types": "./dist/components/Table.d.ts",
+      "default": "./dist/components/Table.js"
+    },
+    "./components/TableOfContents": {
+      "types": "./dist/components/TableOfContents.d.ts",
+      "default": "./dist/components/TableOfContents.js"
+    },
+    "./components/Tabs": {
+      "types": "./dist/components/Tabs.d.ts",
+      "default": "./dist/components/Tabs.js"
+    },
+    "./components/Toolbar": {
+      "types": "./dist/components/Toolbar.d.ts",
+      "default": "./dist/components/Toolbar.js"
+    },
+    "./components/TreeView": {
+      "types": "./dist/components/TreeView.d.ts",
+      "default": "./dist/components/TreeView.js"
+    },
+    "./components/TriStateCheckbox": {
+      "types": "./dist/components/TriStateCheckbox.d.ts",
+      "default": "./dist/components/TriStateCheckbox.js"
+    },
+    "./components/WindowSplitter": {
+      "types": "./dist/components/WindowSplitter.d.ts",
+      "default": "./dist/components/WindowSplitter.js"
+    },
+    "./components/shared": {
+      "types": "./dist/components/shared.d.ts",
+      "default": "./dist/components/shared.js"
+    }
   },
   "peerDependencies": {
     "react": "^19",
     "react-dom": "^19"
   },
   "devDependencies": {
+    "@stylexjs/unplugin": "^0.19.1",
     "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0"
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2"
   },
   "dependencies": {
     "@imsus/normal-ui-css": "workspace:*",

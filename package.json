@@ -5,10 +5,11 @@
   "type": "module",
   "description": "Normal UI: the browser's own stylesheet, repaired to WCAG 2.2 AA. Astro + React + StyleX.",
   "scripts": {
-    "tokens": "pnpm --filter @imsus/normal-ui-css run tokens",
-    "dev": "pnpm tokens && pnpm --filter docs run dev",
+    "tokens": "pnpm --filter @imsus/normal-ui-css run build",
+    "build:react": "pnpm --filter @imsus/normal-ui-react run build",
+    "dev": "pnpm tokens && pnpm run build:react && pnpm --filter docs run dev",
     "check": "pnpm --filter docs run check",
-    "build": "pnpm tokens && pnpm --filter docs run build",
+    "build": "pnpm tokens && pnpm run build:react && pnpm --filter docs run build",
     "preview": "pnpm --filter docs run preview",
     "deploy": "pnpm --filter docs run deploy"
   },

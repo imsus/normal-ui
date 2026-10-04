@@ -19,7 +19,14 @@
     "dist"
   ],
   "scripts": {
-    "tokens": "node scripts/build-tokens.mjs"
+    "tokens": "node scripts/build-tokens.mjs",
+    "compile-stylex": "node scripts/compile-stylex.mjs && tsc -p tsconfig.build.json",
+    "build": "node scripts/build-tokens.mjs && pnpm run compile-stylex"
+  },
+  "devDependencies": {
+    "@stylexjs/unplugin": "^0.19.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@stylexjs/stylex": "^0.19.1"
@@ -32,8 +39,14 @@
     "./themes/mcmaster.css": "./dist/themes/mcmaster.css",
     "./themes/usgraphics.css": "./dist/themes/usgraphics.css",
     "./tokens.json": "./dist/tokens.json",
-    "./tokens.stylex": "./dist/tokens.stylex.ts",
+    "./tokens.stylex": {
+      "types": "./dist/tokens.stylex.d.ts",
+      "default": "./dist/tokens.stylex.js"
+    },
     "./themes": "./dist/themes.ts",
-    "./themes.stylex": "./dist/themes.stylex.ts"
+    "./themes.stylex": {
+      "types": "./dist/themes.stylex.d.ts",
+      "default": "./dist/themes.stylex.js"
+    }
   }
 }
