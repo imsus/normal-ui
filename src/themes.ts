@@ -14,7 +14,7 @@ export const themes: Theme[] = [
       "light"
     ],
     "notes": [
-      "Light only: GOV.UK has no dark mode, so this theme stays light whatever the device or data-theme says.",
+      "Light only: GOV.UK has no dark mode, so this theme stays light whatever the device or data-color-scheme says.",
       "Text is 16px on screens up to 640px and 19px above (root 100% / 118.75%).",
       "Arial stands in for GDS Transport, which is licensed for GOV.UK services only; never add it to type.fonts. No crown, no logotype.",
       "Focus is a 3px yellow outline with a black inset on fields and list items, so it holds 3:1 on white; focused links take the yellow fill with a black bar.",

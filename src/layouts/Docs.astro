@@ -30,22 +30,22 @@ const crumbs = parts.length === 0 ? [] : [
       // Saving the choice also reaches every preview frame on the page (the storage
       // event in Base.astro), so the examples change with the docs.
       var root = document.documentElement;
-      var theme = document.getElementById('pd-theme');
-      if (theme) {
-        theme.value = root.dataset.theme || 'auto';
-        theme.addEventListener('change', function () {
-          if (theme.value === 'auto') delete root.dataset.theme;
-          else root.dataset.theme = theme.value;
-          try { localStorage.setItem('pd-theme', theme.value); } catch (e) {}
+      var scheme = document.getElementById('pd-color-scheme');
+      if (scheme) {
+        scheme.value = root.dataset.colorScheme || 'auto';
+        scheme.addEventListener('change', function () {
+          if (scheme.value === 'auto') delete root.dataset.colorScheme;
+          else root.dataset.colorScheme = scheme.value;
+          try { localStorage.setItem('pd-color-scheme', scheme.value); } catch (e) {}
         });
       }
-      var style = document.getElementById('pd-style');
-      if (style) {
-        style.value = root.dataset.style || '';
-        style.addEventListener('change', function () {
-          if (style.value) root.dataset.style = style.value;
-          else delete root.dataset.style;
-          try { localStorage.setItem('pd-style', style.value); } catch (e) {}
+      var theme = document.getElementById('pd-theme');
+      if (theme) {
+        theme.value = root.dataset.theme || '';
+        theme.addEventListener('change', function () {
+          if (theme.value) root.dataset.theme = theme.value;
+          else delete root.dataset.theme;
+          try { localStorage.setItem('pd-theme', theme.value); } catch (e) {}
         });
       }
     })();

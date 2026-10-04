@@ -8,7 +8,7 @@ import type { NavSection } from '../lib/site';
 import { themes } from '../themes';
 
 /**
- * The docs chrome: skip link, top bar with the style and theme switches, sidebar nav,
+ * The docs chrome: skip link, top bar with the theme and color-scheme switches, sidebar nav,
  * main. Server-rendered only; the switches are wired by a tiny inline script.
  */
 export function DocsShell({
@@ -35,11 +35,11 @@ export function DocsShell({
         <a href={home} {...stylex.props(s.brand)}>Normal UI</a>
         <div {...stylex.props(s.tools)}>
           {search}
-          <Select id="pd-style" label="Style" layout="inline" defaultValue="">
+          <Select id="pd-theme" label="Theme" layout="inline" defaultValue="">
             <option value="">Normal UI</option>
             {themes.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
           </Select>
-          <Select id="pd-theme" label="Theme" layout="inline" defaultValue="auto">
+          <Select id="pd-color-scheme" label="Color scheme" layout="inline" defaultValue="auto">
             <option value="auto">Device</option>
             <option value="light">Light</option>
             <option value="dark">Dark</option>

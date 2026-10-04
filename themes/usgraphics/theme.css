@@ -3,16 +3,16 @@
    StyleX, so it restyles plain elements but never beats a component's own styles. */
 @layer normal-ui-theme {
 /* A section heading in running content sits on a dotted rule */
-:where([data-style="usgraphics"]) :where(.pd-content, article) :where(h2) {
+:where([data-theme="usgraphics"]) :where(.pd-content, article) :where(h2) {
   padding-block-end: var(--space-xs);
   border-block-end: var(--border-width) dotted var(--rule);
 }
-:where([data-style="usgraphics"]) :where(hr) { border-top-style: dotted; }
+:where([data-theme="usgraphics"]) :where(hr) { border-top-style: dotted; }
 
 /* Tables: a ruled grid with a grey header row */
-:where([data-style="usgraphics"]) :where(thead th) { background: var(--surface-muted); }
-:where([data-style="usgraphics"]) :where(caption) { font-weight: 700; }
+:where([data-theme="usgraphics"]) :where(thead th) { background: var(--surface-muted); }
+:where([data-theme="usgraphics"]) :where(caption) { font-weight: 700; }
 
 /* Numbers and codes read as data */
-:where([data-style="usgraphics"]) :where(samp, output) { font-family: var(--font-mono); }
+:where([data-theme="usgraphics"]) :where(samp, output) { font-family: var(--font-mono); }
 }

@@ -1,11 +1,11 @@
 /* Generated from themes/<id>/tokens.json by scripts/build-tokens.mjs. Do not edit.
-   Load after tokens.css and base.css. Set data-style="<id>" on <html> (or any element). */
+   Load after tokens.css and base.css. Set data-theme="<id>" on <html> (or any element). */
 @import "../../themes/govuk/theme.css";
 @import "../../themes/mcmaster/theme.css";
 @import "../../themes/usgraphics/theme.css";
 
 /* GOV.UK */
-[data-style="govuk"] {
+[data-theme="govuk"] {
   color-scheme: light;
   --canvas: #ffffff;
   --canvas-text: #0b0c0c;
@@ -76,11 +76,11 @@
   --error-weight: 700;
 }
 @media (min-width: 40.0625em) {
-  [data-style="govuk"] { --font-size-root: 118.75%; }
+  [data-theme="govuk"] { --font-size-root: 118.75%; }
 }
-/* No data-theme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
+/* No data-color-scheme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme])[data-style="govuk"], :where(:root:not([data-theme])) [data-style="govuk"] {
+  :root:not([data-color-scheme])[data-theme="govuk"], :where(:root:not([data-color-scheme])) [data-theme="govuk"] {
     color-scheme: light;
     --button-pressed-face: var(--canvas-text);
     --button-pressed-text: var(--canvas);
@@ -134,7 +134,7 @@
     --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%230b0c0c' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
   }
 }
-[data-style="govuk"][data-theme="light"], [data-style="govuk"] [data-theme="light"], [data-theme="light"] [data-style="govuk"] {
+[data-theme="govuk"][data-color-scheme="light"], [data-theme="govuk"] [data-color-scheme="light"], [data-color-scheme="light"] [data-theme="govuk"] {
   --canvas: #ffffff;
   --canvas-text: #0b0c0c;
   --surface-soft: #f4f8fb;
@@ -178,7 +178,7 @@
   --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%230b0c0c' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
   --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%230b0c0c' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
 }
-[data-style="govuk"][data-theme="dark"], [data-style="govuk"] [data-theme="dark"], [data-theme="dark"] [data-style="govuk"] {
+[data-theme="govuk"][data-color-scheme="dark"], [data-theme="govuk"] [data-color-scheme="dark"], [data-color-scheme="dark"] [data-theme="govuk"] {
   color-scheme: light;
   --button-pressed-face: var(--canvas-text);
   --button-pressed-text: var(--canvas);
@@ -233,7 +233,7 @@
 }
 
 /* McMaster-Carr */
-[data-style="mcmaster"] {
+[data-theme="mcmaster"] {
   --canvas: #ffffff;
   --canvas-text: #000000;
   --surface-soft: #f7f7f7;
@@ -275,9 +275,9 @@
   --app-heading-2: 1.1rem;
   --nav-link-decoration: none;
 }
-/* No data-theme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
+/* No data-color-scheme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme])[data-style="mcmaster"], :where(:root:not([data-theme])) [data-style="mcmaster"] {
+  :root:not([data-color-scheme])[data-theme="mcmaster"], :where(:root:not([data-color-scheme])) [data-theme="mcmaster"] {
     --canvas: #151515;
     --canvas-text: #ececec;
     --surface-soft: #1c1c1c;
@@ -311,7 +311,7 @@
     --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23ececec' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
   }
 }
-[data-style="mcmaster"][data-theme="light"], [data-style="mcmaster"] [data-theme="light"], [data-theme="light"] [data-style="mcmaster"] {
+[data-theme="mcmaster"][data-color-scheme="light"], [data-theme="mcmaster"] [data-color-scheme="light"], [data-color-scheme="light"] [data-theme="mcmaster"] {
   --canvas: #ffffff;
   --canvas-text: #000000;
   --surface-soft: #f7f7f7;
@@ -344,7 +344,7 @@
   --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
   --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
 }
-[data-style="mcmaster"][data-theme="dark"], [data-style="mcmaster"] [data-theme="dark"], [data-theme="dark"] [data-style="mcmaster"] {
+[data-theme="mcmaster"][data-color-scheme="dark"], [data-theme="mcmaster"] [data-color-scheme="dark"], [data-color-scheme="dark"] [data-theme="mcmaster"] {
   --canvas: #151515;
   --canvas-text: #ececec;
   --surface-soft: #1c1c1c;
@@ -379,7 +379,7 @@
 }
 
 /* US Graphics */
-[data-style="usgraphics"] {
+[data-theme="usgraphics"] {
   --canvas: #ffffff;
   --canvas-text: #000000;
   --surface-soft: #f7f7f7;
@@ -422,9 +422,9 @@
   --app-heading-2: 1.071rem;
   --nav-link-decoration: none;
 }
-/* No data-theme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
+/* No data-color-scheme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme])[data-style="usgraphics"], :where(:root:not([data-theme])) [data-style="usgraphics"] {
+  :root:not([data-color-scheme])[data-theme="usgraphics"], :where(:root:not([data-color-scheme])) [data-theme="usgraphics"] {
     --canvas: #161616;
     --canvas-text: #f2f2f2;
     --surface-soft: #1e1e1e;
@@ -454,7 +454,7 @@
     --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23f2f2f2' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
   }
 }
-[data-style="usgraphics"][data-theme="light"], [data-style="usgraphics"] [data-theme="light"], [data-theme="light"] [data-style="usgraphics"] {
+[data-theme="usgraphics"][data-color-scheme="light"], [data-theme="usgraphics"] [data-color-scheme="light"], [data-color-scheme="light"] [data-theme="usgraphics"] {
   --canvas: #ffffff;
   --canvas-text: #000000;
   --surface-soft: #f7f7f7;
@@ -483,7 +483,7 @@
   --pd-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
   --pd-select-arrow-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M2 8h8L6 3z'/%3E%3C/svg%3E");
 }
-[data-style="usgraphics"][data-theme="dark"], [data-style="usgraphics"] [data-theme="dark"], [data-theme="dark"] [data-style="usgraphics"] {
+[data-theme="usgraphics"][data-color-scheme="dark"], [data-theme="usgraphics"] [data-color-scheme="dark"], [data-color-scheme="dark"] [data-theme="usgraphics"] {
   --canvas: #161616;
   --canvas-text: #f2f2f2;
   --surface-soft: #1e1e1e;

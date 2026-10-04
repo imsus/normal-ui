@@ -31,10 +31,10 @@ import { entriesIn, href, levels } from '../lib/site';
   </p>
   <h2>How the code is layered</h2>
   <ol>
-    <li><code>tokens.json</code> is the source of every value. <code>pnpm tokens</code> writes <code>src/styles/tokens.css</code> (custom properties, both themes) and <code>src/tokens.stylex.ts</code> (StyleX constants pointing at them).</li>
+    <li><code>tokens.json</code> is the source of every value. <code>pnpm tokens</code> writes <code>src/styles/tokens.css</code> (custom properties, both color schemes) and <code>src/tokens.stylex.ts</code> (StyleX constants pointing at them).</li>
     <li><code>src/styles/base.css</code> styles the elements themselves, in the <code>normal-ui</code> layer. Write plain semantic HTML and it already looks right.</li>
     <li><code>src/components</code> holds the React components. They add the wiring (labels, ARIA, keyboard) and style themselves with StyleX, whose atomic layers sit above the base layer.</li>
     <li><code>src/styles/patterns.css</code> is the same composite styling for hand-written HTML (<code>.pd-badge</code>, <code>[role=tab]</code>…). The templates and pages use it.</li>
-    <li><a href={href('/themes/')}>Themes</a> restyle all of it from a few token values and element rules, switched with <code>data-style</code>.</li>
+    <li><a href={href('/themes/')}>Themes</a> restyle all of it from a few token values and element rules, switched with <code>data-theme</code>.</li>
   </ol>
 </Docs>

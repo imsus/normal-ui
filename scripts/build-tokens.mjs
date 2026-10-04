@@ -1,7 +1,7 @@
 // Generates the runtime forms of tokens.json and of every theme in themes/<id>/tokens.json:
 //   src/styles/tokens.css    CSS custom properties (--canvas, --space-md, …), both colour modes
 //   src/tokens.stylex.ts     StyleX constants that point at those properties
-//   src/styles/themes.css    each theme's values, scoped to [data-style="<id>"], plus its theme.css
+//   src/styles/themes.css    each theme's values, scoped to [data-theme="<id>"], plus its theme.css
 //   src/themes.stylex.ts     StyleX constants for the tokens a theme adds
 //   src/themes.ts            the theme list and resolved values, for the docs
 // tokens.json and themes/<id>/tokens.json are the only places a value is written by hand.
@@ -130,19 +130,19 @@ ${decl([...baseBlock(primary), ...families(tokens), ...rootBase(tokens), ...leng
 ${rootSteps(tokens, ':root')}`;
 if (allModes.includes('dark')) {
   css += `
-/* No data-theme on <html>: follow the device. */
+/* No data-color-scheme on <html>: follow the device. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
+  :root:not([data-color-scheme]) {
     color-scheme: dark;
 ${decl(baseBlock('dark'), '    ')}
   }
 }
 `;
 }
-/* data-theme forces a theme on <html>, or on any element to show a theme inside a page. */
+/* data-color-scheme forces a Color scheme on <html>, or on any element to show one scheme inside a page. */
 for (const mode of allModes) {
   css += `
-[data-theme="${mode}"] {
+[data-color-scheme="${mode}"] {
   color-scheme: ${mode};
 ${decl(baseBlock(mode))}
 }
@@ -158,7 +158,7 @@ const group = (name, entries, doc) =>
 
 const ts = `// Generated from tokens.json by scripts/build-tokens.mjs. Do not edit.
 // Every value is a var() reference to src/styles/tokens.css, so themes switch
-// at runtime (data-theme, data-style or the device setting) without re-rendering.
+// at runtime (data-color-scheme, data-theme or the device setting) without re-rendering.
 import * as stylex from '@stylexjs/stylex';
 
 ${group('color', baseColors.map((t) => [camel(t.name), `var(--${t.name})`, t.usage]), 'System colours, used by role.')}
@@ -171,9 +171,9 @@ writeFileSync(new URL('src/tokens.stylex.ts', root), ts);
 
 // ---------- Themes ----------
 // A theme lists only what it changes (a base token's name) and what it adds (a new name).
-// Its values apply inside [data-style="<id>"], on <html> or on any element. A theme may
+// Its values apply inside [data-theme="<id>"], on <html> or on any element. A theme may
 // list fewer modes ("modes": ["light"]): it then stays in that mode whatever the device
-// or data-theme says.
+// or data-color-scheme says.
 const themesDir = new URL('themes/', root);
 const ids = existsSync(themesDir)
   ? readdirSync(themesDir, { withFileTypes: true }).filter((d) => d.isDirectory() && existsSync(new URL(`${d.name}/tokens.json`, themesDir))).map((d) => d.name).sort()
@@ -182,12 +182,12 @@ const baseNames = new Set(baseColors.map((t) => t.name));
 const baseLengths = new Set(lengthFamilies.flatMap((f) => (tokens[f]?.tokens ?? []).map((t) => t.name)));
 
 let themeCss = `/* Generated from themes/<id>/tokens.json by scripts/build-tokens.mjs. Do not edit.
-   Load after tokens.css and base.css. Set data-style="<id>" on <html> (or any element). */
+   Load after tokens.css and base.css. Set data-theme="<id>" on <html> (or any element). */
 ${ids.map((id) => `@import "../../themes/${id}/theme.css";`).join('\n')}
 `;
 let themeTs = `// Generated from themes/<id>/tokens.json by scripts/build-tokens.mjs. Do not edit.
 // The tokens each theme adds, as var() references. They only have a value inside
-// [data-style="<id>"]; elsewhere they are unset.
+// [data-theme="<id>"]; elsewhere they are unset.
 import * as stylex from '@stylexjs/stylex';
 `;
 const manifest = [];
@@ -210,7 +210,7 @@ for (const id of ids) {
   const merged = [...baseColors.filter((t) => !own.some((o) => o.name === t.name)), ...own];
   // A mode the theme does not have falls back to its first one, every token included.
   const shown = (mode) => (modes.includes(mode) ? mode : modes[0]);
-  const at = `[data-style="${id}"]`;
+  const at = `[data-theme="${id}"]`;
   // Re-draw the select arrow when the theme changes the text it is filled with.
   const arrows = (mode) => (own.some((t) => t.name === 'field-text') ? selectArrows(resolve(merged, mode)['field-text']) : []);
   const block = (mode, indent = '  ') => {
@@ -227,15 +227,15 @@ for (const id of ids) {
 ${fontFaces(theme, `../../themes/${id}/`)}${at} {
 ${decl([...(modes.length === 1 ? [`color-scheme: ${first};`] : []), ...colors(own, first), ...arrows(first), ...families(theme), ...rootBase(theme), ...lengths(theme)])}
 }
-${rootSteps(theme, at)}/* No data-theme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
+${rootSteps(theme, at)}/* No data-color-scheme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme])${at}, :where(:root:not([data-theme])) ${at} {
+  :root:not([data-color-scheme])${at}, :where(:root:not([data-color-scheme])) ${at} {
 ${block('dark', '    ')}
   }
 }
 `;
   for (const mode of allModes) {
-    themeCss += `${at}[data-theme="${mode}"], ${at} [data-theme="${mode}"], [data-theme="${mode}"] ${at} {
+    themeCss += `${at}[data-color-scheme="${mode}"], ${at} [data-color-scheme="${mode}"], [data-color-scheme="${mode}"] ${at} {
 ${block(mode)}
 }
 `;

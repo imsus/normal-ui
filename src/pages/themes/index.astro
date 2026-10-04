@@ -6,22 +6,22 @@ import { themes } from '../../themes';
 /** Usage notes write token names in `backticks`: show them as code. */
 const code = (text: string) => text.replace(/`([^`]+)`/g, '<code>$1</code>');
 ---
-<Docs title="Themes" description="Styles on top of Normal UI: a set of token values and a few element rules, switched with data-style.">
+<Docs title="Themes" description="Styles on top of Normal UI: a set of token values and a few element rules, switched with data-theme.">
   <h1>Themes</h1>
   <div class="pd-content docs-prose">
     <p>
       A theme is Normal UI with different values. It lists only what it changes and what it adds, in
       <code>themes/&lt;id&gt;/tokens.json</code>, plus a few element rules in <code>themes/&lt;id&gt;/theme.css</code>.
-      Everything it does not mention stays Normal UI. Set it with <code>data-style</code>:
+      Everything it does not mention stays Normal UI. Set it with <code>data-theme</code>:
     </p>
 <pre style="overflow-x:auto"><code>&lt;!-- Follows the device's light or dark --&gt;
-&lt;html data-style="govuk"&gt;
+&lt;html data-theme="govuk"&gt;
 &lt;!-- Forced dark --&gt;
-&lt;html data-style="govuk" data-theme="dark"&gt;
+&lt;html data-theme="govuk" data-color-scheme="dark"&gt;
 &lt;!-- One part of a page --&gt;
-&lt;section data-style="mcmaster"&gt;…&lt;/section&gt;</code></pre>
+&lt;section data-theme="mcmaster"&gt;…&lt;/section&gt;</code></pre>
     <p>
-      Use the Style switch at the top of any docs page to see every component, template and page in a theme;
+      Use the Theme switch at the top of any docs page to see every component, template and page in a theme;
       the previews follow it.
     </p>
     <h2>What a theme can change</h2>
@@ -34,7 +34,7 @@ const code = (text: string) => text.replace(/`([^`]+)`/g, '<code>$1</code>');
           <li>shape: border widths, <code>target-min</code>, button padding, edge, shadow and press offset, focus width and offset, checkbox and radio size, the sheet shadow;</li>
           <li>text: heading sizes for content and app UI, heading weight, control text, eyebrows, the <code>small</code> floor, error weight, and the link underline in navigation.</li>
         </ul></li>
-      <li><strong>Its modes.</strong> <code>"modes": ["light"]</code> keeps a theme light whatever the device or <code>data-theme</code> says.</li>
+      <li><strong>Its modes.</strong> <code>"modes": ["light"]</code> keeps a theme light whatever the device or <code>data-color-scheme</code> says.</li>
       <li><strong>Element rules</strong> in <code>theme.css</code>, in the <code>normal-ui-theme</code> layer: after
         <code>normal-ui</code>, before StyleX. For what tokens cannot say: a dotted heading rule, catalog tables, drawn
         checkboxes. They restyle plain HTML but never beat a component's own styles.</li>
@@ -55,11 +55,11 @@ const code = (text: string) => text.replace(/`([^`]+)`/g, '<code>$1</code>');
 
   {themes.map((t) => (
     <section aria-labelledby={`t-${t.id}`} style="margin-block-start:calc(var(--pd-line) * 2)">
-      <h2 id={`t-${t.id}`}>{t.name} <small><code>data-style="{t.id}"</code>{t.modes.length === 1 && <> · {t.modes[0]} only</>}</small></h2>
+      <h2 id={`t-${t.id}`}>{t.name} <small><code>data-theme="{t.id}"</code>{t.modes.length === 1 && <> · {t.modes[0]} only</>}</small></h2>
       <p>{t.description} {t.inspiration && <>Inspired by <a href={t.inspiration}>{t.inspiration.replace(/^https?:\/\/(www\.)?|\/$/g, '')}</a>.</>}</p>
-      <p><a href={href(`/themes/specimen/?style=${t.id}`)}>Open the {t.name} specimen on its own page</a></p>
+      <p><a href={href(`/themes/specimen/?theme=${t.id}`)}>Open the {t.name} specimen on its own page</a></p>
       <div style="overflow:auto;border:1px solid var(--control-border);margin-block-end:var(--space-md)">
-        <iframe src={href(`/themes/specimen/?style=${t.id}`)} title={`${t.name} specimen`} loading="lazy"
+        <iframe src={href(`/themes/specimen/?theme=${t.id}`)} title={`${t.name} specimen`} loading="lazy"
           style="display:block;border:0;width:100%;min-width:20rem;height:56rem"></iframe>
       </div>
       <h3>Deliberate departures</h3>

@@ -1,6 +1,6 @@
 // Generated from themes/<id>/tokens.json by scripts/build-tokens.mjs. Do not edit.
 // The tokens each theme adds, as var() references. They only have a value inside
-// [data-style="<id>"]; elsewhere they are unset.
+// [data-theme="<id>"]; elsewhere they are unset.
 import * as stylex from '@stylexjs/stylex';
 
 /** Added by the GOV.UK theme. */

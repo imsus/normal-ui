@@ -8,7 +8,7 @@ The React components in `src/components` style themselves with StyleX. StyleX em
 
 - **The element is the component.** Use `<button>`, `<a href>`, `<label>` + `<input>`, `<fieldset>` + `<legend>`, `<details>` + `<summary>`, `<table>` with `<th scope>`. Never rebuild these from `<div>`s; the native element brings keyboard, focus and screen-reader behaviour for free.
 - **Change a default only for a reason a reader would notice.** Every change is listed in the table at the end with the WCAG criterion it serves.
-- **Two themes, both checked.** `light` matches the browser's normal rendering; `dark` matches what browsers draw under `color-scheme: dark`. With no `data-theme` on `<html>`, the page follows the device's light or dark setting. Set `data-theme="light"` or `data-theme="dark"` to force one. Both themes, and the device-following dark values, are generated into `tokens.css` from `tokens.json`; change values only there.
+- **Two color schemes, both checked.** `light` matches the browser's normal rendering; `dark` matches what browsers draw under `color-scheme: dark`. With no `data-color-scheme` on `<html>`, the page follows the device's light or dark setting. Set `data-color-scheme="light"` or `data-color-scheme="dark"` to force one. Both schemes, and the device-following dark values, are generated into `tokens.css` from `tokens.json`; change values only there.
 
 ## Color
 
@@ -18,9 +18,9 @@ Use the system-color tokens by their role, never by their hue.
 - Links: `link`, `link-visited`, `link-active`, always underlined. Do not remove the underline in running text; colour alone may not mark a link (1.4.1).
 - Controls: `button-text` on `button-face`; `field-text` and `placeholder` on `field`; outline every control in `control-border`.
 - `accent` fills checked checkboxes, radios, range thumbs and progress bars through `accent-color`. Do not paint text with it.
-- `mark` with `mark-text` for highlights. Keep the text black in both themes.
+- `mark` with `mark-text` for highlights. Keep the text black in both color schemes.
 - `rule` for `<hr>` and table borders.
-- Surfaces: `surface-soft`, `surface-muted` and `surface-raised` tint panels and cards (see Card). Every floating layer (dialogs, menus, the customizable select's list) sits on `surface-raised`: white in light, a step lighter than the page in dark, so it reads as on top. Tooltips and toasts stay inverse. Buttons keep `button-face`, fields `field`, selection `highlight`: those colours mean pressable, editable and chosen, so they never become surfaces. Text, links and controls keep their normal tokens on them: every surface holds `gray-text` at 4.5:1 and control borders at 3:1 in both themes, so nothing changes colour when it sits on a tint.
+- Surfaces: `surface-soft`, `surface-muted` and `surface-raised` tint panels and cards (see Card). Every floating layer (dialogs, menus, the customizable select's list) sits on `surface-raised`: white in light, a step lighter than the page in dark, so it reads as on top. Tooltips and toasts stay inverse. Buttons keep `button-face`, fields `field`, selection `highlight`: those colours mean pressable, editable and chosen, so they never become surfaces. Text, links and controls keep their normal tokens on them: every surface holds `gray-text` at 4.5:1 and control borders at 3:1 in both color schemes, so nothing changes colour when it sits on a tint.
 
 There are no brand or status hues. For an error, write it out ("Enter a date after today") next to the field and link it with `aria-describedby`; do not rely on red. The `status-*` tokens exist so a theme can add a hue on top of the words; in Normal UI they are `canvas-text`.
 
@@ -296,10 +296,10 @@ Everything else uses words and native widgets (checkbox ticks, radio dots). If a
 
 ## Themes
 
-Normal UI is the default style. A theme restyles it without forking it: `themes/<id>/tokens.json` lists only the tokens it changes and the ones it adds, and `themes/<id>/theme.css` holds the few element rules tokens cannot say. Set `data-style="<id>"` on `<html>`, or on any element to theme one part of a page. Light and dark still come from the device or `data-theme`; a theme with `"modes": ["light"]` stays light.
+Normal UI is the default style. A theme restyles it without forking it: `themes/<id>/tokens.json` lists only the tokens it changes and the ones it adds, and `themes/<id>/theme.css` holds the few element rules tokens cannot say. Set `data-theme="<id>"` on `<html>`, or on any element to theme one part of a page. Light and dark still come from the device or `data-color-scheme`; a theme with `"modes": ["light"]` stays light.
 
 - **Tokens reach everything.** The React components style themselves with StyleX, which beats any element rule, so every value a component draws with is a token: colours (including button variants, hover and pressed fills, status colours, the focus inset, and the page and masthead fills), fonts and web fonts (`type.fonts`), the root size with breakpoints (`type.rootSize`), spacing, radius, shape (border widths, `target-min`, button padding, edge and press offset, focus width and offset, choice size, sheet shadow) and text treatments (heading sizes, control text, eyebrows, the `small` floor, error weight, the underline in navigation). Normal UI's own values are the defaults, so nothing changes until a theme sets one.
-- **Element rules** in `theme.css` sit in the `normal-ui-theme` layer, after `normal-ui` and before StyleX. Scope every rule with `:where([data-style="<id>"])`. If your own CSS uses layers, declare `@layer normal-ui, normal-ui-theme, app;`.
+- **Element rules** in `theme.css` sit in the `normal-ui-theme` layer, after `normal-ui` and before StyleX. Scope every rule with `:where([data-theme="<id>"])`. If your own CSS uses layers, declare `@layer normal-ui, normal-ui-theme, app;`.
 - **Added tokens** cover what Normal UI has no role for (a bevel). They only have a value inside the theme. In StyleX, import them from `src/themes.stylex.ts`.
 - **Page pieces:** `.pd-masthead` (a band in `masthead`), `.pd-sheet` (the page on a `page` background with `sheet-shadow`) and `.pd-eyebrow`. In Normal UI they look like the plain page.
 - **The same contrast bar.** `pnpm tokens` checks every theme in each of its modes against the pairs in the Color table, plus button variants, status colours and the masthead, plus any pairs the theme lists in `checks`, and stops the build on a failure. A light focus ring passes if its `focus-inset` holds 3:1. A theme may waive a pair only with a reason in `waive`; the Themes page lists every waiver and every other deliberate departure.

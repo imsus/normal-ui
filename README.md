@@ -19,10 +19,10 @@ pnpm build      # tokens, type-check, static site in dist/
 | --- | --- |
 | `tokens.json` | Every value. Edit only here. |
 | `scripts/build-tokens.mjs` | Writes `src/styles/tokens.css` and `src/tokens.stylex.ts` from `tokens.json` (runs before dev and build). |
-| `src/styles/tokens.css` | Generated custom properties: light, dark, device-following dark, and `data-theme` on any element. |
+| `src/styles/tokens.css` | Generated custom properties: light, dark, device-following dark, and `data-color-scheme` on any element. |
 | `src/tokens.stylex.ts` | Generated StyleX constants (`color.canvas`, `space.md`, …) that compile to `var(--…)`. |
 | `src/styles/base.css` | Reset and element styles in the `normal-ui` layer. The core of the system. |
-| `themes/<id>/` | A theme: `tokens.json` (only what it changes or adds) and `theme.css` (element rules). Set with `data-style="<id>"`. |
+| `themes/<id>/` | A theme: `tokens.json` (only what it changes or adds) and `theme.css` (element rules). Set with `data-theme="<id>"`. |
 | `src/styles/themes.css`, `src/themes.stylex.ts`, `src/themes.ts` | Generated from `themes/*/tokens.json`: the scoped values, StyleX constants for added tokens, and the list the docs read. |
 | `src/styles/patterns.css` | Composite components for hand-written HTML (`.pd-badge`, `[role=tab]`, …). |
 | `src/components` | 42 React components, each styled with StyleX. `index.ts` exports them all. |
@@ -39,12 +39,12 @@ pnpm build      # tokens, type-check, static site in dist/
    declares `@layer normal-ui;` first in `<head>` so this holds in dev too, where
    the StyleX stylesheet loads first.
 4. A theme's element rules (`themes/<id>/theme.css`) sit in `normal-ui-theme`, between
-   `normal-ui` and StyleX. Its values are unlayered and scoped to `[data-style="<id>"]`.
+   `normal-ui` and StyleX. Its values are unlayered and scoped to `[data-theme="<id>"]`.
 5. Your own unlayered CSS beats all of it.
 
-Theme: no `data-theme` follows the device; `data-theme="light"` or `"dark"` on
+Color scheme: no `data-color-scheme` follows the device; `data-color-scheme="light"` or `"dark"` on
 `<html>` (or any element) forces one.
-Style: no `data-style` is plain Normal UI; `data-style="usgraphics"`, `"mcmaster"` or
+Theme: no `data-theme` is plain Normal UI; `data-theme="usgraphics"`, `"mcmaster"` or
 `"govuk"` applies a theme (GOV.UK is light only). Every value a component draws with is a
 token, so themes reach the React components too. `pnpm tokens` fails if a theme drops
 below WCAG 2.2 AA contrast.

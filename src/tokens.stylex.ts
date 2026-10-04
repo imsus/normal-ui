@@ -1,6 +1,6 @@
 // Generated from tokens.json by scripts/build-tokens.mjs. Do not edit.
 // Every value is a var() reference to src/styles/tokens.css, so themes switch
-// at runtime (data-theme, data-style or the device setting) without re-rendering.
+// at runtime (data-color-scheme, data-theme or the device setting) without re-rendering.
 import * as stylex from '@stylexjs/stylex';
 
 /** System colours, used by role. */

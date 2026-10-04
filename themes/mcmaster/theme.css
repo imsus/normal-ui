@@ -1,27 +1,27 @@
 /* McMaster-Carr theme: the element rules its tokens cannot express. Values come from
    tokens.json next to this file. In the normal-ui-theme layer: after normal-ui, before StyleX. */
 @layer normal-ui-theme {
-:where([data-style="mcmaster"]) :where(.pd-content, article) :where(h2) {
+:where([data-theme="mcmaster"]) :where(.pd-content, article) :where(h2) {
   padding-block-end: var(--space-2xs);
   border-block-end: var(--border-width) solid var(--rule);
 }
 
 /* Quiet underlines in running text: present, but light until pointed at */
-:where([data-style="mcmaster"]) :where(a:link, a:visited) {
+:where([data-theme="mcmaster"]) :where(a:link, a:visited) {
   text-decoration-thickness: 1px;
   text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
 }
-:where([data-style="mcmaster"]) :where(a:hover) { text-decoration-color: currentColor; }
+:where([data-theme="mcmaster"]) :where(a:hover) { text-decoration-color: currentColor; }
 
 /* Catalog tables: header band, hairline rows, no column rules, a yellow row on hover */
-:where([data-style="mcmaster"]) :where(th, td) {
+:where([data-theme="mcmaster"]) :where(th, td) {
   border-inline: 0;
   padding: var(--space-2xs) 6px;
 }
-:where([data-style="mcmaster"]) :where(thead th) {
+:where([data-theme="mcmaster"]) :where(thead th) {
   background: var(--surface-muted);
   vertical-align: bottom;
   border-block-end-color: var(--control-border);
 }
-:where([data-style="mcmaster"]) :where(tbody tr:hover > *) { background: var(--highlight); color: var(--highlight-text); }
+:where([data-theme="mcmaster"]) :where(tbody tr:hover > *) { background: var(--highlight); color: var(--highlight-text); }
 }

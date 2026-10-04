@@ -13,19 +13,19 @@ const Usage = ({ text }: { text: string }) => (
 
 const camel = (s: string) => s.replace(/-([a-z0-9])/g, (_, c: string) => c.toUpperCase());
 
-/** Every token from tokens.json, shown in both themes, with its StyleX name and usage. */
+/** Every token from tokens.json, shown in both color schemes, with its StyleX name and usage. */
 export function TokenTables() {
-  const themes = tokens.color.themes;
+  const schemes = tokens.color.themes;
   return (
     <>
       <h2>Colour</h2>
-      <p>Each swatch is drawn inside a <code>data-theme</code> box, so both themes show whatever the page is set to.</p>
+      <p>Each swatch is drawn inside a <code>data-color-scheme</code> box, so both color schemes show whatever the page is set to.</p>
       <div {...stylex.props(s.scroll)}>
         <table {...stylex.props(s.table)}>
           <thead>
             <tr>
               <th scope="col">Token</th>
-              {themes.map((t) => <th key={t.id} scope="col">{t.name}</th>)}
+              {schemes.map((t) => <th key={t.id} scope="col">{t.name}</th>)}
               <th scope="col">Usage</th>
             </tr>
           </thead>
@@ -37,10 +37,10 @@ export function TokenTables() {
                   <br />
                   <small {...stylex.props(shared.muted)}><code>color.{camel(t.name)}</code></small>
                 </th>
-                {themes.map((th) => {
-                  const v = typeof t.value === 'string' ? t.value : (t.value[th.id] ?? t.value[themes[0].id]);
+                {schemes.map((th) => {
+                  const v = typeof t.value === 'string' ? t.value : (t.value[th.id] ?? t.value[schemes[0].id]);
                   return (
-                    <td key={th.id} data-theme={th.id} {...stylex.props(s.swatchCell)}>
+                    <td key={th.id} data-color-scheme={th.id} {...stylex.props(s.swatchCell)}>
                       <span {...stylex.props(s.swatch, s.fill(`var(--${t.name})`))} />
                       <code>{v}</code>
                     </td>
