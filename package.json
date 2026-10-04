@@ -11,11 +11,15 @@
     "check": "pnpm --filter docs run check",
     "build": "pnpm tokens && pnpm run build:react && pnpm --filter docs run build",
     "preview": "pnpm --filter docs run preview",
-    "deploy": "pnpm --filter docs run deploy"
+    "deploy": "pnpm --filter docs run deploy",
+    "changeset": "changeset"
   },
   "browserslist": [
     "last 2 Chrome versions",
     "last 2 Firefox versions",
     "last 2 Safari versions"
-  ]
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3"
+  }
 }
