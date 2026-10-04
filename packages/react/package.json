@@ -16,10 +16,14 @@
     "*.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "skills"
+  ],
+  "keywords": [
+    "tanstack-intent"
   ],
   "scripts": {
-    "build": "vite build && node scripts/finish-build.mjs && tsc -p tsconfig.build.json"
+    "build": "node scripts/build-skills.mjs && vite build && node scripts/finish-build.mjs && tsc -p tsconfig.build.json"
   },
   "exports": {
     ".": {

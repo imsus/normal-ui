@@ -16,7 +16,11 @@
     "*.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "skills"
+  ],
+  "keywords": [
+    "tanstack-intent"
   ],
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",

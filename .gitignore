@@ -7,3 +7,4 @@ dist/
 .next/
 fixtures/tarballs/
 fixtures/*/pnpm-lock.yaml
+packages/react/skills/normal-ui-react/references/
