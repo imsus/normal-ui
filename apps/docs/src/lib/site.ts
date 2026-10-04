@@ -167,7 +167,10 @@ export const itemsIn = (id: LevelId): { title: string; href: string; group: stri
 export type NavSection = { title: string; href?: string; links: { label: string; href: string }[] };
 
 export const nav: NavSection[] = [
-  { title: 'Start', links: [{ label: 'Overview', href: href('/') }] },
+  { title: 'Start', links: [
+    { label: 'Overview', href: href('/') },
+    { label: 'Getting started', href: href('/getting-started/') },
+  ] },
   { title: 'Foundations', links: [
     { label: 'Guidelines', href: href('/guidelines/') },
     { label: 'Tokens', href: href('/tokens/') },

@@ -1,75 +1,72 @@
 # Normal UI
 
-The browser's own stylesheet, repaired to WCAG 2.2 AA, as code: Astro for the docs
-site, React components styled with StyleX.
-
-Moved from the Normal UI design system artifact. The guidelines (`docs/README.md`)
-and every component's notes (`docs/components`, `docs/examples`) came across unchanged
-apart from how to load the code.
+The browser's own stylesheet, repaired to WCAG 2.2 AA, distributed as installable
+CSS and React components. Public and experimental (0.x).
 
 ```bash
 pnpm install
 pnpm dev        # docs at http://localhost:4321
-pnpm build      # tokens, type-check, static site in dist/
+pnpm build      # packages, type-check, static site in apps/docs/dist/
 ```
 
 ## Layout
 
 | Path | What |
 | --- | --- |
-| `tokens.json` | Every value. Edit only here. |
-| `scripts/build-tokens.mjs` | Writes `src/styles/tokens.css` and `src/tokens.stylex.ts` from `tokens.json` (runs before dev and build). |
-| `src/styles/tokens.css` | Generated custom properties: light, dark, device-following dark, and `data-color-scheme` on any element. |
-| `src/tokens.stylex.ts` | Generated StyleX constants (`color.canvas`, `space.md`, …) that compile to `var(--…)`. |
-| `src/styles/base.css` | Reset and element styles in the `normal-ui` layer. The core of the system. |
-| `themes/<id>/` | A theme: `tokens.json` (only what it changes or adds) and `theme.css` (element rules). Set with `data-theme="<id>"`. |
-| `src/styles/themes.css`, `src/themes.stylex.ts`, `src/themes.ts` | Generated from `themes/*/tokens.json`: the scoped values, StyleX constants for added tokens, and the list the docs read. |
-| `src/styles/patterns.css` | Composite components for hand-written HTML (`.pd-badge`, `[role=tab]`, …). |
-| `src/components` | 42 React components, each styled with StyleX. `index.ts` exports them all. |
-| `src/demos` | The live examples on the docs pages, and `registry.ts` (atomic level, what each is made of, group, usage snippet). |
-| `src/examples` | 38 templates and pages, kept as plain HTML. The `level` in each file's `@dsCard` comment puts it under `/templates/` or `/pages/`; each is served on its own at `/<level>/<slug>/preview/`. |
-| `src/site`, `src/layouts`, `src/pages` | The docs site, organised by atomic design: `/atoms/`, `/molecules/`, `/organisms/`, `/templates/`, `/pages/`, each item at a kebab-case slug of its title (`/atoms/text-field/`, `/pages/checkout/`). Levels, slugs and titles are defined in `src/lib/site.ts`. |
+| `packages/css` | `@imsus/normal-ui-css`: tokens, base styles, patterns, themes. `tokens.json` is the source of every value; `scripts/build-tokens.mjs` generates `src/` and `dist/`. |
+| `packages/css/themes/<id>/` | A theme: `tokens.json` (only what it changes or adds) and `theme.css` (element rules). Set with `data-theme="<id>"`. |
+| `packages/react` | `@imsus/normal-ui-react`: 42 React components as source plus the precompiled `dist/` (one chunk per component, `styles.css`). |
+| `apps/docs` | The docs site (Astro), consuming both packages through `workspace:*`. Guidelines, component notes and examples live in `apps/docs/docs/`. |
+| `fixtures/vite`, `fixtures/next` | Consumer smoke tests: packed tarballs installed and built in CI. |
+| `skills/` | Pointers to the agent skills shipped inside each package. |
+
+## Working here
+
+- `pnpm tokens` rebuilds the CSS package (tokens, `dist/`, contrast gate).
+- `pnpm run build:react` rebuilds the React `dist/` (needs the CSS `dist/` first).
+- `pnpm check` type-checks; `pnpm deploy` ships the docs to Cloudflare Pages.
+- `pnpm tokens` fails if any theme drops below WCAG 2.2 AA contrast. Fix the
+  value, or waive a theme pair with a written reason.
+- Components take native props plus `className`/`style` (applied after the
+  component's own styles) and `xstyle` for StyleX users. Interactive components
+  carry `'use client'`; static ones (Badge, Alert, Breadcrumb, Stepper, Switch,
+  Select, TableOfContents, and the rest) render as server components.
+- Agent skills live beside the code they teach (`packages/*/skills/`); the React
+  skill's per-component references copy from `apps/docs/docs/components/` at
+  build time. Never edit the copies.
 
 ## How the CSS fits together
 
-1. `tokens.css` defines the custom properties.
-2. `base.css` styles elements inside `@layer normal-ui` and `:where()`.
-3. StyleX writes atomic classes into its own layers (`useCSSLayers`), declared after
-   `normal-ui`, so component styles always beat element defaults. The base layout
-   declares `@layer normal-ui;` first in `<head>` so this holds in dev too, where
-   the StyleX stylesheet loads first.
-4. A theme's element rules (`themes/<id>/theme.css`) sit in `normal-ui-theme`, between
-   `normal-ui` and StyleX. Its values are unlayered and scoped to `[data-theme="<id>"]`.
+1. `tokens.css` defines the custom properties (unlayered).
+2. `base.css` and `patterns.css` style elements inside `@layer normal-ui` and `:where()`.
+3. Component styles (StyleX) sit in their own layers, declared after `normal-ui`
+   and `normal-ui-theme`, so they always beat element defaults.
+4. A theme's values are unlayered, scoped to `[data-theme="<id>"]`; its element
+   rules sit in `normal-ui-theme`, between `normal-ui` and the components.
 5. Your own unlayered CSS beats all of it.
 
-Color scheme: no `data-color-scheme` follows the device; `data-color-scheme="light"` or `"dark"` on
-`<html>` (or any element) forces one.
-Theme: no `data-theme` is plain Normal UI; `data-theme="usgraphics"`, `"mcmaster"` or
-`"govuk"` applies a theme (GOV.UK is light only). Every value a component draws with is a
-token, so themes reach the React components too. `pnpm tokens` fails if a theme drops
-below WCAG 2.2 AA contrast.
+Color scheme: no `data-color-scheme` follows the device; `"light"` or `"dark"` on
+`<html>` (or any element) forces one. Every value a component draws with is a
+token, so themes reach the React components too.
 
-## Using the components
+## Using the packages
 
-```tsx
-import { Button, TextField, Alert, Stack } from '../components';
+Consumers install from npm (see each package's README and the docs site's
+Getting started page):
 
-<Stack>
-  <Alert kind="warning">3 products are almost out of stock.</Alert>
-  <TextField label="Email address" type="email" autoComplete="email" />
-  <Button type="submit">Save address</Button>
-</Stack>
+```ts
+import '@imsus/normal-ui-css';
+import '@imsus/normal-ui-css/themes/govuk.css'; // optional theme
+import '@imsus/normal-ui-react/styles.css';
 ```
 
-Every component takes native props where it wraps one element, plus `xstyle` (a StyleX
-style) where overriding makes sense. Load `tokens.css` and `base.css` once per page.
-In Astro, hydrate only the ones that need script (`client:visible`); Badge, Alert,
-Breadcrumb, Stepper, Switch, Select, MenuButton and the rest of the static ones ship
-no JavaScript.
+```tsx
+import { Alert, Button, TextField } from '@imsus/normal-ui-react';
+```
 
 ## Dependencies
 
-Runtime: `astro`, `@astrojs/react`, `react`, `react-dom`, `@stylexjs/stylex`.
-Dev: `@stylexjs/unplugin`, `typescript`, `@types/react`, `@types/react-dom`.
+Docs runtime: `astro`, `@astrojs/react`, `react`, `react-dom`, `@stylexjs/stylex`.
+Build: `@stylexjs/unplugin`, `typescript`, `vite`, `esbuild`, `wrangler`.
 No other libraries: popovers, dialogs, the custom select, the scroll carousel and the
 table of contents use the platform.
