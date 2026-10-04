@@ -56,6 +56,8 @@
   --pd-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
 }
 :where([data-theme="dark"]) { color-scheme: dark; }
+/* The root text size: 100% (the reader's own setting) unless a theme changes it. */
+:where(html) { font-size: var(--font-size-root, 100%); }
 
 /* ---------- Rhythm ----------
    One line of body text (1.5rem = 24px) is the unit. Two contexts set it up through
@@ -65,7 +67,8 @@
   --pd-line: 1.5rem;
   --pd-flow: var(--pd-line);                    /* space after a paragraph, list, table… */
   --pd-lh-step: 0.375rem;                       /* heading line-heights snap to quarter lines */
-  --pd-h1: 2rem; --pd-h2: 1.5rem; --pd-h3: 1.17rem; --pd-h4: 1rem; --pd-h5: 0.875rem; --pd-h6: 0.875rem;
+  --pd-h1: var(--heading-1, 2rem); --pd-h2: var(--heading-2, 1.5rem); --pd-h3: var(--heading-3, 1.17rem);
+  --pd-h4: var(--heading-4, 1rem); --pd-h5: var(--heading-5, 0.875rem); --pd-h6: var(--heading-6, 0.875rem);
   --pd-h1-before: 0;
   --pd-h2-before: calc(var(--pd-line) * 1.5);
   --pd-h3-before: var(--pd-line);
@@ -76,7 +79,8 @@
 :where(.pd-app) {
   --pd-flow: 0;                                 /* spacing comes from the layout's gap */
   --pd-lh-step: 0.25rem;
-  --pd-h1: 1.5rem; --pd-h2: 1.125rem; --pd-h3: 1rem; --pd-h4: 0.9375rem; --pd-h5: 0.875rem; --pd-h6: 0.875rem;
+  --pd-h1: var(--app-heading-1, 1.5rem); --pd-h2: var(--app-heading-2, 1.125rem); --pd-h3: var(--app-heading-3, 1rem);
+  --pd-h4: var(--app-heading-4, 0.9375rem); --pd-h5: var(--app-heading-5, 0.875rem); --pd-h6: var(--app-heading-5, 0.875rem);
   --pd-h1-before: 0; --pd-h2-before: 0; --pd-h3-before: 0; --pd-h4-before: 0;
   --pd-h-after: 0;
   --pd-body-margin: 0;
@@ -88,12 +92,12 @@
   color: var(--canvas-text);
   font-family: var(--font-sans);
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: var(--line-height-body, 1.5);
 }
 
 /* Headings: sizes from the context, line-heights snapped to the rhythm grid */
 :where(h1, h2, h3, h4, h5, h6) {
-  font-weight: 700;
+  font-weight: var(--heading-weight, 700);
   line-height: 1.25;
   line-height: round(up, 1.2em, var(--pd-lh-step, 0.375rem));
   text-wrap: balance;
@@ -113,7 +117,7 @@
 :where(dd) { margin-inline-start: var(--space-indent); }
 :where(blockquote) { margin-inline: var(--space-indent); }
 :where(figure) { margin-inline: 0; }
-:where(hr) { border: 0; border-top: 1px solid var(--rule); margin-block: calc(var(--pd-flow, 1.5rem) / 2); }
+:where(hr) { border: 0; border-top: var(--border-width, 1px) solid var(--rule); margin-block: calc(var(--pd-flow, 1.5rem) / 2); }
 :where(img, video, svg, canvas) { max-width: 100%; height: auto; }
 /* The first heading in a box has no space above it; the last child has none below */
 :where(:is(h1, h2, h3, h4, h5, h6):first-child) { margin-block-start: 0; }
@@ -130,15 +134,21 @@
 :where(a:visited) { color: var(--link-visited); }
 :where(a:active) { color: var(--link-active); }
 :where(a:hover) { text-decoration-thickness: 2px; }
+/* In navigation a link is identified by where it sits (1.4.1), so a theme may drop the
+   underline there; in running text it always stays. */
+:where(nav) :where(a:link, a:visited) { text-decoration-line: var(--nav-link-decoration, underline); }
+:where(nav) :where(a:hover) { text-decoration-line: underline; }
 
 /* Focus: one visible, solid ring on every focusable thing */
-:where(:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: var(--space-2xs); }
+:where(:focus-visible) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: var(--focus-offset, 2px); }
+/* Fields add an inset ring (transparent in Normal UI) for themes with a light outline */
+:where(input, select, textarea):focus-visible:not(:user-invalid, [aria-invalid="true"]) { box-shadow: inset 0 0 0 2px var(--focus-inset, transparent); }
 :where(:focus:not(:focus-visible)) { outline: none; }
 
 /* Inline text */
 :where(code, kbd, samp, pre) { font-family: var(--font-mono); font-size: 1em; }
 :where(pre) { overflow-x: auto; white-space: pre; }
-:where(small) { font-size: 0.83em; }
+:where(small) { font-size: max(0.83em, var(--small-min, 13px)); }
 :where(mark) { background: var(--mark); color: var(--mark-text); }
 /* A key: monospace alone barely reads as one, so draw the keycap. 1px control-border
    (3:1 or more on every surface) on surface-muted, at the surrounding text size. */
@@ -155,41 +165,66 @@
 
 /* Tables: collapsed borders and real cell padding in place of 2px spacing and 1px padding */
 :where(table) { border-collapse: collapse; }
-:where(th, td) { border: 1px solid var(--rule); padding: var(--space-xs) var(--space-sm); text-align: start; vertical-align: top; }
+:where(th, td) { border: var(--border-width, 1px) solid var(--rule); padding: var(--space-xs) var(--space-sm); text-align: start; vertical-align: top; }
 :where(th) { font-weight: 700; }
 :where(caption) { padding-block: var(--space-xs); text-align: start; }
 
 /* Form controls: 16px text, 24px minimum targets, 3:1 borders */
 :where(button, input, select, textarea) {
   font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.25;
+  font-size: var(--control-font-size, 1rem);
+  line-height: var(--control-line-height, 1.25);
   color: var(--field-text);
 }
 :where(button, input:is([type="button"], [type="submit"], [type="reset"]), ::file-selector-button) {
-  min-height: var(--space-lg);
-  min-width: var(--space-lg);
-  padding: var(--space-xs) var(--space-sm);
+  min-height: var(--target-min, 24px);
+  min-width: var(--target-min, 24px);
+  padding: var(--button-padding-block, 4px) var(--button-padding-inline, 8px);
   background: var(--button-face);
   color: var(--button-text);
-  border: 1px solid var(--control-border);
+  border: var(--control-border-width, 1px) solid var(--button-border, var(--control-border));
   border-radius: var(--radius-control);
+  box-shadow: 0 var(--button-edge-width, 0px) 0 var(--button-edge, transparent), var(--button-shadow, 0 0 0 transparent);
 }
-:where(button, input:is([type="button"], [type="submit"], [type="reset"])):hover:not(:disabled) { border-color: var(--canvas-text); }
+:where(button, input:is([type="button"], [type="submit"], [type="reset"])):disabled { border-color: var(--button-border-disabled, var(--button-border, var(--control-border))); }
+:where(button, input:is([type="button"], [type="submit"], [type="reset"])):hover:not(:disabled) {
+  background: var(--button-face-hover, var(--button-face));
+  border-color: var(--button-border-hover, var(--canvas-text));
+}
+:where(button, input:is([type="button"], [type="submit"], [type="reset"])):active:not(:disabled) {
+  box-shadow: var(--button-shadow-active, 0 0 0 transparent);
+  translate: 0 var(--button-press-offset, 0px);
+}
+/* Variants name the intent. Normal UI draws them all alike (order and wording carry the
+   emphasis); a theme sets them apart through the button-primary-* and button-warning-*
+   tokens. Re-pointing the plain button tokens here lets every button rule, and the
+   React Button, read them unchanged. */
+:where([data-variant="primary"]) {
+  --button-face: var(--button-primary-face); --button-text: var(--button-primary-text);
+  --button-border: var(--button-primary-border); --button-face-hover: var(--button-primary-face-hover);
+  --button-edge: var(--button-primary-edge);
+}
+:where([data-variant="warning"]) {
+  --button-face: var(--button-warning-face); --button-text: var(--button-warning-text);
+  --button-border: var(--button-warning-border); --button-face-hover: var(--button-warning-face-hover);
+  --button-edge: var(--button-warning-edge);
+}
 :where(button, input):disabled {
   /* Transparent rather than canvas, so a disabled control takes the colour of the
      surface it sits on (a card, a dialog); the dashed border says it is disabled. */
   background: transparent;
   color: var(--gray-text);
   border-style: dashed;
+  box-shadow: none;
+  translate: none;
   cursor: not-allowed;
 }
 
 :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="button"], [type="submit"], [type="reset"], [type="file"]), textarea, select) {
-  min-height: var(--space-lg);
+  min-height: var(--target-min, 24px);
   padding: var(--space-xs) 6px;
   background: var(--field);
-  border: 1px solid var(--control-border);
+  border: var(--control-border-width, 1px) solid var(--control-border);
   border-radius: var(--radius-control);
 }
 /* Selects: the system's state arrow (--pd-chevron's triangle, in field-text) instead of
@@ -214,22 +249,22 @@
 :where(textarea) {
   resize: vertical;
   field-sizing: content;
-  min-block-size: calc(3lh + 2 * var(--space-xs) + 2px);
-  max-block-size: calc(12lh + 2 * var(--space-xs) + 2px);
+  min-block-size: calc(3lh + 2 * var(--space-xs) + 2 * var(--control-border-width, 1px));
+  max-block-size: calc(12lh + 2 * var(--space-xs) + 2 * var(--control-border-width, 1px));
 }
 :where(::placeholder) { color: var(--placeholder); opacity: 1; }
 
 /* Invalid: shown only after the person has interacted (or when the page sets
-   aria-invalid). A doubled border in full-strength text colour, never colour alone;
-   the written error message beside the field carries the meaning. */
+   aria-invalid). A doubled border in status-error (text colour in Normal UI), never
+   colour alone; the written error message beside the field carries the meaning. */
 :where(input, select, textarea):where(:user-invalid, [aria-invalid="true"]) {
-  border-color: var(--canvas-text);
-  box-shadow: inset 0 0 0 1px var(--canvas-text);
+  border-color: var(--status-error, var(--canvas-text));
+  box-shadow: inset 0 0 0 1px var(--status-error, var(--canvas-text));
 }
 
 :where(input[type="checkbox"], input[type="radio"]) {
-  width: 18px;
-  height: 18px;
+  width: var(--choice-size, 18px);
+  height: var(--choice-size, 18px);
   margin: 3px 6px 3px 3px;
   vertical-align: -4px;
   accent-color: var(--accent);
@@ -239,7 +274,7 @@
 :where(fieldset) {
   margin-inline: 2px;
   padding: 0.35em 0.75em 0.625em;
-  border: 1px solid var(--control-border);
+  border: var(--border-width, 1px) solid var(--control-border);
 }
 :where(legend) { padding-inline: var(--space-2xs); }
 
@@ -268,7 +303,7 @@
    backdrop dark enough to show the page behind is out of reach. Like every floating
    layer it sits on surface-raised: white in light, a step lighter than the page in dark. */
 :where(dialog) {
-  border: 1px solid var(--control-border);
+  border: var(--border-width, 1px) solid var(--control-border);
   background: var(--surface-raised);
   color: var(--canvas-text);
   padding: 1em;

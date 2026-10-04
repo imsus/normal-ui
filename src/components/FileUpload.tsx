@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useState } from 'react';
 import type { ReactNode } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 import { shared } from './shared';
 
 export type UploadItem = { name: string; size: number; progress?: number; status: string };
@@ -95,8 +95,8 @@ const styles = stylex.create({
     color: { default: null, ':hover': color.highlightText },
     textAlign: 'center',
     cursor: 'pointer',
-    outline: { default: null, ':has(input:focus-visible)': `2px solid ${color.focusRing}` },
-    outlineOffset: 2,
+    outline: { default: null, ':has(input:focus-visible)': `${shape.focusWidth} solid ${color.focusRing}` },
+    outlineOffset: shape.focusOffset,
   },
   dragging: { borderColor: color.canvasText, backgroundColor: color.highlight, color: color.highlightText },
   input: { maxWidth: '100%' },

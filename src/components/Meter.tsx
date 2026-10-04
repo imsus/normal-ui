@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
 import type { MeterHTMLAttributes, ReactNode } from 'react';
-import { color } from '../tokens.stylex';
+import { color, shape } from '../tokens.stylex';
 import { shared } from './shared';
 
 /**
@@ -38,7 +38,7 @@ const styles = stylex.create({
     width: '100%',
     height: '1rem',
     accentColor: color.accent,
-    '::-webkit-meter-bar': { backgroundColor: color.field, borderWidth: 1, borderStyle: 'solid', borderColor: color.controlBorder },
+    '::-webkit-meter-bar': { backgroundColor: color.field, borderWidth: shape.borderWidth, borderStyle: 'solid', borderColor: color.controlBorder },
     '::-webkit-meter-optimum-value': { backgroundColor: color.link },
     '::-webkit-meter-suboptimum-value': { backgroundColor: color.link },
     '::-webkit-meter-even-less-good-value': { backgroundColor: color.link },

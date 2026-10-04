@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 import { optionStyles as o } from './Options';
 import { shared } from './shared';
 
@@ -241,12 +241,12 @@ const styles = stylex.create({
     paddingInline: space.md,
     fontSize: '1.125rem',
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     borderRadius: 0,
     // The dialog draws the frame; the ring sits inside it.
-    outlineOffset: { default: null, ':focus-visible': -2 },
+    outlineOffset: { default: null, ':focus-visible': `calc(-1 * ${shape.focusWidth})` },
   },
   // Grows with its results up to the dialog's height, then scrolls. It sits on the
   // dialog's surface: no frame, field fill or height cap from the plain-HTML
@@ -279,7 +279,7 @@ const styles = stylex.create({
     fontFamily: font.sans,
     fontSize: '0.8125rem',
     color: color.grayText,
-    borderTopWidth: 1,
+    borderTopWidth: shape.borderWidth,
     borderTopStyle: 'solid',
     borderTopColor: color.rule,
   },

@@ -88,11 +88,20 @@ export function TokenTables() {
       <Lengths family="spacing" prefix="space" bar />
       <h2>Radius</h2>
       <Lengths family="radius" prefix="radius" />
+      <h2>Shape</h2>
+      <p>Borders, target size, button edges and the focus ring. Normal UI's values reproduce the browser's look; themes change them.</p>
+      <Lengths family="shape" prefix="shape" />
+      <h2>Text treatments</h2>
+      <p>Heading sizes, control text, eyebrows and the link treatment in navigation, as values a theme can change.</p>
+      <Lengths family="text" prefix="text" />
     </>
   );
 }
 
-function Lengths({ family, prefix, bar = false }: { family: 'spacing' | 'radius'; prefix: string; bar?: boolean }) {
+function Lengths({ family, prefix, bar = false }: { family: 'spacing' | 'radius' | 'shape' | 'text'; prefix: string; bar?: boolean }) {
+  // Spacing and radius drop their prefix in StyleX (space.md, radius.control); shape and text keep the full name.
+  const key = (name: string) =>
+    family === 'shape' || family === 'text' ? camel(name) : camel(name.replace(`${prefix}-`, '').replace(/^2xs$/, 'xxs'));
   return (
     <div {...stylex.props(s.scroll)}>
       <table {...stylex.props(s.table)}>
@@ -104,7 +113,7 @@ function Lengths({ family, prefix, bar = false }: { family: 'spacing' | 'radius'
                 <code>--{t.name}</code>
                 <br />
                 <small {...stylex.props(shared.muted)}>
-                  <code>{prefix}.{camel(t.name.replace(`${prefix}-`, '').replace(/^2xs$/, 'xxs'))}</code>
+                  <code>{prefix}.{key(t.name)}</code>
                 </small>
               </th>
               <td>

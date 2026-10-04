@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 import { Chevron } from './Chevron';
 
 export type TreeNode = { id: string; label: string; children?: TreeNode[] };
@@ -125,10 +125,16 @@ const styles = stylex.create({
   label: {
     display: 'flex',
     alignItems: 'center',
-    minHeight: `calc(${space.lg} + ${space.sm})`,
+    minHeight: `calc(${shape.targetMin} + ${space.sm})`,
     paddingInline: space.xs,
   },
-  ring: { outlineWidth: 2, outlineStyle: 'solid', outlineColor: color.focusRing, outlineOffset: -2 },
+  ring: {
+    outlineWidth: shape.focusWidth,
+    outlineStyle: 'solid',
+    outlineColor: color.focusRing,
+    outlineOffset: `calc(-1 * ${shape.focusWidth})`,
+    boxShadow: `inset 0 0 0 calc(${shape.focusWidth} + 2px) ${color.focusInset}`,
+  },
   selected: {
     backgroundColor: { default: color.highlight, '@media (forced-colors: active)': 'Highlight' },
     color: { default: color.highlightText, '@media (forced-colors: active)': 'HighlightText' },

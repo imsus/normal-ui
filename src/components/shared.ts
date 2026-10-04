@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space, text } from '../tokens.stylex';
 
 /** Styles several components reuse. Plain StyleX objects, passed through stylex.props. */
 export const shared = stylex.create({
@@ -18,15 +18,24 @@ export const shared = stylex.create({
   field: { display: 'grid', gap: space.xs },
   /** The inverse layer: tooltips, hints, toasts. */
   inverse: { backgroundColor: color.canvasText, color: color.canvas },
-  /** 2px focus ring drawn inside the element, for items inside composite widgets. */
-  ringInside: { outlineWidth: 2, outlineStyle: 'solid', outlineColor: color.focusRing, outlineOffset: -2 },
+  /**
+   * Focus ring drawn inside the element, for items inside composite widgets. The inset
+   * (transparent in Normal UI) keeps a light theme ring at 3:1.
+   */
+  ringInside: {
+    outlineWidth: shape.focusWidth,
+    outlineStyle: 'solid',
+    outlineColor: color.focusRing,
+    outlineOffset: `calc(-1 * ${shape.focusWidth})`,
+    boxShadow: `inset 0 0 0 calc(${shape.focusWidth} + 2px) ${color.focusInset}`,
+  },
   /** Small uppercase label above a group. */
   eyebrow: {
     fontFamily: font.sans,
-    fontSize: '0.8125rem',
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    letterSpacing: '0.04em',
+    fontSize: text.eyebrowSize,
+    fontWeight: text.eyebrowWeight,
+    textTransform: text.eyebrowTransform,
+    letterSpacing: text.eyebrowTracking,
     color: color.grayText,
   },
 });

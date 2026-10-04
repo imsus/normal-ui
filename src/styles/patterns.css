@@ -50,7 +50,7 @@
 :where(nav[aria-label="Breadcrumb"] [aria-current="page"]) { font-weight: 700; }
 
 /* Tabs: role=tablist > button[role=tab], with role=tabpanel */
-:where([role="tablist"]) { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--control-border); }
+:where([role="tablist"]) { display: flex; flex-wrap: wrap; border-bottom: var(--border-width, 1px) solid var(--control-border); }
 :where([role="tab"]) {
   min-height: calc(var(--space-lg) + var(--space-md)); padding: var(--space-sm) var(--space-md);
   background: transparent; color: var(--canvas-text); border: 0; border-bottom: 3px solid transparent;
@@ -64,7 +64,7 @@
 /* Switch: <input type="checkbox" role="switch"> — 44×24, knob drawn with a gradient */
 :where(input[type="checkbox"][role="switch"]) {
   appearance: none; flex: none; width: 44px; height: 24px; margin: 0 var(--space-sm) 0 0; vertical-align: middle;
-  border: 1px solid var(--control-border); border-radius: 12px; cursor: pointer;
+  border: var(--border-width, 1px) solid var(--control-border); border-radius: 12px; cursor: pointer;
   background: radial-gradient(circle at 11px 50%, var(--canvas-text) 7px, transparent 7.5px) var(--field);
 }
 :where(input[type="checkbox"][role="switch"]:checked) {
@@ -76,7 +76,7 @@
 
 /* Popover menus: <button popovertarget> + <div popover class="pd-menu"> */
 :where([popover]) {
-  margin: 0; padding: var(--space-xs); border: 1px solid var(--control-border);
+  margin: 0; padding: var(--space-xs); border: var(--border-width, 1px) solid var(--control-border);
   background: var(--surface-raised); color: var(--canvas-text);
 }
 :where(.pd-menu) { position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline; margin-block: var(--space-xs); min-width: 12rem; }
@@ -101,7 +101,7 @@
 
 /* Badge: short status text in a box, never colour alone */
 :where(.pd-badge) {
-  display: inline-block; padding: 0 var(--space-xs); border: 1px solid var(--canvas-text);
+  display: inline-block; padding: 0 var(--space-xs); border: var(--border-width, 1px) solid var(--canvas-text);
   font: 700 0.75rem/1.5 var(--font-sans); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; vertical-align: 0.1em;
 }
 :where(.pd-badge[data-tone="strong"]) { background: var(--canvas-text); color: var(--canvas); }
@@ -114,19 +114,23 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  inline-size: var(--pd-square, calc(1.25rem + 2 * var(--space-xs) + 2px));
-  block-size: var(--pd-square, calc(1.25rem + 2 * var(--space-xs) + 2px));
+  inline-size: var(--pd-square, calc(1.25rem + 2 * var(--button-padding-block, 4px) + 2 * var(--control-border-width, 1px)));
+  block-size: var(--pd-square, calc(1.25rem + 2 * var(--button-padding-block, 4px) + 2 * var(--control-border-width, 1px)));
   padding: 0;
 }
 
 /* Alert banner: .pd-alert with a data-kind of info | success | warning | error */
-:where(.pd-alert) { border: 1px solid var(--canvas-text); padding: var(--space-sm) var(--space-md); margin-block: var(--space-md); }
+:where(.pd-alert) { border: var(--border-width, 1px) solid var(--status-info, var(--canvas-text)); padding: var(--space-sm) var(--space-md); margin-block: var(--space-md); }
 :where(.pd-alert) > :first-child { margin-top: 0; }
 :where(.pd-alert) > :last-child { margin-bottom: 0; }
-:where(.pd-alert) strong:first-child { font-family: var(--font-sans); }
-:where(.pd-alert[data-kind="warning"]) { border-width: 2px; border-style: dashed; }
-:where(.pd-alert[data-kind="error"]) { border-width: 3px; }
-:where(.pd-alert[data-kind="success"]) { border-width: 2px; }
+:where(.pd-alert) strong:first-child { font-family: var(--font-sans); color: var(--pd-status, inherit); }
+/* Border weight is the cue in Normal UI; the status tokens add a hue where a theme gives one. */
+:where(.pd-alert[data-kind="info"]) { --pd-status: var(--status-info); }
+:where(.pd-alert[data-kind="warning"]) { border-width: 2px; border-style: dashed; border-color: var(--status-warning); --pd-status: var(--status-warning); }
+:where(.pd-alert[data-kind="error"]) { border-width: 3px; border-color: var(--status-error); --pd-status: var(--status-error); }
+:where(.pd-alert[data-kind="success"]) { border-width: 2px; border-color: var(--status-success); --pd-status: var(--status-success); }
+/* A field's error message, under the field: <small class="pd-error" id="…">. */
+:where(.pd-error) { color: var(--status-error); font-weight: var(--error-weight, 400); }
 
 /* Toast: <div popover="manual" class="pd-toast" role="status"> in the top layer */
 :where(.pd-toast) {
@@ -144,7 +148,7 @@
 :where(.pd-steps li) { counter-increment: step; display: flex; align-items: center; gap: var(--space-xs); color: var(--gray-text); }
 :where(.pd-steps li)::before {
   content: counter(step); display: inline-grid; place-items: center; width: 1.75rem; height: 1.75rem;
-  border: 1px solid var(--control-border); border-radius: 50%; font-variant-numeric: tabular-nums;
+  border: var(--border-width, 1px) solid var(--control-border); border-radius: 50%; font-variant-numeric: tabular-nums;
 }
 :where(.pd-steps li[data-done])::before { content: "✓" / "Done: "; background: var(--canvas-text); color: var(--canvas); border-color: var(--canvas-text); }
 :where(.pd-steps li[data-done]) { color: var(--canvas-text); }
@@ -157,7 +161,7 @@
   border: 2px dashed var(--control-border); text-align: center; cursor: pointer;
 }
 :where(.pd-drop:hover, .pd-drop.dragging) { border-color: var(--canvas-text); background: var(--highlight); color: var(--highlight-text); }
-:where(.pd-drop:has(input:focus-visible)) { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+:where(.pd-drop:has(input:focus-visible)) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: 2px; }
 :where(.pd-drop) input[type="file"] { max-width: 100%; }
 
 /* ---------- ARIA Authoring Practices patterns ---------- */
@@ -168,18 +172,18 @@
 meter::-webkit-meter-optimum-value { background: var(--link); }
 meter::-webkit-meter-suboptimum-value { background: var(--link); }
 meter::-webkit-meter-even-less-good-value { background: var(--link); }
-meter::-webkit-meter-bar { background: var(--field); border: 1px solid var(--control-border); }
+meter::-webkit-meter-bar { background: var(--field); border: var(--border-width, 1px) solid var(--control-border); }
 meter::-moz-meter-bar { background: var(--link); }
 
 /* Option lists shared by listbox, combobox popups, tree and menus */
 :where([role="listbox"], [role="tree"], [role="menu"], [role="menubar"]) { list-style: none; margin: 0; padding: 0; }
-:where([role="listbox"]) { border: 1px solid var(--control-border); background: var(--field); color: var(--field-text); max-height: 14rem; overflow-y: auto; padding: 2px; }
+:where([role="listbox"]) { border: var(--border-width, 1px) solid var(--control-border); background: var(--field); color: var(--field-text); max-height: 14rem; overflow-y: auto; padding: 2px; }
 :where([role="option"]) { display: flex; align-items: center; gap: var(--space-sm); min-height: calc(var(--space-lg) + var(--space-sm)); padding: var(--space-xs) var(--space-sm); cursor: default; font-family: var(--font-sans); }
 :where([role="option"])::before { content: ""; width: 1em; flex: none; }
 :where([role="option"][aria-selected="true"]) { font-weight: 700; }
 :where([role="option"][aria-selected="true"])::before { content: "✓" / ""; }
 :where([role="option"]:hover, [role="option"].active) { background: var(--highlight); color: var(--highlight-text); }
-:where([role="option"].active) { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+:where([role="option"].active) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -2px; }
 :where([role="option"][aria-disabled="true"]) { color: var(--gray-text); text-decoration: line-through; }
 
 /* Combobox: the input plus a listbox popup under it */
@@ -188,34 +192,34 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(.pd-combo [role="listbox"]) { position: absolute; inset-inline: 0; z-index: 5; margin-top: 2px; }
 
 /* Menus and menubar: role=menu gets the popover-menu look */
-:where([role="menubar"]) { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--control-border); font-family: var(--font-sans); }
+:where([role="menubar"]) { display: flex; flex-wrap: wrap; border-bottom: var(--border-width, 1px) solid var(--control-border); font-family: var(--font-sans); }
 :where([role="menubar"] > li) { position: relative; }
 :where([role="menubar"] [role="menuitem"]) { display: block; padding: var(--space-xs) var(--space-md); min-height: var(--space-lg); color: var(--canvas-text); text-decoration: none; cursor: default; }
 :where([role="menubar"] > li > [aria-expanded="true"]) { background: var(--highlight); color: var(--highlight-text); }
-:where([role="menu"]) { position: absolute; z-index: 5; min-width: 12rem; padding: var(--space-xs); border: 1px solid var(--control-border); background: var(--surface-raised); }
+:where([role="menu"]) { position: absolute; z-index: 5; min-width: 12rem; padding: var(--space-xs); border: var(--border-width, 1px) solid var(--control-border); background: var(--surface-raised); }
 :where([role="menu"] [role^="menuitem"]) { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-xs) var(--space-sm); min-height: calc(var(--space-lg) + var(--space-sm)); }
 :where([role="menu"] [role^="menuitem"]:hover, [role="menu"] [role^="menuitem"]:focus) { background: var(--highlight); color: var(--highlight-text); outline: none; }
-:where([role="menu"] [role^="menuitem"]:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+:where([role="menu"] [role^="menuitem"]:focus-visible) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -2px; }
 :where([role="menuitemcheckbox"], [role="menuitemradio"])::before { content: ""; width: 1em; }
 :where([role="menuitemcheckbox"][aria-checked="true"], [role="menuitemradio"][aria-checked="true"])::before { content: "✓" / ""; }
-:where([role="menu"] [role="separator"]) { border-top: 1px solid var(--rule); margin: var(--space-xs) 0; }
+:where([role="menu"] [role="separator"]) { border-top: var(--border-width, 1px) solid var(--rule); margin: var(--space-xs) 0; }
 :where([role="menu"] kbd) { margin-inline-start: auto; font: 0.8125rem var(--font-sans); color: var(--gray-text); padding: 0; border: 0; background: none; }
 
 /* Toolbar and toggle buttons */
-:where([role="toolbar"]) { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: center; padding: var(--space-xs); border: 1px solid var(--control-border); }
-:where([role="toolbar"] [role="separator"]) { align-self: stretch; border-inline-start: 1px solid var(--rule); margin-inline: var(--space-xs); }
+:where([role="toolbar"]) { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: center; padding: var(--space-xs); border: var(--border-width, 1px) solid var(--control-border); }
+:where([role="toolbar"] [role="separator"]) { align-self: stretch; border-inline-start: var(--border-width, 1px) solid var(--rule); margin-inline: var(--space-xs); }
 :where(button[aria-pressed="true"]) { background: var(--canvas-text); color: var(--canvas); border-color: var(--canvas-text); }
 
 /* Accordion: a heading holds a full-width button with aria-expanded */
-:where(.pd-accordion) { border-top: 1px solid var(--rule); }
+:where(.pd-accordion) { border-top: var(--border-width, 1px) solid var(--rule); }
 :where(.pd-accordion) > :is(h2, h3, h4) { margin: 0; font-size: 1rem; }
 :where(.pd-accordion) > :is(h2, h3, h4) > button {
   display: flex; width: 100%; align-items: center; gap: 0; min-height: calc(var(--space-lg) * 2);
-  padding: var(--space-xs) 0; background: transparent; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0;
+  padding: var(--space-xs) 0; background: transparent; border: 0; border-bottom: var(--border-width, 1px) solid var(--rule); border-radius: 0;
   color: var(--canvas-text); font: 700 1rem var(--font-sans); text-align: start;
 }
 :where(.pd-accordion button[aria-expanded="false"])::before { rotate: -90deg; }
-:where(.pd-accordion [role="region"]) { padding: var(--space-xs) 0 var(--space-sm) 1.25em; border-bottom: 1px solid var(--rule); }
+:where(.pd-accordion [role="region"]) { padding: var(--space-xs) 0 var(--space-sm) 1.25em; border-bottom: var(--border-width, 1px) solid var(--rule); }
 
 /* Tree view */
 :where([role="tree"] [role="group"]) { list-style: none; margin: 0; padding-inline-start: var(--space-lg); }
@@ -226,35 +230,35 @@ meter::-moz-meter-bar { background: var(--link); }
 :where([role="treeitem"][aria-expanded="false"]) > [role="group"] { display: none; }
 :where([role="treeitem"][aria-selected="true"]) > .label { background: var(--highlight); color: var(--highlight-text); font-weight: 700; }
 :where([role="treeitem"]:focus) { outline: none; }
-:where([role="treeitem"]:focus-visible) > .label { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+:where([role="treeitem"]:focus-visible) > .label { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -2px; }
 
 /* Grid and treegrid: cell or row focus drawn inside the cell */
-:where([role="grid"], [role="treegrid"]) :is([role="gridcell"], [role="row"], td, th):focus { outline: 2px solid var(--focus-ring); outline-offset: -3px; }
+:where([role="grid"], [role="treegrid"]) :is([role="gridcell"], [role="row"], td, th):focus { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -3px; }
 :where([role="grid"] [role="gridcell"][aria-readonly="true"]) { color: var(--gray-text); }
 :where([role="treegrid"] [aria-expanded="false"]) > :first-child::before { rotate: -90deg; }
 
 /* Window splitter: a focusable separator between two panes */
 :where([role="separator"][tabindex]) {
   flex: none; width: 12px; cursor: col-resize; background: transparent;
-  border-inline: 1px solid var(--control-border);
+  border-inline: var(--border-width, 1px) solid var(--control-border);
   background-image: linear-gradient(var(--control-border), var(--control-border)); background-size: 2px 24px; background-position: center; background-repeat: no-repeat;
 }
 :where([role="separator"][tabindex]:hover) { background-color: var(--highlight); }
 
 /* Carousel */
-:where([aria-roledescription="carousel"]) { border: 1px solid var(--control-border); }
-:where([aria-roledescription="carousel"]) .controls { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: center; padding: var(--space-xs); border-bottom: 1px solid var(--rule); }
+:where([aria-roledescription="carousel"]) { border: var(--border-width, 1px) solid var(--control-border); }
+:where([aria-roledescription="carousel"]) .controls { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: center; padding: var(--space-xs); border-bottom: var(--border-width, 1px) solid var(--rule); }
 :where([aria-roledescription="slide"]) { padding: var(--space-md); }
 
 /* Feed */
-:where([role="feed"]) > article { border-top: 1px solid var(--rule); padding-block: var(--space-sm); }
-:where([role="feed"]) > article:focus { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+:where([role="feed"]) > article { border-top: var(--border-width, 1px) solid var(--rule); padding-block: var(--space-sm); }
+:where([role="feed"]) > article:focus { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: 2px; }
 
 /* ARIA 1.3 review roles: suggestions and comments, with the change named in text */
 :where(ins, del) { text-decoration-thickness: 2px; }
 :where(ins) { text-decoration: underline; background: var(--highlight); color: var(--highlight-text); }
 :where(del) { text-decoration: line-through; color: var(--gray-text); }
-:where([role="comment"]) { border: 1px solid var(--control-border); padding: var(--space-xs) var(--space-sm); font: 0.875rem/1.4 var(--font-sans); }
+:where([role="comment"]) { border: var(--border-width, 1px) solid var(--control-border); padding: var(--space-xs) var(--space-sm); font: 0.875rem/1.4 var(--font-sans); }
 
 /* ---------- Newer HTML and CSS (opt-in where support is partial) ---------- */
 
@@ -267,7 +271,7 @@ meter::-moz-meter-bar { background: var(--link); }
   :where(select.pd-select) { display: inline-flex; align-items: center; gap: var(--space-sm); min-height: calc(var(--space-lg) + var(--space-md)); padding: var(--space-xs) var(--space-sm); }
   :where(select.pd-select:open)::picker-icon { rotate: 180deg; }
   :where(select.pd-select:open) { border-color: var(--canvas-text); }
-  :where(select.pd-select)::picker(select) { margin-block: 2px; padding: var(--space-xs); border: 1px solid var(--control-border); background: var(--surface-raised); color: var(--canvas-text); }
+  :where(select.pd-select)::picker(select) { margin-block: 2px; padding: var(--space-xs); border: var(--border-width, 1px) solid var(--control-border); background: var(--surface-raised); color: var(--canvas-text); }
   :where(select.pd-select option) { display: flex; align-items: center; gap: var(--space-sm); min-height: calc(var(--space-lg) + var(--space-sm)); padding: var(--space-xs) var(--space-sm); }
   :where(select.pd-select option:is(:hover, :focus-visible)) { background: var(--highlight); color: var(--highlight-text); outline: none; }
   :where(select.pd-select option:checked) { font-weight: 700; }
@@ -290,7 +294,7 @@ meter::-moz-meter-bar { background: var(--link); }
   overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; list-style: none; margin: 0; padding: 0 0 var(--space-sm);
   counter-reset: pd-slide;
 }
-:where(.pd-scroller > li) { scroll-snap-align: start; border: 1px solid var(--control-border); padding: var(--space-md); counter-increment: pd-slide; }
+:where(.pd-scroller > li) { scroll-snap-align: start; border: var(--border-width, 1px) solid var(--control-border); padding: var(--space-md); counter-increment: pd-slide; }
 @supports selector(::scroll-marker) {
   :where(.pd-scroller) { anchor-name: --pd-scroller; scroll-marker-group: after; margin-block-start: calc(var(--space-lg) * 2); scrollbar-width: none; }
   /* Chromium places the marker row after the list without counting its height, so the
@@ -301,19 +305,19 @@ meter::-moz-meter-bar { background: var(--link); }
     /* Square, like .pd-square, at 40px. */
     inline-size: calc(var(--space-lg) + var(--space-md)); block-size: calc(var(--space-lg) + var(--space-md));
     padding: 0; display: grid; place-items: center;
-    border: 1px solid var(--control-border); background: var(--button-face); color: var(--button-text); font: 1.25rem/1 var(--font-sans); cursor: pointer;
+    border: var(--border-width, 1px) solid var(--control-border); background: var(--button-face); color: var(--button-text); font: 1.25rem/1 var(--font-sans); cursor: pointer;
   }
   :where(.pd-scroller)::scroll-button(inline-start) { content: "‹" / "Previous"; translate: calc(-100% - var(--space-xs)) 0; }
   :where(.pd-scroller)::scroll-button(inline-end) { content: "›" / "Next"; }
   :where(.pd-scroller)::scroll-button(*):disabled { border-style: dashed; color: var(--gray-text); background: transparent; cursor: not-allowed; }
-  :where(.pd-scroller)::scroll-button(*):focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  :where(.pd-scroller)::scroll-button(*):focus-visible { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: 2px; }
   :where(.pd-scroller)::scroll-marker-group { display: flex; gap: var(--space-xs); justify-content: center; margin-block-start: var(--space-sm); }
   :where(.pd-scroller > li)::scroll-marker {
     content: counter(pd-slide); display: inline-grid; place-items: center; width: var(--space-lg); height: var(--space-lg);
-    border: 1px solid var(--control-border); font: 0.8125rem var(--font-sans); color: var(--canvas-text); text-decoration: none;
+    border: var(--border-width, 1px) solid var(--control-border); font: 0.8125rem var(--font-sans); color: var(--canvas-text); text-decoration: none;
   }
   :where(.pd-scroller > li)::scroll-marker:target-current { background: var(--canvas-text); color: var(--canvas); font-weight: 700; }
-  :where(.pd-scroller > li)::scroll-marker:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  :where(.pd-scroller > li)::scroll-marker:focus-visible { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: 2px; }
 }
 
 /* Scroll-spy table of contents: <nav class="pd-toc">. Where scroll-target-group exists,
@@ -346,7 +350,7 @@ meter::-moz-meter-bar { background: var(--link); }
   display: flex; flex-direction: column; gap: var(--pd-card-pad); min-width: 0;
   padding: var(--pd-card-pad);
   background: var(--canvas); color: var(--canvas-text);
-  border: 1px solid var(--control-border);
+  border: var(--border-width, 1px) solid var(--control-border);
 }
 :where(.pd-card[data-size="xs"]) { --pd-card-pad: var(--space-sm); }
 :where(.pd-card[data-size="sm"]) { --pd-card-pad: 12px; }
@@ -377,8 +381,8 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(.pd-card-body) { display: flex; flex-direction: column; gap: var(--pd-card-pad); min-width: 0; --pd-card-bleed-top: 0px; --pd-card-bleed-bottom: 0px; }
 :where(.pd-card:not([data-body]), .pd-card[data-body="seamless"]) > :where(.pd-card-body:first-child) { --pd-card-bleed-top: var(--pd-card-pad); }
 :where(.pd-card:not([data-body]), .pd-card[data-body="seamless"]) > :where(.pd-card-body:last-child) { --pd-card-bleed-bottom: var(--pd-card-pad); }
-:where(.pd-card[data-body="inset"]) > :where(.pd-card-body) { padding: var(--pd-card-pad); background: var(--pd-card-panel); border: 1px solid var(--rule); --pd-card-bleed-top: var(--pd-card-pad); --pd-card-bleed-bottom: var(--pd-card-pad); }
-:where(.pd-card[data-body="flush"]) > :where(.pd-card-body) { padding: var(--pd-card-pad); background: var(--pd-card-panel); border-block: 1px solid var(--rule); --pd-card-bleed-top: var(--pd-card-pad); --pd-card-bleed-bottom: var(--pd-card-pad); }
+:where(.pd-card[data-body="inset"]) > :where(.pd-card-body) { padding: var(--pd-card-pad); background: var(--pd-card-panel); border: var(--border-width, 1px) solid var(--rule); --pd-card-bleed-top: var(--pd-card-pad); --pd-card-bleed-bottom: var(--pd-card-pad); }
+:where(.pd-card[data-body="flush"]) > :where(.pd-card-body) { padding: var(--pd-card-pad); background: var(--pd-card-panel); border-block: var(--border-width, 1px) solid var(--rule); --pd-card-bleed-top: var(--pd-card-pad); --pd-card-bleed-bottom: var(--pd-card-pad); }
 :where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-body) { padding: var(--pd-card-pad); --pd-card-bleed-top: var(--pd-card-pad); --pd-card-bleed-bottom: var(--pd-card-pad); }
 :where(.pd-card[data-body="divided"][data-divider="inset"]) > :where(.pd-card-body) { padding-inline: 0; }
 
@@ -386,8 +390,8 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(.pd-card[data-body="flush"]) > :where(.pd-card-header, .pd-card-footer) { padding-inline: var(--pd-card-pad); }
 :where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-header, .pd-card-footer) { padding: var(--pd-card-pad); }
 :where(.pd-card[data-body="divided"][data-divider="inset"]) > :where(.pd-card-header, .pd-card-footer) { padding-inline: 0; }
-:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-header) { border-bottom: 1px solid var(--rule); }
-:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-footer) { border-top: 1px solid var(--rule); }
+:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-header) { border-bottom: var(--border-width, 1px) solid var(--rule); }
+:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-footer) { border-top: var(--border-width, 1px) solid var(--rule); }
 :where(.pd-card[data-body="separated"]) > :where(.pd-card-header, .pd-card-footer) { background: var(--pd-card-band); }
 
 /* Bleed: out to the card's edges; a table inside runs its rows edge to edge */
@@ -413,12 +417,41 @@ meter::-moz-meter-bar { background: var(--link); }
   :where(input[role="switch"]) { forced-color-adjust: none; border-color: CanvasText; background: radial-gradient(circle at 11px 50%, CanvasText 7px, transparent 7.5px) Canvas; }
   :where(input[role="switch"]:checked) { background: radial-gradient(circle at calc(100% - 11px) 50%, Canvas 7px, transparent 7.5px) Highlight; border-color: Highlight; }
   :where([role="tab"][aria-selected="true"]) { border-bottom-color: Highlight; }
-  :where(.pd-tip [role="tooltip"], .pd-toast, .pd-badge[data-tone="strong"]) { border: 1px solid CanvasText; }
+  :where(.pd-tip [role="tooltip"], .pd-toast, .pd-badge[data-tone="strong"]) { border: var(--border-width, 1px) solid CanvasText; }
   :where(.pd-steps li[data-done])::before { forced-color-adjust: none; background: CanvasText; color: Canvas; }
   :where(button[aria-pressed="true"]) { forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight; }
   :where([role="option"].active, [role="option"]:hover, [role="treeitem"][aria-selected="true"] > .label, [role="menu"] [role^="menuitem"]:focus) { forced-color-adjust: none; background: Highlight; color: HighlightText; }
   :where(ins) { background: Mark; color: MarkText; }
-  :where(.pd-hint) { border: 1px solid CanvasText; }
+  :where(.pd-hint) { border: var(--border-width, 1px) solid CanvasText; }
 }
 
+/* ---------- Page pieces ----------
+   A masthead band and a page sheet. In Normal UI they add nothing you can see beyond a
+   rule (masthead is canvas, page is canvas, sheet-shadow is none); a theme gives them a
+   brand fill, a grey desk or a drop shadow through those tokens. */
+:where(.pd-masthead) {
+  background: var(--masthead);
+  color: var(--masthead-text);
+  border-block-end: var(--border-width, 1px) solid var(--rule);
+  padding: var(--space-sm) var(--space-md);
+}
+:where(.pd-masthead) :where(a:link, a:visited) { color: inherit; }
+:where(body:has(> .pd-sheet)) { background: var(--page); }
+:where(.pd-sheet) {
+  max-width: 78rem;
+  margin: var(--space-md) auto;
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  background: var(--canvas);
+  border: var(--border-width, 1px) solid var(--rule);
+  box-shadow: var(--sheet-shadow, none);
+}
+/* A small label above a group: nav sections, card kickers, table groups. */
+:where(.pd-eyebrow) {
+  font-family: var(--font-sans);
+  font-size: var(--eyebrow-size, 0.8125rem);
+  font-weight: var(--eyebrow-weight, 700);
+  text-transform: var(--eyebrow-transform, uppercase);
+  letter-spacing: var(--eyebrow-tracking, 0.04em);
+  color: var(--gray-text);
+}
 }

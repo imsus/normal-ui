@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 import { wrap } from './shared';
 
 export type Tab = { label: ReactNode; content: ReactNode };
@@ -61,9 +61,9 @@ export function Tabs({ label, tabs, defaultIndex = 0 }: { label: string; tabs: T
 }
 
 const styles = stylex.create({
-  list: { display: 'flex', flexWrap: 'wrap', borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: color.controlBorder },
+  list: { display: 'flex', flexWrap: 'wrap', borderBottomWidth: shape.borderWidth, borderBottomStyle: 'solid', borderBottomColor: color.controlBorder },
   tab: {
-    minHeight: `calc(${space.lg} + ${space.md})`,
+    minHeight: `calc(${shape.targetMin} + ${space.md})`,
     paddingBlock: space.sm,
     paddingInline: space.md,
     backgroundColor: 'transparent',
@@ -77,7 +77,7 @@ const styles = stylex.create({
     marginBottom: -1,
     cursor: 'pointer',
     fontSize: '1rem',
-    outlineOffset: { default: null, ':focus-visible': -2 },
+    outlineOffset: { default: null, ':focus-visible': `calc(-1 * ${shape.focusWidth})` },
   },
   selected: {
     borderBottomColor: { default: color.canvasText, ':hover': color.canvasText, '@media (forced-colors: active)': 'Highlight' },

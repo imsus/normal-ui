@@ -43,4 +43,4 @@ export type { Slide, FeedArticle } from './Content';
 export { WindowSplitter } from './WindowSplitter';
 export { Card, CardHeader, CardHeading, CardSubheading, CardActions, CardBody, CardFooter, CardBleed } from './Card';
 export type { CardBodyTreatment, CardSize, CardVariant } from './Card';
-export { color, font, space, radius } from '../tokens.stylex';
+export { color, font, space, radius, shape, text } from '../tokens.stylex';

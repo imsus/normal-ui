@@ -22,7 +22,7 @@ Use the system-color tokens by their role, never by their hue.
 - `rule` for `<hr>` and table borders.
 - Surfaces: `surface-soft`, `surface-muted` and `surface-raised` tint panels and cards (see Card). Every floating layer (dialogs, menus, the customizable select's list) sits on `surface-raised`: white in light, a step lighter than the page in dark, so it reads as on top. Tooltips and toasts stay inverse. Buttons keep `button-face`, fields `field`, selection `highlight`: those colours mean pressable, editable and chosen, so they never become surfaces. Text, links and controls keep their normal tokens on them: every surface holds `gray-text` at 4.5:1 and control borders at 3:1 in both themes, so nothing changes colour when it sits on a tint.
 
-There are no brand or status hues. For an error, write it out ("Enter a date after today") next to the field and link it with `aria-describedby`; do not rely on red.
+There are no brand or status hues. For an error, write it out ("Enter a date after today") next to the field and link it with `aria-describedby`; do not rely on red. The `status-*` tokens exist so a theme can add a hue on top of the words; in Normal UI they are `canvas-text`.
 
 | Pair | Light | Dark | Needs |
 | --- | --- | --- | --- |
@@ -55,7 +55,7 @@ Three families, all already on the reader's device, no web fonts to load:
 - Body copy in `body`: 16px on a 24px line. That line is the rhythm unit. Keep lines under about 75 characters by constraining the container, for example `max-width: 40rem`.
 - Headings come in two scales, chosen by context (see "Reset and rhythm"). Line heights snap to the grid with `round(up, 1.2em, step)`.
 - Use headings in order. Never skip a level to get a smaller size; in app UI the scale is already smaller.
-- `small` is the smallest text allowed (0.83em, about 13px).
+- `small` is the smallest text allowed: 0.83em, never under `small-min` (13px), even when a theme sets a smaller root.
 - Controls use `control`: 16px, so they grow with the reader's text size instead of staying at the browser's fixed 13.33px.
 - Code uses `code` at 1em.
 - Set sizes in `em`/`rem`, never `px`, so browser zoom and text-size settings work (1.4.4).
@@ -96,7 +96,8 @@ Rhythm is set by context through custom properties, so contexts nest:
 ## Controls and states
 
 - **Rest:** `button-face` fill, 1px `control-border`, `radius-control` corners.
-- **Hover:** the border darkens to `canvas-text`. Links thicken their underline to 2px.
+- **Hover:** the border darkens to `canvas-text` (`button-border-hover`). Links thicken their underline to 2px.
+- **Variants:** `variant="primary"` (React) or `data-variant="primary"` (HTML) marks the one action a form leads with, `warning` an action that destroys or cannot be undone. Normal UI draws them exactly like every other button: order and wording carry the emphasis. A theme may set them apart through `button-primary-*` and `button-warning-*`.
 - **Focus:** a 2px solid `focus-ring` outline, offset `space-2xs`, on every focusable element when reached by keyboard (`:focus-visible`). Never set `outline: none` without a replacement of equal strength.
 - **Active:** links turn `link-active`.
 - **Disabled:** the fill becomes transparent (so it matches whatever surface it sits on), the border turns dashed, text becomes `gray-text`. The text stays above 4.5:1; the dashed border and `cursor: not-allowed` say it is unavailable. Prefer explaining why an action is unavailable over disabling it.
@@ -292,6 +293,19 @@ One: the state arrow, a small solid triangle (`--pd-chevron` in `base.css`, `<Ch
 - It is decorative (`aria-hidden`); `aria-expanded` or the native element announces the state. It turns in 0.15s, or instantly for people who ask for less motion.
 
 Everything else uses words and native widgets (checkbox ticks, radio dots). If a product needs icons, pair each with visible text, or give an icon-only button an `aria-label`, and draw it in `canvas-text` so it reaches 3:1.
+
+## Themes
+
+Normal UI is the default style. A theme restyles it without forking it: `themes/<id>/tokens.json` lists only the tokens it changes and the ones it adds, and `themes/<id>/theme.css` holds the few element rules tokens cannot say. Set `data-style="<id>"` on `<html>`, or on any element to theme one part of a page. Light and dark still come from the device or `data-theme`; a theme with `"modes": ["light"]` stays light.
+
+- **Tokens reach everything.** The React components style themselves with StyleX, which beats any element rule, so every value a component draws with is a token: colours (including button variants, hover and pressed fills, status colours, the focus inset, and the page and masthead fills), fonts and web fonts (`type.fonts`), the root size with breakpoints (`type.rootSize`), spacing, radius, shape (border widths, `target-min`, button padding, edge and press offset, focus width and offset, choice size, sheet shadow) and text treatments (heading sizes, control text, eyebrows, the `small` floor, error weight, the underline in navigation). Normal UI's own values are the defaults, so nothing changes until a theme sets one.
+- **Element rules** in `theme.css` sit in the `normal-ui-theme` layer, after `normal-ui` and before StyleX. Scope every rule with `:where([data-style="<id>"])`. If your own CSS uses layers, declare `@layer normal-ui, normal-ui-theme, app;`.
+- **Added tokens** cover what Normal UI has no role for (a bevel). They only have a value inside the theme. In StyleX, import them from `src/themes.stylex.ts`.
+- **Page pieces:** `.pd-masthead` (a band in `masthead`), `.pd-sheet` (the page on a `page` background with `sheet-shadow`) and `.pd-eyebrow`. In Normal UI they look like the plain page.
+- **The same contrast bar.** `pnpm tokens` checks every theme in each of its modes against the pairs in the Color table, plus button variants, status colours and the masthead, plus any pairs the theme lists in `checks`, and stops the build on a failure. A light focus ring passes if its `focus-inset` holds 3:1. A theme may waive a pair only with a reason in `waive`; the Themes page lists every waiver and every other deliberate departure.
+- **Fonts:** ship only fonts you are licensed to serve. Put the files in `themes/<id>/fonts/` and list them in `type.fonts`; a family that is not listed is used only if the reader has it installed.
+
+The three themes that ship are US Graphics (`usgraphics`), McMaster-Carr (`mcmaster`) and GOV.UK (`govuk`, light only).
 
 ## What changed from the browser defaults
 

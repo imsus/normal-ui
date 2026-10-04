@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { color } from '../tokens.stylex';
+import { color, shape } from '../tokens.stylex';
 import { clamp } from './shared';
 
 /**
@@ -70,7 +70,7 @@ export function WindowSplitter({
 }
 
 const styles = stylex.create({
-  wrap: { display: 'flex', borderWidth: 1, borderStyle: 'solid', borderColor: color.controlBorder },
+  wrap: { display: 'flex', borderWidth: shape.borderWidth, borderStyle: 'solid', borderColor: color.controlBorder },
   height: (height: string) => ({ height }),
   pane: { overflow: 'auto', paddingBlock: 8, paddingInline: 12 },
   basis: (flexBasis: string) => ({ flexGrow: 0, flexShrink: 0, flexBasis }),

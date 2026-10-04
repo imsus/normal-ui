@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
 import type { InputHTMLAttributes, ReactNode } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 import { shared } from './shared';
 
 /**
@@ -52,7 +52,7 @@ const styles = stylex.create({
     margin: 0,
     marginInlineEnd: space.sm,
     verticalAlign: 'middle',
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: { default: 'solid', ':disabled': 'dashed' },
     borderColor: { default: color.controlBorder, ':checked': color.accent, '@media (forced-colors: active)': 'CanvasText' },
     borderRadius: 12,

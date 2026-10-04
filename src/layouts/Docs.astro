@@ -27,15 +27,27 @@ const crumbs = parts.length === 0 ? [] : [
   </DocsShell>
   <script is:inline>
     (function () {
-      var sel = document.getElementById('pd-theme');
-      if (!sel) return;
+      // Saving the choice also reaches every preview frame on the page (the storage
+      // event in Base.astro), so the examples change with the docs.
       var root = document.documentElement;
-      sel.value = root.dataset.theme || 'auto';
-      sel.addEventListener('change', function () {
-        if (sel.value === 'auto') delete root.dataset.theme;
-        else root.dataset.theme = sel.value;
-        try { localStorage.setItem('pd-theme', sel.value); } catch (e) {}
-      });
+      var theme = document.getElementById('pd-theme');
+      if (theme) {
+        theme.value = root.dataset.theme || 'auto';
+        theme.addEventListener('change', function () {
+          if (theme.value === 'auto') delete root.dataset.theme;
+          else root.dataset.theme = theme.value;
+          try { localStorage.setItem('pd-theme', theme.value); } catch (e) {}
+        });
+      }
+      var style = document.getElementById('pd-style');
+      if (style) {
+        style.value = root.dataset.style || '';
+        style.addEventListener('change', function () {
+          if (style.value) root.dataset.style = style.value;
+          else delete root.dataset.style;
+          try { localStorage.setItem('pd-style', style.value); } catch (e) {}
+        });
+      }
     })();
   </script>
   <script>

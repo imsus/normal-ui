@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 import { wrap } from './shared';
 
 export type MenubarItem =
@@ -143,13 +143,13 @@ const styles = stylex.create({
     listStyle: 'none',
     margin: 0,
     padding: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: shape.borderWidth,
     borderBottomStyle: 'solid',
     borderBottomColor: color.controlBorder,
     fontFamily: font.sans,
   },
   top: { position: 'relative' },
-  topItem: { display: 'block', paddingBlock: space.xs, paddingInline: space.md, minHeight: space.lg, color: color.canvasText, cursor: 'default' },
+  topItem: { display: 'block', paddingBlock: space.xs, paddingInline: space.md, minHeight: shape.targetMin, color: color.canvasText, cursor: 'default' },
   topOpen: { backgroundColor: color.highlight, color: color.highlightText },
   menu: {
     position: 'absolute',
@@ -158,7 +158,7 @@ const styles = stylex.create({
     listStyle: 'none',
     margin: 0,
     padding: space.xs,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     backgroundColor: color.surfaceRaised,
@@ -170,15 +170,15 @@ const styles = stylex.create({
     gap: space.sm,
     paddingBlock: space.xs,
     paddingInline: space.sm,
-    minHeight: `calc(${space.lg} + ${space.sm})`,
+    minHeight: `calc(${shape.targetMin} + ${space.sm})`,
     cursor: 'default',
     backgroundColor: { default: null, ':hover': color.highlight, ':focus': color.highlight },
     color: { default: null, ':hover': color.highlightText, ':focus': color.highlightText },
-    outline: { default: null, ':focus': 'none', ':focus-visible': `2px solid ${color.focusRing}` },
-    outlineOffset: -2,
+    outline: { default: null, ':focus': 'none', ':focus-visible': `${shape.focusWidth} solid ${color.focusRing}` },
+    outlineOffset: `calc(-1 * ${shape.focusWidth})`,
   },
   tick: (content: string) => ({ '::before': { content, width: '1em' } }),
-  separator: { borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: color.rule, marginBlock: space.xs },
+  separator: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule, marginBlock: space.xs },
   // A shortcut hint, not a keycap: switch off base.css's key outline.
   kbd: {
     marginInlineStart: 'auto',

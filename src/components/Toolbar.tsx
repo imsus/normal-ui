@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useRef } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 
 /**
  * A group of controls for one target. One Tab stop: Left/Right move between
@@ -60,9 +60,9 @@ const styles = stylex.create({
     gap: space.xs,
     alignItems: 'center',
     padding: space.xs,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
   },
-  separator: { alignSelf: 'stretch', borderInlineStartWidth: 1, borderInlineStartStyle: 'solid', borderInlineStartColor: color.rule, marginInline: space.xs },
+  separator: { alignSelf: 'stretch', borderInlineStartWidth: shape.borderWidth, borderInlineStartStyle: 'solid', borderInlineStartColor: color.rule, marginInline: space.xs },
 });

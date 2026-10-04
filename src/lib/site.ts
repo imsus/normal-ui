@@ -172,6 +172,7 @@ export const nav: NavSection[] = [
     { label: 'Guidelines', href: href('/guidelines/') },
     { label: 'Tokens', href: href('/tokens/') },
     { label: 'Typography', href: href('/typography/') },
+    { label: 'Themes', href: href('/themes/') },
   ] },
   ...levels.map((l) => ({
     title: l.label,

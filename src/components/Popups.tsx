@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { cloneElement, useEffect, useId, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactElement, ReactNode } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 import { buttonStyles } from './Button';
 import { Chevron } from './Chevron';
 
@@ -21,7 +21,7 @@ const popover = stylex.create({
     listStyle: 'none',
     margin: 0,
     padding: space.xs,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     // Floating layers sit on surface-raised: above the page in dark mode.
@@ -178,14 +178,14 @@ const menu = stylex.create({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    minHeight: `calc(${space.lg} + ${space.sm})`,
+    minHeight: `calc(${shape.targetMin} + ${space.sm})`,
     paddingBlock: space.xs,
     paddingInline: space.sm,
     // The focused item is the "current" one: highlight it, keep the ring for keyboard.
     backgroundColor: { default: 'transparent', ':hover': color.highlight, ':focus': color.highlight },
     color: { default: color.canvasText, ':hover': color.highlightText, ':focus': color.highlightText },
-    outline: { default: null, ':focus': 'none', ':focus-visible': `2px solid ${color.focusRing}` },
-    outlineOffset: -2,
+    outline: { default: null, ':focus': 'none', ':focus-visible': `${shape.focusWidth} solid ${color.focusRing}` },
+    outlineOffset: `calc(-1 * ${shape.focusWidth})`,
     forcedColorAdjust: { default: null, ':focus': 'none' },
     borderWidth: 0,
     borderRadius: 0,
@@ -195,7 +195,7 @@ const menu = stylex.create({
     fontSize: '1rem',
     lineHeight: 1.25,
   },
-  separator: { borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: color.rule, marginBlock: space.xs },
+  separator: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule, marginBlock: space.xs },
 });
 
 /**
@@ -338,7 +338,7 @@ const toast = stylex.create({
     paddingInline: space.md,
     backgroundColor: color.canvasText,
     color: color.canvas,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: { default: color.canvasText, '@media (forced-colors: active)': 'CanvasText' },
     fontFamily: font.sans,

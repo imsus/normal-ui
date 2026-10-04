@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
 import type { ReactNode, SelectHTMLAttributes } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 import { shared } from './shared';
 import { chevron } from './chevron.stylex';
 
@@ -50,14 +50,14 @@ const styles = stylex.create({
     display: { default: null, [base]: 'inline-flex' },
     alignItems: 'center',
     gap: space.sm,
-    minHeight: { default: null, [base]: `calc(${space.lg} + ${space.md})` },
+    minHeight: { default: null, [base]: `calc(${shape.targetMin} + ${space.md})` },
     paddingInline: { default: null, [base]: space.sm },
     borderColor: { default: null, ':open': color.canvasText },
     '::picker(select)': {
       appearance: 'base-select',
       marginBlock: 2,
       padding: space.xs,
-      borderWidth: 1,
+      borderWidth: shape.borderWidth,
       borderStyle: 'solid',
       borderColor: color.controlBorder,
       backgroundColor: color.surfaceRaised,
@@ -78,7 +78,7 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     gap: space.sm,
-    minHeight: `calc(${space.lg} + ${space.sm})`,
+    minHeight: `calc(${shape.targetMin} + ${space.sm})`,
     paddingBlock: space.xs,
     paddingInline: space.sm,
     backgroundColor: { default: null, ':hover': color.highlight, ':focus-visible': color.highlight },

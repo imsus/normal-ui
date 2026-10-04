@@ -2,7 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { useId } from 'react';
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, space, text } from '../tokens.stylex';
 import { shared } from './shared';
 
 /*
@@ -46,7 +46,7 @@ function FieldFrame({ fieldId, label, hint, hintId, error, errorId, layout = 'st
     <div {...stylex.props(shared.field, layout === 'inline' ? styles.inline : styles.frame, xstyle)}>
       <label htmlFor={fieldId}>{label}</label>
       {children}
-      {error ? <small id={errorId} {...stylex.props(layout === 'inline' && styles.under)}>{error}</small> : null}
+      {error ? <small id={errorId} {...stylex.props(styles.error, layout === 'inline' && styles.under)}>{error}</small> : null}
       {hint ? <small id={hintId} {...stylex.props(shared.muted, layout === 'inline' && styles.under)}>{hint}</small> : null}
     </div>
   );
@@ -141,6 +141,8 @@ const styles = stylex.create({
     rowGap: space.xs,
   },
   under: { gridColumn: 2 },
+  // Text colour in Normal UI; a theme's error hue. The words carry the meaning either way.
+  error: { color: color.statusError, fontWeight: text.errorWeight },
   choice: { display: 'block', width: 'fit-content' },
   fieldset: { maxWidth: '24rem', borderColor: color.controlBorder, marginInline: space.xxs },
 });

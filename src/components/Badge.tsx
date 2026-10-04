@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import type { ReactNode } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 
 /**
  * A short status word in a 1px box. The word carries the meaning: there are no
@@ -15,7 +15,7 @@ const styles = stylex.create({
   badge: {
     display: 'inline-block',
     paddingInline: space.xs,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.canvasText,
     fontFamily: font.sans,

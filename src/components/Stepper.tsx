@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 
 /**
  * An ordered list of steps. Finished steps show a tick read as "Done:", the current
@@ -44,7 +44,7 @@ const styles = stylex.create({
       placeItems: 'center',
       width: '1.75rem',
       height: '1.75rem',
-      borderWidth: 1,
+      borderWidth: shape.borderWidth,
       borderStyle: 'solid',
       borderColor: color.controlBorder,
       borderRadius: '50%',

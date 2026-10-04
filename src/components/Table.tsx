@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { Fragment, useId, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { color, space } from '../tokens.stylex';
+import { color, shape, space } from '../tokens.stylex';
 import { shared, clamp } from './shared';
 import { Chevron } from './Chevron';
 import { cardBleed } from './Card';
@@ -18,7 +18,7 @@ export type Column<Row> = {
 const styles = stylex.create({
   wide: { width: '100%' },
   scroll: { overflowX: 'auto', maxWidth: '100%' },
-  cell: { outline: { default: null, ':focus': `2px solid ${color.focusRing}` }, outlineOffset: -3 },
+  cell: { outline: { default: null, ':focus': `${shape.focusWidth} solid ${color.focusRing}` }, outlineOffset: `calc(-1 * ${shape.focusWidth} - 1px)` },
   edit: { width: '6em' },
   title: { marginTop: 0 },
   // A bleeding table: rows run edge to edge with horizontal lines only, and the first

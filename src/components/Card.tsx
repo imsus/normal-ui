@@ -2,7 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { Children, createContext, isValidElement, useContext, useId } from 'react';
 import type { ReactNode } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 
 /*
  * Card: a container for related content, such as a form, a list or a summary.
@@ -209,7 +209,7 @@ const styles = stylex.create({
     minWidth: 0,
     backgroundColor: color.canvas,
     color: color.canvasText,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     // Parts are spaced by gap, so flow margins and heading margins are off inside.
@@ -281,7 +281,7 @@ const styles = stylex.create({
   bodyInset: {
     padding: P,
     backgroundColor: 'var(--pd-card-panel)',
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.rule,
     '--pd-card-bleed-top': P,
@@ -315,8 +315,8 @@ const styles = stylex.create({
   partPad: { padding: P },
   partPadBlock: { paddingBlock: P },
   partPadInline: { paddingInline: P },
-  lineBelow: { borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: color.rule },
-  lineAbove: { borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: color.rule },
+  lineBelow: { borderBottomWidth: shape.borderWidth, borderBottomStyle: 'solid', borderBottomColor: color.rule },
+  lineAbove: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule },
   // A separated header or footer: a tinted band (recessed on a plain card, raised on a
   // tinted one). Every surface keeps gray-text above 4.5:1, so text colours stay.
   band: { backgroundColor: 'var(--pd-card-band)' },

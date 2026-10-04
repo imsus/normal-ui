@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 
 /** Option rows shared by Listbox and Combobox. */
 export const optionStyles = stylex.create({
@@ -7,7 +7,7 @@ export const optionStyles = stylex.create({
     listStyle: 'none',
     margin: 0,
     padding: 2,
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     backgroundColor: color.field,
@@ -19,7 +19,7 @@ export const optionStyles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     gap: space.sm,
-    minHeight: `calc(${space.lg} + ${space.sm})`,
+    minHeight: `calc(${shape.targetMin} + ${space.sm})`,
     paddingBlock: space.xs,
     paddingInline: space.sm,
     cursor: 'default',
@@ -32,10 +32,11 @@ export const optionStyles = stylex.create({
   active: {
     backgroundColor: { default: color.highlight, '@media (forced-colors: active)': 'Highlight' },
     color: { default: color.highlightText, '@media (forced-colors: active)': 'HighlightText' },
-    outlineWidth: 2,
+    outlineWidth: shape.focusWidth,
     outlineStyle: 'solid',
     outlineColor: color.focusRing,
-    outlineOffset: -2,
+    outlineOffset: `calc(-1 * ${shape.focusWidth})`,
+    boxShadow: `inset 0 0 0 calc(${shape.focusWidth} + 2px) ${color.focusInset}`,
     forcedColorAdjust: 'none',
   },
 });

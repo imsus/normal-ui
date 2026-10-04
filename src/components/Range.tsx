@@ -1,14 +1,14 @@
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { space } from '../tokens.stylex';
+import { shape, space } from '../tokens.stylex';
 import { Button } from './Button';
 import { ButtonGroup, buttonGroupItem } from './ButtonGroup';
 import { Fieldset } from './Field';
 import { clamp, shared } from './shared';
 
 const styles = stylex.create({
-  range: { width: '100%', minHeight: space.lg, margin: 0 },
+  range: { width: '100%', minHeight: shape.targetMin, margin: 0 },
   wrap: { maxWidth: '24rem' },
   out: { display: 'block', marginBlockStart: space.sm },
 });

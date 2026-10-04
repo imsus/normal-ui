@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 import { Chevron } from './Chevron';
 import { chevron } from './chevron.stylex';
 
@@ -95,18 +95,18 @@ export function Details({ summary, children, open, name }: { summary: ReactNode;
 }
 
 const styles = stylex.create({
-  accordion: { borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: color.rule },
+  accordion: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule },
   heading: { margin: 0, fontSize: '1rem' },
   button: {
     display: 'flex',
     width: '100%',
     alignItems: 'center',
-    minHeight: `calc(${space.lg} * 2)`,
+    minHeight: `calc(${shape.targetMin} * 2)`,
     paddingBlock: space.xs,
     paddingInline: 0,
     backgroundColor: 'transparent',
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: shape.borderWidth,
     borderBottomStyle: 'solid',
     borderBottomColor: color.rule,
     borderRadius: 0,
@@ -119,7 +119,7 @@ const styles = stylex.create({
   panel: {
     paddingBlock: `${space.xs} ${space.sm}`,
     paddingInlineStart: `calc(${chevron.size} + ${chevron.gap})`,
-    borderBottomWidth: 1,
+    borderBottomWidth: shape.borderWidth,
     borderBottomStyle: 'solid',
     borderBottomColor: color.rule,
   },

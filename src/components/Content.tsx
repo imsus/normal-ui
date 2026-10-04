@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useEffect, useId, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { color, font, space } from '../tokens.stylex';
+import { color, font, shape, space } from '../tokens.stylex';
 import { buttonStyles } from './Button';
 import { shared } from './shared';
 
@@ -65,14 +65,14 @@ export function Carousel({ label, slides, interval = 5000 }: { label: string; sl
 }
 
 const carousel = stylex.create({
-  box: { borderWidth: 1, borderStyle: 'solid', borderColor: color.controlBorder },
+  box: { borderWidth: shape.borderWidth, borderStyle: 'solid', borderColor: color.controlBorder },
   controls: {
     display: 'flex',
     flexWrap: 'wrap',
     gap: space.xs,
     alignItems: 'center',
     padding: space.xs,
-    borderBottomWidth: 1,
+    borderBottomWidth: shape.borderWidth,
     borderBottomStyle: 'solid',
     borderBottomColor: color.rule,
   },
@@ -112,12 +112,12 @@ const scrollButton = {
   positionArea: 'block-start span-inline-start',
   marginBlockEnd: space.sm,
   // Square, like a square <Button>, at 40px: the arrow centred in it.
-  width: `calc(${space.lg} + ${space.md})`,
-  height: `calc(${space.lg} + ${space.md})`,
+  width: `calc(${shape.targetMin} + ${space.md})`,
+  height: `calc(${shape.targetMin} + ${space.md})`,
   padding: 0,
   display: 'grid',
   placeItems: 'center',
-  borderWidth: 1,
+  borderWidth: shape.borderWidth,
   borderStyle: 'solid',
   borderColor: color.controlBorder,
   backgroundColor: color.buttonFace,
@@ -134,7 +134,7 @@ const scroller = stylex.create({
     // Chromium places the ::scroll-marker-group row after the list without counting its
     // height, so reserve it (24px markers + their 8px gap) inside this box; otherwise a
     // container with overflow clips the markers.
-    paddingBlockEnd: { default: null, [markers]: `calc(${space.lg} + ${space.sm})` },
+    paddingBlockEnd: { default: null, [markers]: `calc(${shape.targetMin} + ${space.sm})` },
   },
   heading: { fontSize: '1.17em', margin: 0 },
   list: {
@@ -159,7 +159,7 @@ const scroller = stylex.create({
   },
   item: {
     scrollSnapAlign: 'start',
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     padding: space.md,
@@ -170,7 +170,7 @@ const scroller = stylex.create({
       placeItems: 'center',
       width: space.lg,
       height: space.lg,
-      borderWidth: 1,
+      borderWidth: shape.borderWidth,
       borderStyle: 'solid',
       borderColor: color.controlBorder,
       fontFamily: font.sans,
@@ -240,12 +240,12 @@ const feed = stylex.create({
   heading: { fontSize: '1.17em', marginTop: 0 },
   hint: { marginTop: 0 },
   article: {
-    borderTopWidth: 1,
+    borderTopWidth: shape.borderWidth,
     borderTopStyle: 'solid',
     borderTopColor: color.rule,
     paddingBlock: space.sm,
-    outline: { default: null, ':focus': `2px solid ${color.focusRing}` },
-    outlineOffset: 2,
+    outline: { default: null, ':focus': `${shape.focusWidth} solid ${color.focusRing}` },
+    outlineOffset: shape.focusOffset,
   },
   title: { margin: 0, fontSize: '1rem' },
   body: { margin: '4px 0 0' },
@@ -289,7 +289,7 @@ const review = stylex.create({
     color: { default: color.highlightText, '@media (forced-colors: active)': 'MarkText' },
   },
   comment: {
-    borderWidth: 1,
+    borderWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     paddingBlock: space.xs,

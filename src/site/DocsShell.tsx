@@ -5,10 +5,11 @@ import { shared } from '../components/shared';
 import { Select } from '../components/Field';
 import { Breadcrumb } from '../components/Breadcrumb';
 import type { NavSection } from '../lib/site';
+import { themes } from '../themes';
 
 /**
- * The docs chrome: skip link, top bar with the theme switch, sidebar nav, main.
- * Server-rendered only; the theme switch is wired by a tiny inline script.
+ * The docs chrome: skip link, top bar with the style and theme switches, sidebar nav,
+ * main. Server-rendered only; the switches are wired by a tiny inline script.
  */
 export function DocsShell({
   nav,
@@ -34,6 +35,10 @@ export function DocsShell({
         <a href={home} {...stylex.props(s.brand)}>Normal UI</a>
         <div {...stylex.props(s.tools)}>
           {search}
+          <Select id="pd-style" label="Style" layout="inline" defaultValue="">
+            <option value="">Normal UI</option>
+            {themes.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+          </Select>
           <Select id="pd-theme" label="Theme" layout="inline" defaultValue="auto">
             <option value="auto">Device</option>
             <option value="light">Light</option>
