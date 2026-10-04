@@ -1,3 +1,5 @@
+'use client';
+
 import * as stylex from '@stylexjs/stylex';
 import { useRef } from 'react';
 import type { CSSProperties, KeyboardEvent, ReactNode } from 'react';

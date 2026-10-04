@@ -1,3 +1,5 @@
+'use client';
+
 import * as stylex from '@stylexjs/stylex';
 import { useId, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
