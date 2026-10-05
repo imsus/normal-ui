@@ -4,7 +4,16 @@ import react from '@astrojs/react';
 import stylex from '@stylexjs/unplugin';
 
 export default defineConfig({
-  integrations: [react()],
+  integrations: [
+    react({
+      // The workspace packages resolve through pnpm symlinks to real paths under
+      // packages/*/dist, so plugin-react's default /node_modules/ exclude misses
+      // them and it wraps the precompiled output in Fast Refresh code. That breaks
+      // lazily loaded islands (missing preamble) for no benefit: dist has no JSX
+      // source left to refresh. Exclude it; dist rebuilds full-reload instead.
+      exclude: [/\/packages\/react\/dist\//, /\/packages\/css\/dist\//],
+    }),
+  ],
   // Astro's HTML compression drops the space where text breaks onto a new line
   // before a tag ("in\n<a>" renders as "in<a>"). Keep the source whitespace.
   compressHTML: false,
