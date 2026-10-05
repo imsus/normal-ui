@@ -1,9 +1,12 @@
 ---
 // Every page: tokens, the element layer and the plain-HTML patterns layer, and the
-// color-scheme and theme switch. StyleX output is appended to the same stylesheet at build time.
+// color-scheme and theme switch. Component styles come precompiled from the React
+// package; the docs' own StyleX output is appended to the same stylesheet at build time.
 import '@imsus/normal-ui-css';
 // Every theme's values, scoped to [data-theme="<id>"], and its element rules.
 import '@imsus/normal-ui-css/themes.css';
+// Precompiled component rules, in their own layers after the element layers.
+import '@imsus/normal-ui-react/styles.css';
 // Docs-only rules, scoped to .docs-prose. Loaded here so every page shares one
 // stylesheet, the one StyleX appends its rules to.
 import '../site/docs.css';
