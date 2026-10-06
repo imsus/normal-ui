@@ -11,7 +11,9 @@ export default defineConfig({
       // them and it wraps the precompiled output in Fast Refresh code. That breaks
       // lazily loaded islands (missing preamble) for no benefit: dist has no JSX
       // source left to refresh. Exclude it; dist rebuilds full-reload instead.
-      exclude: [/\/packages\/react\/dist\//, /\/packages\/css\/dist\//],
+      // The search palette is imported by a plain <script> (Docs.astro), not an
+      // island, so pages without islands never get the preamble either.
+      exclude: [/\/packages\/react\/dist\//, /\/packages\/css\/dist\//, /\/src\/site\/searchPalette\.tsx$/],
     }),
   ],
   // Astro's HTML compression drops the space where text breaks onto a new line
