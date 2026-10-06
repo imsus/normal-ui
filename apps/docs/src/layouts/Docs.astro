@@ -1,0 +1,81 @@
+---
+import Base from './Base.astro';
+import { DocsShell } from '../site/DocsShell';
+import { DocsSearch } from '../site/DocsSearch';
+import { href, levels, nav } from '../lib/site';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+
+// Breadcrumb: Overview › level › this page, from the path.
+const sections: Record<string, string> = Object.fromEntries(levels.map((l) => [l.id, l.label]));
+const parts = current.slice(href('/').length).split('/').filter(Boolean);
+const crumbs = parts.length === 0 ? [] : [
+  { href: href('/'), label: 'Overview' },
+  ...(sections[parts[0]] ? [{ href: href(`/${parts[0]}/`), label: sections[parts[0]] }] : []),
+  ...(parts.length > 1 || !sections[parts[0]] ? [{ href: current, label: title }] : []),
+];
+---
+<Base title={`${title} · Normal UI`} description={description}>
+  <DocsShell nav={nav} current={current} home={href('/')} crumbs={crumbs}>
+    <DocsSearch slot="search" />
+    <slot />
+  </DocsShell>
+  <script is:inline>
+    (function () {
+      // Saving the choice also reaches every preview frame on the page (the storage
+      // event in Base.astro), so the examples change with the docs.
+      var root = document.documentElement;
+      var scheme = document.getElementById('pd-color-scheme');
+      if (scheme) {
+        scheme.value = root.dataset.colorScheme || 'auto';
+        scheme.addEventListener('change', function () {
+          if (scheme.value === 'auto') delete root.dataset.colorScheme;
+          else root.dataset.colorScheme = scheme.value;
+          try { localStorage.setItem('pd-color-scheme', scheme.value); } catch (e) {}
+        });
+      }
+      var theme = document.getElementById('pd-theme');
+      if (theme) {
+        theme.value = root.dataset.theme || '';
+        theme.addEventListener('change', function () {
+          if (theme.value) root.dataset.theme = theme.value;
+          else delete root.dataset.theme;
+          try { localStorage.setItem('pd-theme', theme.value); } catch (e) {}
+        });
+      }
+    })();
+  </script>
+  <script>
+    // The page finder. The palette and React load only when someone reaches for it:
+    // on hover or focus of the button (to warm up), on click, or on Ctrl/Cmd+K.
+    const button = document.getElementById('docs-search');
+    const nav = navigator as Navigator & { userAgentData?: { platform: string } };
+    if (/mac|iphone|ipad/i.test(nav.userAgentData?.platform ?? navigator.platform)) {
+      const mod = button?.querySelector('[data-mod]');
+      if (mod) mod.textContent = '⌘';
+    }
+    let palette: Promise<() => void> | undefined;
+    const load = () => {
+      palette ??= import('../site/searchPalette').then((m) => m.mount());
+      // Once mounted, the palette owns the shortcut.
+      palette.then(() => removeEventListener('keydown', onKey));
+      return palette;
+    };
+    const show = () => load().then((open) => open());
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        show();
+      }
+    }
+    addEventListener('keydown', onKey);
+    button?.addEventListener('click', show);
+    button?.addEventListener('pointerenter', load, { once: true });
+    button?.addEventListener('focus', load, { once: true });
+  </script>
+</Base>

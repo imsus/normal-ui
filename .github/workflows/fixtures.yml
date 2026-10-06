@@ -1,0 +1,40 @@
+name: fixtures
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+jobs:
+  fixtures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm tokens && pnpm run build:react
+      - run: node scripts/pack-fixtures.mjs
+      - run: pnpm install --no-frozen-lockfile
+        working-directory: fixtures/vite
+      - run: pnpm --filter fixture-vite run build
+        working-directory: fixtures/vite
+      - run: pnpm install --no-frozen-lockfile
+        working-directory: fixtures/next
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+      - run: pnpm --filter fixture-next run build
+        working-directory: fixtures/next
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+      # Release dry run: package what would be published, without publishing.
+      - run: npm publish --dry-run --access public
+        working-directory: packages/css
+      - run: npm publish --dry-run --access public
+        working-directory: packages/react

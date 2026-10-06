@@ -1,0 +1,42 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  fixtures:
+    uses: ./.github/workflows/fixtures.yml
+
+  release:
+    needs: fixtures
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      # npm 11.5.1+ is required for OIDC trusted publishing.
+      - run: npm install -g npm@11
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm tokens && pnpm run build:react
+      # Publishes whatever versions npm still lacks (including the first 0.1.0
+      # once the trusted publisher is configured); changesets cannot do OIDC
+      # through pnpm, so this script publishes with `npm --provenance` instead.
+      - run: node scripts/npm-publish.mjs
+      - uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          commit: 'chore: version packages'
+          title: 'Version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

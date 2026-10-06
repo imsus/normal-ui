@@ -1,0 +1,4 @@
+/* Unlayered consumer CSS: must beat component styles and base styles. */
+.consumer-override {
+  background: rgb(1, 2, 3);
+}

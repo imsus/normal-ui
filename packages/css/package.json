@@ -1,0 +1,59 @@
+{
+  "name": "@imsus/normal-ui-css",
+  "version": "0.1.0",
+  "description": "Normal UI tokens, base styles, patterns and themes as plain CSS.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imsus/normal-ui.git",
+    "directory": "packages/css"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "skills"
+  ],
+  "keywords": [
+    "tanstack-intent"
+  ],
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "compile-stylex": "node scripts/compile-stylex.mjs && tsc -p tsconfig.build.json",
+    "build": "node scripts/build-tokens.mjs && pnpm run compile-stylex"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/plugin-syntax-typescript": "^7.29.7",
+    "@stylexjs/babel-plugin": "^0.19.1",
+    "@stylexjs/unplugin": "^0.19.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@stylexjs/stylex": "^0.19.1"
+  },
+  "exports": {
+    ".": "./dist/index.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./themes.css": "./dist/themes.css",
+    "./themes/govuk.css": "./dist/themes/govuk.css",
+    "./themes/mcmaster.css": "./dist/themes/mcmaster.css",
+    "./themes/usgraphics.css": "./dist/themes/usgraphics.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./tokens.stylex": {
+      "types": "./dist/tokens.stylex.d.ts",
+      "default": "./dist/tokens.stylex.js"
+    },
+    "./themes": "./dist/themes.ts",
+    "./themes.stylex": {
+      "types": "./dist/themes.stylex.d.ts",
+      "default": "./dist/themes.stylex.js"
+    }
+  }
+}

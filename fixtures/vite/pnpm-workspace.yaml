@@ -1,0 +1,7 @@
+# Isolated from the repo workspace: this fixture installs the packed tarballs
+# like a real consumer. The override pins the react package's css dependency
+# to the packed tarball instead of the npm registry (nothing is published yet).
+packages:
+  - '.'
+overrides:
+  "@imsus/normal-ui-css": "file:../tarballs/css.tgz"

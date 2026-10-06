@@ -1,0 +1,96 @@
+/* GOV.UK theme: the element rules its tokens cannot express. Values come from
+   tokens.json next to this file. In the normal-ui-theme layer: after normal-ui, before StyleX. */
+@layer normal-ui-theme {
+/* Links: thin underline, thick and darker under the pointer; on focus, the yellow fill
+   with a black bar */
+:where([data-theme="govuk"]) :where(a:link, a:visited) {
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.15em;
+}
+:where([data-theme="govuk"]) :where(a:hover) {
+  color: var(--link-hover);
+  text-decoration-thickness: max(3px, 0.1875rem);
+}
+:where([data-theme="govuk"]) :where(a:focus-visible) {
+  outline: 3px solid transparent;
+  background: var(--focus-ring);
+  color: var(--focus-inset);
+  box-shadow: 0 -2px var(--focus-ring), 0 4px var(--focus-inset);
+  text-decoration: none;
+}
+/* A focused plain button turns yellow with a black edge (React buttons keep the ring) */
+:where([data-theme="govuk"]) :where(button, input:is([type="button"], [type="submit"], [type="reset"])):focus-visible:not(:active) {
+  background: var(--focus-ring);
+  color: var(--focus-inset);
+  box-shadow: 0 2px 0 var(--focus-inset);
+}
+
+/* Fields: 40px tall at 19px text */
+:where([data-theme="govuk"]) :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="button"], [type="submit"], [type="reset"], [type="file"]), select) {
+  min-height: 2.105rem;
+  padding: var(--space-xs);
+}
+
+/* Checkboxes and radios: GOV.UK's large drawn boxes, sized by --choice-size */
+:where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]) {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  flex: none;
+  margin: 0 var(--space-sm) 0 0;
+  vertical-align: middle;
+  border: var(--control-border-width) solid var(--control-border);
+  background: var(--field);
+  color: var(--field-text);
+}
+:where([data-theme="govuk"]) :where(input[type="radio"]) { border-radius: 50%; }
+:where([data-theme="govuk"]) :where(input[type="radio"])::before {
+  content: "";
+  width: calc(var(--choice-size) / 2);
+  height: calc(var(--choice-size) / 2);
+  border-radius: 50%;
+  background: currentColor;
+  scale: 0;
+}
+:where([data-theme="govuk"]) :where(input[type="radio"]:checked)::before { scale: 1; }
+:where([data-theme="govuk"]) :where(input[type="checkbox"])::before {
+  content: "";
+  width: calc(var(--choice-size) * 0.45);
+  height: calc(var(--choice-size) * 0.22);
+  border: solid currentColor;
+  border-width: 0 0 4px 4px;
+  rotate: -45deg;
+  translate: 0 -20%;
+  opacity: 0;
+}
+:where([data-theme="govuk"]) :where(input[type="checkbox"]:checked)::before { opacity: 1; }
+:where([data-theme="govuk"]) :where(input[type="checkbox"]:indeterminate)::before {
+  opacity: 1;
+  height: 0;
+  border-width: 0 0 4px 0;
+  rotate: 0deg;
+  translate: 0;
+}
+:where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-width) var(--focus-ring);
+}
+:where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]):disabled { opacity: 0.5; }
+@media (forced-colors: active) {
+  :where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]) { appearance: auto; }
+}
+
+/* Tables: rows only, generous right padding */
+:where([data-theme="govuk"]) :where(th, td) {
+  border: 0;
+  border-block-end: var(--border-width) solid var(--rule);
+  padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+}
+
+/* Details: a link-coloured summary, the content behind a grey bar */
+:where([data-theme="govuk"]) :where(summary) { color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
+:where([data-theme="govuk"]) :where(details[open] > :not(summary)) { padding-inline-start: var(--space-md); border-inline-start: 5px solid var(--rule); }
+
+/* An error summary at the top of a form: <div class="pd-error-summary" role="alert"> */
+:where([data-theme="govuk"]) :where(.pd-error-summary) { border: 5px solid var(--status-error); padding: var(--space-md); }
+}

@@ -1,0 +1,18 @@
+/* US Graphics theme: the element rules its tokens cannot express. Values come from
+   tokens.json next to this file. In the normal-ui-theme layer: after normal-ui, before
+   StyleX, so it restyles plain elements but never beats a component's own styles. */
+@layer normal-ui-theme {
+/* A section heading in running content sits on a dotted rule */
+:where([data-theme="usgraphics"]) :where(.pd-content, article) :where(h2) {
+  padding-block-end: var(--space-xs);
+  border-block-end: var(--border-width) dotted var(--rule);
+}
+:where([data-theme="usgraphics"]) :where(hr) { border-top-style: dotted; }
+
+/* Tables: a ruled grid with a grey header row */
+:where([data-theme="usgraphics"]) :where(thead th) { background: var(--surface-muted); }
+:where([data-theme="usgraphics"]) :where(caption) { font-weight: 700; }
+
+/* Numbers and codes read as data */
+:where([data-theme="usgraphics"]) :where(samp, output) { font-family: var(--font-mono); }
+}
