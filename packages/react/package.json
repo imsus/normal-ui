@@ -95,6 +95,14 @@
       "types": "./dist/components/FileUpload.d.ts",
       "default": "./dist/components/FileUpload.js"
     },
+    "./components/InputGroup": {
+      "types": "./dist/components/InputGroup.d.ts",
+      "default": "./dist/components/InputGroup.js"
+    },
+    "./components/Joined": {
+      "types": "./dist/components/Joined.d.ts",
+      "default": "./dist/components/Joined.js"
+    },
     "./components/Layout": {
       "types": "./dist/components/Layout.d.ts",
       "default": "./dist/components/Layout.js"

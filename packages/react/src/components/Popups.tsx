@@ -6,6 +6,7 @@ import type { CSSProperties, KeyboardEvent, ReactElement, ReactNode } from 'reac
 import { color, font, shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { buttonStyles } from './Button';
 import { Chevron } from './Chevron';
+import { joined, useJoined } from './Joined';
 import { mergeRootProps } from './shared';
 
 /*
@@ -44,12 +45,15 @@ const popover = stylex.create({
  * Built on popover="auto", so the menu sits in the top layer and closes on an
  * outside click without script. Put destructive actions last, after <MenuSeparator />.
  */
-export function MenuButton({ label, children, className, style }: { label: ReactNode; children: ReactNode;
+export function MenuButton({ label, children, disabled, className, style }: { label: ReactNode; children: ReactNode;
+  /** Unavailable on its own. A group-level disabled (an InputGroup's) also disables it. */
+  disabled?: boolean;
   /** Extra classes, concatenated after the component's own. Unlayered CSS wins. */
   className?: string;
   /** Inline style, spread after StyleX output. Wins property by property. */
   style?: CSSProperties;
 }) {
+  const { joined: grouped, disabled: groupDisabled } = useJoined();
   const id = useId();
   // A per-instance anchor name, so the menu sits under its own button however it opened.
   const anchor = `--menu-${id.replace(/[^\w-]/g, '')}`;
@@ -138,8 +142,9 @@ export function MenuButton({ label, children, className, style }: { label: React
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={id}
+        disabled={disabled || groupDisabled}
         onKeyDown={onButtonKeyDown}
-        {...mergeRootProps(stylex.props(buttonStyles.button, menu.anchorName(anchor)), { className, style })}
+        {...mergeRootProps(stylex.props(buttonStyles.button, grouped && joined.item, menu.anchorName(anchor)), { className, style })}
       >
         {label}
         <Chevron kind="dropdown" open={open} />

@@ -1,6 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { useState } from 'react';
+import { Button } from '@imsus/normal-ui-react/components/Button';
 import { Checkbox, Fieldset, Radio, Select, TextField } from '@imsus/normal-ui-react/components/Field';
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupSelect } from '@imsus/normal-ui-react/components/InputGroup';
 import { Combobox } from '@imsus/normal-ui-react/components/Combobox';
 import { CustomSelect } from '@imsus/normal-ui-react/components/CustomSelect';
 import { FileUpload } from '@imsus/normal-ui-react/components/FileUpload';
@@ -61,6 +63,32 @@ export const Forms = {
         { value: 'gosend', label: 'GoSend Same Day', detail: 'today · Rp 45.000' },
       ]} />
       <p {...stylex.props(shared.muted)}><small>Browsers without customizable select show the native list with the same options.</small></p>
+    </div>
+  ),
+  InputGroup: () => (
+    <div {...stylex.props(s.gap)}>
+      <InputGroup label="Website" hint="The part after https://.">
+        <InputGroupAddon>https://</InputGroupAddon>
+        <InputGroupInput autoComplete="url" placeholder="example.com" />
+      </InputGroup>
+      <InputGroup label="Search products">
+        <InputGroupInput type="search" autoComplete="off" />
+        <Button type="submit">Search</Button>
+      </InputGroup>
+      <InputGroup label="Phone number">
+        <InputGroupSelect label="Country code" autoComplete="tel-country-code" defaultValue="+62">
+          <option>+62</option><option>+60</option><option>+65</option>
+        </InputGroupSelect>
+        <InputGroupInput label="Number" type="tel" autoComplete="tel-national" placeholder="812 3456 7890" />
+      </InputGroup>
+      <InputGroup label="Price range" hint="In thousands of rupiah.">
+        <InputGroupInput label="Minimum" inputMode="numeric" placeholder="100" />
+        <InputGroupInput label="Maximum" inputMode="numeric" placeholder="300" />
+      </InputGroup>
+      <InputGroup label="Delivery date" error="Enter a date after today, like 30 September.">
+        <InputGroupInput defaultValue="12 March" />
+        <Button>Today</Button>
+      </InputGroup>
     </div>
   ),
   Switch: () => (

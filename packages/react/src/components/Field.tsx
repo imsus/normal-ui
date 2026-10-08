@@ -11,7 +11,7 @@ import { mergeRootProps, shared } from './shared';
  * these components add the label, hint and error wiring that every field needs.
  */
 
-type FieldBits = {
+export type FieldBits = {
   /** Visible label. Never replaced by a placeholder. */
   label: ReactNode;
   /** Help text under the field, linked with aria-describedby. */
@@ -27,7 +27,7 @@ type FieldBits = {
   xstyle?: StyleXStyles;
 };
 
-function useFieldIds(id: string | undefined, hint: unknown, error: unknown, describedBy?: string) {
+export function useFieldIds(id: string | undefined, hint: unknown, error: unknown, describedBy?: string) {
   const auto = useId();
   const fieldId = id ?? auto;
   const hintId = hint ? `${fieldId}-hint` : undefined;
@@ -36,8 +36,14 @@ function useFieldIds(id: string | undefined, hint: unknown, error: unknown, desc
   return { fieldId, hintId, errorId, describedBy: ids };
 }
 
-function FieldFrame({ fieldId, label, hint, hintId, error, errorId, layout = 'stacked', xstyle, className, style, children }: FieldBits & {
+export function FieldFrame({ fieldId, labelId, label, hint, hintId, error, errorId, layout = 'stacked', xstyle, className, style, children }: FieldBits & {
   fieldId: string;
+  /**
+   * Group mode (an InputGroup of two or more fields): the visible label is a span
+   * with this id, and the control names it with aria-labelledby instead of a
+   * label-for. `fieldId` is unused then.
+   */
+  labelId?: string;
   hintId?: string;
   errorId?: string;
   /** Extra classes on the wrap, concatenated after the component's own. Unlayered CSS wins. */
@@ -48,7 +54,7 @@ function FieldFrame({ fieldId, label, hint, hintId, error, errorId, layout = 'st
 }) {
   return (
     <div {...mergeRootProps(stylex.props(shared.field, layout === 'inline' ? styles.inline : styles.frame, xstyle), { className, style })}>
-      <label htmlFor={fieldId}>{label}</label>
+      {labelId ? <span id={labelId}>{label}</span> : <label htmlFor={fieldId}>{label}</label>}
       {children}
       {error ? <small id={errorId} {...stylex.props(styles.error, layout === 'inline' && styles.under)}>{error}</small> : null}
       {hint ? <small id={hintId} {...stylex.props(shared.muted, layout === 'inline' && styles.under)}>{hint}</small> : null}

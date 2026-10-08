@@ -4,7 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import type { ButtonHTMLAttributes, Ref } from 'react';
 import { color, font, radius, shape, space, text } from '@imsus/normal-ui-css/tokens.stylex';
-import { buttonGroupItem, useInButtonGroup } from './ButtonGroup';
+import { joined, useJoined } from './Joined';
 import { Spinner } from './Loading';
 import { mergeRootProps } from './shared';
 
@@ -42,14 +42,16 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
  * The native button. In Normal UI one look for every button, whatever its `variant`:
  * order and wording carry the emphasis. `type` defaults to "button".
  */
-export function Button({ type = 'button', pressed, variant, loading = false, loadingText, square = false, xstyle, className, style, children, onClick, ...rest }: ButtonProps) {
-  // Inside a ButtonGroup, join the neighbouring buttons.
-  const grouped = useInButtonGroup();
+export function Button({ type = 'button', pressed, variant, loading = false, loadingText, square = false, disabled, xstyle, className, style, children, onClick, ...rest }: ButtonProps) {
+  // Inside a joined group, join the neighbouring members. A group-level
+  // disabled (an InputGroup's) disables every member.
+  const { joined: grouped, disabled: groupDisabled } = useJoined();
   return (
     <button
       type={type}
       aria-pressed={pressed}
       data-variant={variant}
+      disabled={disabled || groupDisabled}
       aria-disabled={loading || rest['aria-disabled'] || undefined}
       {...rest}
       // While loading, swallow clicks (and form submission) without losing focus.
@@ -60,8 +62,8 @@ export function Button({ type = 'button', pressed, variant, loading = false, loa
           square && styles.square,
           pressed && styles.pressed,
           loading && styles.loading,
-          grouped && buttonGroupItem.item,
-          grouped && pressed && buttonGroupItem.raised,
+          grouped && joined.item,
+          grouped && pressed && joined.raised,
           xstyle,
         ),
         { className, style },

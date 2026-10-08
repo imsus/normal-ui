@@ -39,3 +39,11 @@ _Avoid_: Widget, control
 **Example**:
 A template or page built from the system to show it in use; reference material, not part of the installable API.
 _Avoid_: Starter, demo
+
+**Joined**:
+Controls placed edge to edge so neighbours share one border line, with only the outer corners rounded; how a button group and an input group read as one control.
+_Avoid_: Attached, merged, segmented
+
+**Addon**:
+A static, non-interactive segment of text or an icon (`https://`, `kg`, `$`) joined to a field as its own bordered box, never drawn inside the field's border.
+_Avoid_: Adornment, prefix, suffix

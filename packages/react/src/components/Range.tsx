@@ -5,8 +5,9 @@ import { useId, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import { shape, space } from '@imsus/normal-ui-css/tokens.stylex';
 import { Button } from './Button';
-import { ButtonGroup, buttonGroupItem } from './ButtonGroup';
+import { ButtonGroup } from './ButtonGroup';
 import { Fieldset } from './Field';
+import { joined } from './Joined';
 import { clamp, mergeRootProps, shared } from './shared';
 
 const styles = stylex.create({
@@ -173,7 +174,7 @@ export function Spinbutton({
           onClick={() => stepBy(-step)} square xstyle={spin.btn}>−</Button>
         <input type="number" id={id} min={min} max={max} step={step} value={value} inputMode="numeric"
           aria-describedby={`${id}-h`} onChange={(e) => set(+e.target.value)}
-          {...stylex.props(buttonGroupItem.item, spin.input)} />
+          {...stylex.props(joined.item, spin.input)} />
         <Button aria-controls={id} aria-label={`Increase ${noun}`} disabled={value >= max}
           onClick={() => stepBy(step)} square xstyle={spin.btn}>+</Button>
       </ButtonGroup>

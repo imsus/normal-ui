@@ -27,7 +27,7 @@ const n = c.name as never;
 const island = !c.interactive ? null
   : c.name in Actions ? 'actions' : c.name in Content ? 'content' : c.name in Forms ? 'forms'
   : c.name in Status ? 'status' : c.name === 'Loading' ? 'loading' : null;
-const imports = c.name === 'CommandDialog' ? 'Dialog' : c.name === 'ReviewComments' ? 'Suggestion, Commented, Comment' : c.name;
+const imports = c.name === 'CommandDialog' ? 'Dialog' : c.name === 'ReviewComments' ? 'Suggestion, Commented, Comment' : c.name === 'InputGroup' ? 'InputGroup, InputGroupInput, InputGroupSelect, InputGroupAddon, Button' : c.name;
 ---
 <Docs title={c.title} description={summaryOf(c.name)}>
   <p class="docs-meta">

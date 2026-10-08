@@ -8,7 +8,7 @@ import { readdirSync } from 'node:fs';
 
 const dir = new URL('./src/components/', import.meta.url);
 const components = readdirSync(dir)
-  .filter((f) => f.endsWith('.tsx') || f === 'shared.ts')
+  .filter((f) => f.endsWith('.tsx') || f === 'shared.ts' || f === 'Joined.ts')
   .map((f) => f.replace(/\.(tsx|ts)$/, ''));
 const input = {
   index: './src/index.ts',

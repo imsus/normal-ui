@@ -1,6 +1,6 @@
 # Button group
 
-Buttons joined edge to edge into one control: neighbours share a single 1px `control-border` line and only the outer corners keep `radius-control`.
+Buttons joined edge to edge into one control: neighbours share a single `control-border` line and only the outer corners keep `radius-control`.
 
 **Consumer provides:** the buttons, and a `label` when the group needs a name of its own.
 
@@ -10,4 +10,4 @@ Buttons joined edge to edge into one control: neighbours share a single 1px `con
 - For one-of-many choices that act at once (a view switcher), use pressed toggles and keep exactly one pressed. For a choice submitted with a form, use Radio instead.
 - The group adds no keyboard handling: each button stays its own Tab stop. Inside a Toolbar, the toolbar's arrow-key movement crosses into and out of the group.
 - The item under the pointer, a pressed toggle and the focused item are lifted above their neighbours, so the darker border and the focus ring are never hidden by the overlap.
-- `<Button>` joins the group by itself. Anything else (an input, a link styled as a button) takes `buttonGroupItem.item` from the component.
+- `<Button>` joins the group by itself. Anything else (an input, a link styled as a button) takes `joined.item`.

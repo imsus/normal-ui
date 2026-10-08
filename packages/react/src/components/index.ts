@@ -3,6 +3,10 @@
 export { Stack, Cluster, VisuallyHidden } from './Layout';
 export { Button, buttonStyles } from './Button';
 export { ButtonGroup, buttonGroupItem, useInButtonGroup } from './ButtonGroup';
+export { joined, useJoined } from './Joined';
+export type { JoinedContextValue } from './Joined';
+export { InputGroup, InputGroupInput, InputGroupSelect, InputGroupAddon } from './InputGroup';
+export type { InputGroupProps, InputGroupInputProps, InputGroupSelectProps, InputGroupAddonProps } from './InputGroup';
 export type { ButtonProps } from './Button';
 export { Link } from './Link';
 export { Badge } from './Badge';

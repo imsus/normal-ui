@@ -35,7 +35,7 @@ export const registry: Record<string, Entry> = {
 // Anything that is not a <Button> takes the joined look by hand
 <ButtonGroup>
   <Button square aria-label="Decrease quantity">−</Button>
-  <input type="number" {...stylex.props(buttonGroupItem.item)} />
+  <input type="number" {...stylex.props(joined.item)} />
   <Button square aria-label="Increase quantity">+</Button>
 </ButtonGroup>` },
   MenuButton: { level: 'molecules', madeOf: ['Button'], group: 'Actions', interactive: true, usage: `<MenuButton label="Order actions">
@@ -93,6 +93,24 @@ export const registry: Record<string, Entry> = {
 
 // Label beside the field, for toolbars, filters and top bars
 <Select label="Sort by" layout="inline">…</Select>` },
+  InputGroup: { level: 'molecules', madeOf: ['Button', 'TextField'], group: 'Forms', interactive: false, usage: `<InputGroup label="Website" hint="The part after https://.">
+  <InputGroupAddon>https://</InputGroupAddon>
+  <InputGroupInput autoComplete="url" placeholder="example.com" />
+</InputGroup>
+
+// Two or more fields: each names itself with label
+<InputGroup label="Phone number">
+  <InputGroupSelect label="Country code" autoComplete="tel-country-code">
+    <option>+62</option><option>+60</option>
+  </InputGroupSelect>
+  <InputGroupInput label="Number" type="tel" autoComplete="tel-national" />
+</InputGroup>
+
+// Buttons join the row by themselves
+<InputGroup label="Search products">
+  <InputGroupInput type="search" />
+  <Button type="submit">Search</Button>
+</InputGroup>` },
   CustomSelect: { level: 'atoms', group: 'Forms', interactive: false, usage: `<CustomSelect label="Courier" defaultValue="jnt" options={[
   { value: 'jnt', label: 'J&T Express', detail: '2–3 days · Rp 22.000' },
 ]} />` },
