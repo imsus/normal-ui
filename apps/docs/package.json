@@ -12,11 +12,11 @@
     "deploy": "pnpm run build && wrangler pages deploy"
   },
   "dependencies": {
-    "@astrojs/react": "^7.0.0",
+    "@astrojs/react": "^7.0.1",
     "@imsus/normal-ui-css": "workspace:*",
     "@imsus/normal-ui-react": "workspace:*",
     "@stylexjs/stylex": "^0.19.1",
-    "astro": "^7.3.5",
+    "astro": "^7.3.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
@@ -26,6 +26,6 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "typescript": "^7.0.2",
-    "wrangler": "^4.147.0"
+    "wrangler": "^4.148.0"
   }
 }
