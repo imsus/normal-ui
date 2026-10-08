@@ -200,8 +200,18 @@ const menu = stylex.create({
     paddingBlock: space.xs,
     paddingInline: space.sm,
     // The focused item is the "current" one: highlight it, keep the ring for keyboard.
-    backgroundColor: { default: 'transparent', ':hover': color.highlight, ':focus': color.highlight },
-    color: { default: color.canvasText, ':hover': color.highlightText, ':focus': color.highlightText },
+    backgroundColor: {
+      default: 'transparent',
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlight },
+      ':focus': color.highlight,
+      ':active': color.highlight,
+    },
+    color: {
+      default: color.canvasText,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlightText },
+      ':focus': color.highlightText,
+      ':active': color.highlightText,
+    },
     outline: { default: null, ':focus': 'none', ':focus-visible': `${shape.focusWidth} solid ${color.focusRing}` },
     outlineOffset: `calc(-1 * ${shape.focusWidth})`,
     forcedColorAdjust: { default: null, ':focus': 'none' },
@@ -213,7 +223,7 @@ const menu = stylex.create({
     fontSize: '1rem',
     lineHeight: 1.25,
   },
-  separator: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule, marginBlock: space.xs },
+  separator: { borderBlockStartWidth: shape.borderWidth, borderBlockStartStyle: 'solid', borderBlockStartColor: color.rule, marginBlock: space.xs },
 });
 
 /**

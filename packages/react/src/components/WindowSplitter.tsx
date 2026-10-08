@@ -91,7 +91,11 @@ const styles = stylex.create({
     borderInlineWidth: 1,
     borderInlineStyle: 'solid',
     borderInlineColor: color.controlBorder,
-    backgroundColor: { default: 'transparent', ':hover': color.highlight },
+    backgroundColor: {
+      default: 'transparent',
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlight },
+      ':active': color.highlight,
+    },
     backgroundImage: `linear-gradient(${color.controlBorder}, ${color.controlBorder})`,
     backgroundSize: '2px 24px',
     backgroundPosition: 'center',

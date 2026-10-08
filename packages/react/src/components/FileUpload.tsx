@@ -98,9 +98,18 @@ const styles = stylex.create({
     paddingInline: space.md,
     borderWidth: 2,
     borderStyle: 'dashed',
-    borderColor: { default: color.controlBorder, ':hover': color.canvasText },
-    backgroundColor: { default: null, ':hover': color.highlight },
-    color: { default: null, ':hover': color.highlightText },
+    borderColor: {
+      default: color.controlBorder,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.canvasText },
+    },
+    backgroundColor: {
+      default: null,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlight },
+    },
+    color: {
+      default: null,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlightText },
+    },
     textAlign: 'center',
     cursor: 'pointer',
     outline: { default: null, ':has(input:focus-visible)': `${shape.focusWidth} solid ${color.focusRing}` },

@@ -22,6 +22,9 @@ const styles = stylex.create({
     color: { default: color.link, ':visited': color.linkVisited, ':active': color.linkActive },
     textDecorationLine: 'underline',
     textUnderlineOffset: '0.15em',
-    textDecorationThickness: { default: null, ':hover': 2 },
+    textDecorationThickness: {
+      default: null,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': 2 },
+    },
   },
 });

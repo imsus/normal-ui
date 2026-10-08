@@ -7,7 +7,7 @@
   padding-block-end: var(--space-xs);
   border-block-end: var(--border-width) dotted var(--rule);
 }
-:where([data-theme="usgraphics"]) :where(hr) { border-top-style: dotted; }
+:where([data-theme="usgraphics"]) :where(hr) { border-block-start-style: dotted; }
 
 /* Tables: a ruled grid with a grey header row */
 :where([data-theme="usgraphics"]) :where(thead th) { background: var(--surface-muted); }

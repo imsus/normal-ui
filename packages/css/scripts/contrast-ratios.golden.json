@@ -1,0 +1,1858 @@
+[
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.4
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 11.01
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 4.53
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 18.26
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 18.26
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 18.26
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 18.26
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 18.26
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 18.26
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 5.17
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 5.17
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 4.87
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 4.62
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 5.17
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 19.56
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 13.89
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 4.54
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 4.54
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 4.28
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 4.06
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 4.54
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 4.54
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.98
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "light",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.32
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.84
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.74
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.49
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 6.9
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 6.9
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 6.9
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 6.9
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 6.9
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 6.9
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 11.2
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 4.99
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 8.35
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 7.59
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 6.74
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 5.88
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 19.56
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 8.5
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 18.73
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 6.66
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 3.98
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 6.06
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 5.38
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 4.69
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 6.66
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 10.76
+  },
+  {
+    "theme": "Normal UI",
+    "mode": "dark",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 10.76
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 6.08
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.06
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 17.52
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 14.03
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 5.35
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 8.03
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 5.16
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 7.24
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 7
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.03
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 8.46
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 8.08
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 9.03
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 14.55
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 13.89
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 5.17
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 5.16
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 5.35
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 5.17
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 18.34
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 17.52
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 2.08
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 19.59
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "link-hover",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 12.07
+  },
+  {
+    "theme": "GOV.UK",
+    "mode": "light",
+    "fg": "button-edge",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 3.65
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 8.86
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 8.65
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.38
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 18.76
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 16.83
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 5.12
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 6.52
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 18.76
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 16.83
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 6.39
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 6.39
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 5.96
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 5.5
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 6.39
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 18.52
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 18.52
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 5.12
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.38
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 5.12
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 4.29
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 4.29
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 4.01
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 3.7
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 4.29
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 1.61
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 8.86
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.12
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "link",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 7.81
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "button-face",
+    "min": 3,
+    "ratio": 3.83
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 15.46
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 8.81
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 8.79
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.25
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 12.27
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 10.37
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 15.46
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 5.12
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 6.52
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 12.27
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 10.37
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 13.95
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 6.77
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.5
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 7
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 6.38
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 5.9
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 18.52
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 9.93
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 9.06
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.25
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 15.46
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.7
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 15.46
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.43
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 4.9
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 5.07
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 4.62
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 4.27
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 1.68
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 8.81
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 9.7
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "link",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 4.79
+  },
+  {
+    "theme": "McMaster-Carr",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "button-face",
+    "min": 3,
+    "ratio": 3.65
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 8.86
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.38
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 18.43
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 16.52
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 12.65
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 10.72
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 18.43
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 16.52
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 5.74
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 5.74
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 5.36
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 4.99
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 5.74
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 12.65
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 13.89
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.38
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 21
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.1
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 5.1
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 4.76
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 4.43
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 5.1
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.1
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 7.04
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 10.07
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "light",
+    "fg": "control-border",
+    "bg": "button-face",
+    "min": 3,
+    "ratio": 4.47
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "canvas-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "link",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "link-visited",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 10.38
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "link-active",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.17
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-text",
+    "bg": "button-face",
+    "min": 4.5,
+    "ratio": 11.37
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-text",
+    "bg": "button-face-hover",
+    "min": 4.5,
+    "ratio": 9.59
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-pressed-text",
+    "bg": "button-pressed-face",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face",
+    "min": 4.5,
+    "ratio": 12.65
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-primary-text",
+    "bg": "button-primary-face-hover",
+    "min": 4.5,
+    "ratio": 10.72
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face",
+    "min": 4.5,
+    "ratio": 11.37
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "button-warning-text",
+    "bg": "button-warning-face-hover",
+    "min": 4.5,
+    "ratio": 9.59
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "field-text",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 14.89
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "placeholder",
+    "bg": "field",
+    "min": 4.5,
+    "ratio": 7.01
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 7.61
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-soft",
+    "min": 4.5,
+    "ratio": 7.01
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-muted",
+    "min": 4.5,
+    "ratio": 6.36
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "gray-text",
+    "bg": "surface-raised",
+    "min": 4.5,
+    "ratio": 5.87
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "mark-text",
+    "bg": "mark",
+    "min": 4.5,
+    "ratio": 12.65
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "highlight-text",
+    "bg": "highlight",
+    "min": 4.5,
+    "ratio": 8.5
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "masthead-text",
+    "bg": "masthead",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "status-error",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 9.17
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "status-warning",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "status-success",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "status-info",
+    "bg": "canvas",
+    "min": 4.5,
+    "ratio": 16.16
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.6
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "field",
+    "min": 3,
+    "ratio": 5.15
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-soft",
+    "min": 3,
+    "ratio": 5.15
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-muted",
+    "min": 3,
+    "ratio": 4.68
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "surface-raised",
+    "min": 3,
+    "ratio": 4.32
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "rule",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 5.6
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "focus-ring|focus-inset",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 9.02
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "accent",
+    "bg": "canvas",
+    "min": 3,
+    "ratio": 9
+  },
+  {
+    "theme": "US Graphics",
+    "mode": "dark",
+    "fg": "control-border",
+    "bg": "button-face",
+    "min": 3,
+    "ratio": 3.52
+  }
+]

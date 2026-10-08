@@ -34,6 +34,9 @@ pnpm build      # packages, type-check, static site in apps/docs/dist/
 - Agent skills live beside the code they teach (`packages/*/skills/`); the React
   skill's per-component references copy from `apps/docs/docs/components/` at
   build time. Never edit the copies.
+- The CSS standard is good-css.com, pinned in `skills/good-css/` (see
+  `apps/docs/docs/adr/0002-adopt-good-css.md`). Read the matching
+  `references/*.md` before writing any CSS or StyleX.
 
 ## How the CSS fits together
 

@@ -9,7 +9,7 @@ export const shared = stylex.create({
     position: 'absolute',
     width: 1,
     height: 1,
-    overflow: 'hidden',
+    overflow: 'clip',
     clipPath: 'inset(50%)',
     whiteSpace: 'nowrap',
   },

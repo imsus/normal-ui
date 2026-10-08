@@ -27,7 +27,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Page background; the CSS system color Canvas. Every text token below is checked against it.",
         "values": {
-          "light": "#ffffff"
+          "light": "oklch(100% 0 none)"
         }
       },
       {
@@ -35,7 +35,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Body copy and headings on `canvas`. 21:1 light, 18.7:1 dark.",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -43,7 +43,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "The faintest tint, for light grouping (a soft card). Everything on canvas keeps its contrast here: gray-text 4.87:1 light, 7.59:1 dark; control-border 4.28:1, 6.06:1.",
         "values": {
-          "light": "#f4f8fb"
+          "light": "oklch(97.7% 0.006 239.8)"
         }
       },
       {
@@ -51,7 +51,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A quieter panel for secondary content: muted and filled cards, recessed wells, separated bands. The darkest light tint that keeps gray-text at 4.5:1 (4.62:1; dark 6.74:1); control-border 4.06:1, 5.38:1.",
         "values": {
-          "light": "#f3f2f1"
+          "light": "oklch(96.16% 0.002 67.8)"
         }
       },
       {
@@ -59,7 +59,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A panel set on a tinted surface (the body of a muted card): white in light, one step lighter in dark. gray-text 5.17:1 light, 5.88:1 dark; control-border 4.54:1, 4.69:1.",
         "values": {
-          "light": "#ffffff"
+          "light": "oklch(100% 0 none)"
         }
       },
       {
@@ -67,7 +67,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Unvisited links on `canvas`, always underlined. 9.4:1 light, 7.8:1 dark. The browser's LinkText, unchanged.",
         "values": {
-          "light": "#1a65a6"
+          "light": "oklch(49.672% 0.1254 249.8)"
         }
       },
       {
@@ -75,7 +75,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Visited links on `canvas`. 11:1 light, 9.7:1 dark. The browser's VisitedText, unchanged.",
         "values": {
-          "light": "#54319f"
+          "light": "oklch(42.21% 0.168 292.3)"
         }
       },
       {
@@ -83,7 +83,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A link while it is being pressed, on `canvas`. 4.53:1 light (passes AA by a hair; never use it for resting text), 9.5:1 dark.",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -91,7 +91,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button fill. Dark is darkened from Chromium's #6b6b6b so white labels reach 6.9:1.",
         "values": {
-          "light": "#f3f2f1"
+          "light": "oklch(96.16% 0.002 67.8)"
         }
       },
       {
@@ -99,7 +99,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button labels on `button-face`. 18.3:1 light, 6.9:1 dark.",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -123,7 +123,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Dashed border of a disabled button. Same as `button-border`; a theme whose buttons have no border gives it one here so the button still has an edge.",
         "values": {
-          "light": "#b1b4b6"
+          "light": "oklch(76.81% 0.004 236.5)"
         }
       },
       {
@@ -131,7 +131,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button fill under the pointer. Same as `button-face` in Normal UI, where hover only darkens the border.",
         "values": {
-          "light": "#dbdad9"
+          "light": "oklch(88.89% 0.002 67.8)"
         }
       },
       {
@@ -139,7 +139,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Colour of the solid edge under a button (`button-edge-width` tall). None in Normal UI.",
         "values": {
-          "light": "#858686"
+          "light": "oklch(61.92% 0.001 197.1)"
         }
       },
       {
@@ -147,7 +147,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of the one button a form leads with (`variant=\"primary\"`). Normal UI draws every variant the same: order and wording carry the emphasis. A theme may set it apart.",
         "values": {
-          "light": "#0f7a52"
+          "light": "oklch(51.37% 0.11 161)"
         }
       },
       {
@@ -155,7 +155,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Label on `button-primary-face`.",
         "values": {
-          "light": "#ffffff"
+          "light": "oklch(100% 0 none)"
         }
       },
       {
@@ -163,7 +163,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Primary button fill under the pointer.",
         "values": {
-          "light": "#0b5c3e"
+          "light": "oklch(42.151% 0.0884 161.7)"
         }
       },
       {
@@ -171,7 +171,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Edge under a primary button.",
         "values": {
-          "light": "#002d18"
+          "light": "oklch(26.16% 0.062 157.4)"
         }
       },
       {
@@ -179,7 +179,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of a button that destroys or cannot be undone (`variant=\"warning\"`). Identical to a plain button in Normal UI; the label says what it does.",
         "values": {
-          "light": "#ca3535"
+          "light": "oklch(55.79% 0.186 25.6)"
         }
       },
       {
@@ -187,7 +187,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Label on `button-warning-face`.",
         "values": {
-          "light": "#ffffff"
+          "light": "oklch(100% 0 none)"
         }
       },
       {
@@ -195,7 +195,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Warning button fill under the pointer.",
         "values": {
-          "light": "#a22a2a"
+          "light": "oklch(47.52% 0.157 25.5)"
         }
       },
       {
@@ -203,7 +203,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Edge under a warning button.",
         "values": {
-          "light": "#55150b"
+          "light": "oklch(30.32% 0.096 31.7)"
         }
       },
       {
@@ -211,7 +211,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of text inputs, textareas and selects.",
         "values": {
-          "light": "#ffffff"
+          "light": "oklch(100% 0 none)"
         }
       },
       {
@@ -219,7 +219,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Typed text on `field`. 21:1 light, 11.2:1 dark.",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -227,7 +227,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "1px border of buttons, fields, selects and fieldsets. At least 3:1 against `canvas`, `field` and `button-face` in both themes (light 4.5:1 on canvas, 3.95:1 on button-face; dark 6.7:1 on canvas, 4:1 on field).",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -235,7 +235,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Placeholder text on `field`. 5.2:1 light, 5:1 dark. Replaces opacity-faded placeholders that drop under 4.5:1.",
         "values": {
-          "light": "#595959"
+          "light": "oklch(46.4% 0 none)"
         }
       },
       {
@@ -243,7 +243,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Disabled labels and secondary notes on `canvas`. 5.2:1 light, 8.4:1 dark: disabled text stays readable; the dashed border says it is disabled.",
         "values": {
-          "light": "#484949"
+          "light": "oklch(40.45% 0.001 197.1)"
         }
       },
       {
@@ -251,7 +251,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "accent-color for checkboxes, radios, range, progress and the switch track. A non-text mark, but kept at text strength: 5.3:1 on white (light), 10.8:1 on dark canvas. Deepened from Chromium's #0075ff (4.2:1).",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -259,7 +259,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "The 2px solid :focus-visible outline, offset 2px onto `canvas`. 6:1 light, 10.8:1 dark; also 5.2:1 on light `button-face`.",
         "values": {
-          "light": "#ffdd00"
+          "light": "oklch(89.869% 0.1857 97.9)"
         }
       },
       {
@@ -267,7 +267,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A second ring drawn just inside a focused field or list item, for themes whose `focus-ring` is light (a yellow ring needs a dark inset to hold 3:1 on white). None in Normal UI.",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -275,7 +275,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "<mark> highlight fill, the same yellow in both themes.",
         "values": {
-          "light": "#ffdd00"
+          "light": "oklch(89.869% 0.1857 97.9)"
         }
       },
       {
@@ -283,7 +283,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Text on `mark`, black in both themes (19.6:1). Never let <mark> inherit white dark-theme text.",
         "values": {
-          "light": "#0b0c0c"
+          "light": "oklch(15.32% 0.002 197)"
         }
       },
       {
@@ -291,7 +291,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "<hr> and table cell borders. Same as `control-border`, so dividers stay visible at 3:1+.",
         "values": {
-          "light": "#b1b4b6"
+          "light": "oklch(76.81% 0.004 236.5)"
         }
       },
       {
@@ -299,7 +299,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border and lead word of error messages and invalid fields. Text colour in Normal UI: the words say it is an error, never colour alone. A theme may give it a hue at 4.5:1.",
         "values": {
-          "light": "#ca3535"
+          "light": "oklch(55.79% 0.186 25.6)"
         }
       },
       {
@@ -307,7 +307,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border and lead word of success messages.",
         "values": {
-          "light": "#0f7a52"
+          "light": "oklch(51.37% 0.11 161)"
         }
       },
       {
@@ -315,7 +315,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border and lead word of notes.",
         "values": {
-          "light": "#1d70b8"
+          "light": "oklch(53.47% 0.136 249.9)"
         }
       },
       {
@@ -323,7 +323,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of a `.pd-masthead` band. Same as `canvas` in Normal UI; a theme may make it a brand colour.",
         "values": {
-          "light": "#1d70b8"
+          "light": "oklch(53.47% 0.136 249.9)"
         }
       },
       {
@@ -331,7 +331,7 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Text and links on `masthead`.",
         "values": {
-          "light": "#ffffff"
+          "light": "oklch(100% 0 none)"
         }
       },
       {
@@ -339,7 +339,7 @@ export const themes: Theme[] = [
         "added": true,
         "usage": "A link under the pointer, with a 3px underline.",
         "values": {
-          "light": "#0f385c"
+          "light": "oklch(33.28% 0.078 249.1)"
         }
       }
     ],
@@ -519,8 +519,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Page background; the CSS system color Canvas. Every text token below is checked against it.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#151515"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(19.57% 0 none)"
         }
       },
       {
@@ -528,8 +528,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Body copy and headings on `canvas`. 21:1 light, 18.7:1 dark.",
         "values": {
-          "light": "#000000",
-          "dark": "#ececec"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(94.31% 0 none)"
         }
       },
       {
@@ -537,8 +537,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "The faintest tint, for light grouping (a soft card). Everything on canvas keeps its contrast here: gray-text 4.87:1 light, 7.59:1 dark; control-border 4.28:1, 6.06:1.",
         "values": {
-          "light": "#f7f7f7",
-          "dark": "#1c1c1c"
+          "light": "oklch(97.61% 0 none)",
+          "dark": "oklch(22.64% 0 none)"
         }
       },
       {
@@ -546,8 +546,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A quieter panel for secondary content: muted and filled cards, recessed wells, separated bands. The darkest light tint that keeps gray-text at 4.5:1 (4.62:1; dark 6.74:1); control-border 4.06:1, 5.38:1.",
         "values": {
-          "light": "#eeeeee",
-          "dark": "#242424"
+          "light": "oklch(94.91% 0 none)",
+          "dark": "oklch(26.03% 0 none)"
         }
       },
       {
@@ -555,8 +555,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A panel set on a tinted surface (the body of a muted card): white in light, one step lighter in dark. gray-text 5.17:1 light, 5.88:1 dark; control-border 4.54:1, 4.69:1.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#2a2a2a"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(28.5% 0 none)"
         }
       },
       {
@@ -564,8 +564,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Unvisited links on `canvas`, always underlined. 9.4:1 light, 7.8:1 dark. The browser's LinkText, unchanged.",
         "values": {
-          "light": "#0f4c81",
-          "dark": "#8cb8e8"
+          "light": "oklch(40.922% 0.1065 250.2)",
+          "dark": "oklch(76.88% 0.084 251.1)"
         }
       },
       {
@@ -573,8 +573,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Visited links on `canvas`. 11:1 light, 9.7:1 dark. The browser's VisitedText, unchanged.",
         "values": {
-          "light": "#5b3a8c",
-          "dark": "#c3a8ea"
+          "light": "oklch(42.88% 0.132 299.4)",
+          "dark": "oklch(77.82% 0.096 303)"
         }
       },
       {
@@ -582,8 +582,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A link while it is being pressed, on `canvas`. 4.53:1 light (passes AA by a hair; never use it for resting text), 9.5:1 dark.",
         "values": {
-          "light": "#b00000",
-          "dark": "#ff9e9e"
+          "light": "oklch(47.55% 0.195 29.2)",
+          "dark": "oklch(79.78% 0.116 20)"
         }
       },
       {
@@ -591,8 +591,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button fill. Dark is darkened from Chromium's #6b6b6b so white labels reach 6.9:1.",
         "values": {
-          "light": "#f2f2f2",
-          "dark": "#353535"
+          "light": "oklch(96.12% 0 none)",
+          "dark": "oklch(32.9% 0 none)"
         }
       },
       {
@@ -600,8 +600,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button fill under the pointer. Same as `button-face` in Normal UI, where hover only darkens the border.",
         "values": {
-          "light": "#e6e6e6",
-          "dark": "#404040"
+          "light": "oklch(92.49% 0 none)",
+          "dark": "oklch(37.15% 0 none)"
         }
       },
       {
@@ -609,8 +609,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of the one button a form leads with (`variant=\"primary\"`). Normal UI draws every variant the same: order and wording carry the emphasis. A theme may set it apart.",
         "values": {
-          "light": "#2f7d32",
-          "dark": "#2f7d32"
+          "light": "oklch(52.38% 0.134 144)",
+          "dark": "oklch(52.38% 0.134 144)"
         }
       },
       {
@@ -618,8 +618,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Label on `button-primary-face`.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#ffffff"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(100% 0 none)"
         }
       },
       {
@@ -627,8 +627,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border of a primary button.",
         "values": {
-          "light": "#235e26",
-          "dark": "#7fcf83"
+          "light": "oklch(42.9% 0.107 144.3)",
+          "dark": "oklch(78.39% 0.132 145.3)"
         }
       },
       {
@@ -636,8 +636,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Primary button fill under the pointer.",
         "values": {
-          "light": "#276b2a",
-          "dark": "#276b2a"
+          "light": "oklch(46.88% 0.12 144.1)",
+          "dark": "oklch(46.88% 0.12 144.1)"
         }
       },
       {
@@ -645,8 +645,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of text inputs, textareas and selects.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#1f1f1f"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(23.93% 0 none)"
         }
       },
       {
@@ -654,8 +654,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Typed text on `field`. 21:1 light, 11.2:1 dark.",
         "values": {
-          "light": "#000000",
-          "dark": "#ececec"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(94.31% 0 none)"
         }
       },
       {
@@ -663,8 +663,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "1px border of buttons, fields, selects and fieldsets. At least 3:1 against `canvas`, `field` and `button-face` in both themes (light 4.5:1 on canvas, 3.95:1 on button-face; dark 6.7:1 on canvas, 4:1 on field).",
         "values": {
-          "light": "#7a7a7a",
-          "dark": "#8c8c8c"
+          "light": "oklch(57.95% 0 none)",
+          "dark": "oklch(64.01% 0 none)"
         }
       },
       {
@@ -672,8 +672,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Placeholder text on `field`. 5.2:1 light, 5:1 dark. Replaces opacity-faded placeholders that drop under 4.5:1.",
         "values": {
-          "light": "#5f5f5f",
-          "dark": "#a6a6a6"
+          "light": "oklch(48.55% 0 none)",
+          "dark": "oklch(72.52% 0 none)"
         }
       },
       {
@@ -681,8 +681,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Disabled labels and secondary notes on `canvas`. 5.2:1 light, 8.4:1 dark: disabled text stays readable; the dashed border says it is disabled.",
         "values": {
-          "light": "#5f5f5f",
-          "dark": "#a6a6a6"
+          "light": "oklch(48.55% 0 none)",
+          "dark": "oklch(72.52% 0 none)"
         }
       },
       {
@@ -690,8 +690,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "accent-color for checkboxes, radios, range, progress and the switch track. A non-text mark, but kept at text strength: 5.3:1 on white (light), 10.8:1 on dark canvas. Deepened from Chromium's #0075ff (4.2:1).",
         "values": {
-          "light": "#2f7d32",
-          "dark": "#7fcf83"
+          "light": "oklch(52.38% 0.134 144)",
+          "dark": "oklch(78.39% 0.132 145.3)"
         }
       },
       {
@@ -699,8 +699,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "The 2px solid :focus-visible outline, offset 2px onto `canvas`. 6:1 light, 10.8:1 dark; also 5.2:1 on light `button-face`.",
         "values": {
-          "light": "#0f4c81",
-          "dark": "#8cb8e8"
+          "light": "oklch(40.922% 0.1065 250.2)",
+          "dark": "oklch(76.88% 0.084 251.1)"
         }
       },
       {
@@ -708,8 +708,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "<mark> highlight fill, the same yellow in both themes.",
         "values": {
-          "light": "#fff2a8",
-          "dark": "#fff2a8"
+          "light": "oklch(95.47% 0.094 99.4)",
+          "dark": "oklch(95.47% 0.094 99.4)"
         }
       },
       {
@@ -717,8 +717,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "::selection background.",
         "values": {
-          "light": "#fff2a8",
-          "dark": "#4a4320"
+          "light": "oklch(95.47% 0.094 99.4)",
+          "dark": "oklch(38.12% 0.053 98.3)"
         }
       },
       {
@@ -726,8 +726,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Selected text on `highlight`, links included. 13.9:1 light, 8.5:1 dark.",
         "values": {
-          "light": "#000000",
-          "dark": "#ffffff"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(100% 0 none)"
         }
       },
       {
@@ -735,8 +735,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "<hr> and table cell borders. Same as `control-border`, so dividers stay visible at 3:1+.",
         "values": {
-          "light": "#cccccc",
-          "dark": "#3d3d3d"
+          "light": "oklch(84.52% 0 none)",
+          "dark": "oklch(36% 0 none)"
         }
       },
       {
@@ -744,8 +744,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border and lead word of error messages and invalid fields. Text colour in Normal UI: the words say it is an error, never colour alone. A theme may give it a hue at 4.5:1.",
         "values": {
-          "light": "#b00000",
-          "dark": "#ff9e9e"
+          "light": "oklch(47.55% 0.195 29.2)",
+          "dark": "oklch(79.78% 0.116 20)"
         }
       },
       {
@@ -753,8 +753,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border and lead word of success messages.",
         "values": {
-          "light": "#2f7d32",
-          "dark": "#7fcf83"
+          "light": "oklch(52.38% 0.134 144)",
+          "dark": "oklch(78.39% 0.132 145.3)"
         }
       },
       {
@@ -762,8 +762,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of a `.pd-masthead` band. Same as `canvas` in Normal UI; a theme may make it a brand colour.",
         "values": {
-          "light": "#2f7d32",
-          "dark": "#1f5321"
+          "light": "oklch(52.38% 0.134 144)",
+          "dark": "oklch(39.41% 0.097 144.1)"
         }
       },
       {
@@ -771,8 +771,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Text and links on `masthead`.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#ffffff"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(100% 0 none)"
         }
       }
     ],
@@ -864,8 +864,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Page background; the CSS system color Canvas. Every text token below is checked against it.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#161616"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(20.02% 0 none)"
         }
       },
       {
@@ -873,8 +873,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Body copy and headings on `canvas`. 21:1 light, 18.7:1 dark.",
         "values": {
-          "light": "#000000",
-          "dark": "#f2f2f2"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(96.12% 0 none)"
         }
       },
       {
@@ -882,8 +882,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "The faintest tint, for light grouping (a soft card). Everything on canvas keeps its contrast here: gray-text 4.87:1 light, 7.59:1 dark; control-border 4.28:1, 6.06:1.",
         "values": {
-          "light": "#f7f7f7",
-          "dark": "#1e1e1e"
+          "light": "oklch(97.61% 0 none)",
+          "dark": "oklch(23.5% 0 none)"
         }
       },
       {
@@ -891,8 +891,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A quieter panel for secondary content: muted and filled cards, recessed wells, separated bands. The darkest light tint that keeps gray-text at 4.5:1 (4.62:1; dark 6.74:1); control-border 4.06:1, 5.38:1.",
         "values": {
-          "light": "#efefef",
-          "dark": "#262626"
+          "light": "oklch(95.21% 0 none)",
+          "dark": "oklch(26.86% 0 none)"
         }
       },
       {
@@ -900,8 +900,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A panel set on a tinted surface (the body of a muted card): white in light, one step lighter in dark. gray-text 5.17:1 light, 5.88:1 dark; control-border 4.54:1, 4.69:1.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#2c2c2c"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(29.31% 0 none)"
         }
       },
       {
@@ -909,8 +909,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Unvisited links on `canvas`, always underlined. 9.4:1 light, 7.8:1 dark. The browser's LinkText, unchanged.",
         "values": {
-          "light": "#000000",
-          "dark": "#f2f2f2"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(96.12% 0 none)"
         }
       },
       {
@@ -918,8 +918,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Visited links on `canvas`. 11:1 light, 9.7:1 dark. The browser's VisitedText, unchanged.",
         "values": {
-          "light": "#4a4a4a",
-          "dark": "#c4c4c4"
+          "light": "oklch(40.91% 0 none)",
+          "dark": "oklch(82.03% 0 none)"
         }
       },
       {
@@ -927,8 +927,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "A link while it is being pressed, on `canvas`. 4.53:1 light (passes AA by a hair; never use it for resting text), 9.5:1 dark.",
         "values": {
-          "light": "#b00000",
-          "dark": "#ff9e9e"
+          "light": "oklch(47.55% 0.195 29.2)",
+          "dark": "oklch(79.78% 0.116 20)"
         }
       },
       {
@@ -936,8 +936,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button fill. Dark is darkened from Chromium's #6b6b6b so white labels reach 6.9:1.",
         "values": {
-          "light": "#f0f0f0",
-          "dark": "#3a3a3a"
+          "light": "oklch(95.51% 0 none)",
+          "dark": "oklch(34.85% 0 none)"
         }
       },
       {
@@ -945,8 +945,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Button fill under the pointer. Same as `button-face` in Normal UI, where hover only darkens the border.",
         "values": {
-          "light": "#e4e4e4",
-          "dark": "#454545"
+          "light": "oklch(91.89% 0 none)",
+          "dark": "oklch(39.04% 0 none)"
         }
       },
       {
@@ -954,8 +954,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of the one button a form leads with (`variant=\"primary\"`). Normal UI draws every variant the same: order and wording carry the emphasis. A theme may set it apart.",
         "values": {
-          "light": "#f6c21c",
-          "dark": "#f6c21c"
+          "light": "oklch(83.721% 0.1664 88.4)",
+          "dark": "oklch(83.721% 0.1664 88.4)"
         }
       },
       {
@@ -963,8 +963,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Label on `button-primary-face`.",
         "values": {
-          "light": "#000000",
-          "dark": "#000000"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(0% 0 none)"
         }
       },
       {
@@ -972,8 +972,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Primary button fill under the pointer.",
         "values": {
-          "light": "#e8b100",
-          "dark": "#e8b100"
+          "light": "oklch(78.913% 0.1615 86)",
+          "dark": "oklch(78.913% 0.1615 86)"
         }
       },
       {
@@ -981,8 +981,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "1px border of buttons, fields, selects and fieldsets. At least 3:1 against `canvas`, `field` and `button-face` in both themes (light 4.5:1 on canvas, 3.95:1 on button-face; dark 6.7:1 on canvas, 4:1 on field).",
         "values": {
-          "light": "#6e6e6e",
-          "dark": "#8f8f8f"
+          "light": "oklch(53.82% 0 none)",
+          "dark": "oklch(65% 0 none)"
         }
       },
       {
@@ -990,8 +990,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Placeholder text on `field`. 5.2:1 light, 5:1 dark. Replaces opacity-faded placeholders that drop under 4.5:1.",
         "values": {
-          "light": "#666666",
-          "dark": "#a8a8a8"
+          "light": "oklch(51.03% 0 none)",
+          "dark": "oklch(73.16% 0 none)"
         }
       },
       {
@@ -999,8 +999,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Disabled labels and secondary notes on `canvas`. 5.2:1 light, 8.4:1 dark: disabled text stays readable; the dashed border says it is disabled.",
         "values": {
-          "light": "#666666",
-          "dark": "#a8a8a8"
+          "light": "oklch(51.03% 0 none)",
+          "dark": "oklch(73.16% 0 none)"
         }
       },
       {
@@ -1008,8 +1008,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "accent-color for checkboxes, radios, range, progress and the switch track. A non-text mark, but kept at text strength: 5.3:1 on white (light), 10.8:1 on dark canvas. Deepened from Chromium's #0075ff (4.2:1).",
         "values": {
-          "light": "#1f3a93",
-          "dark": "#9fb4ff"
+          "light": "oklch(38.74% 0.15 266.4)",
+          "dark": "oklch(78.25% 0.11 271.7)"
         }
       },
       {
@@ -1017,8 +1017,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "The 2px solid :focus-visible outline, offset 2px onto `canvas`. 6:1 light, 10.8:1 dark; also 5.2:1 on light `button-face`.",
         "values": {
-          "light": "#0050c8",
-          "dark": "#8fb8ff"
+          "light": "oklch(47.26% 0.198 260.5)",
+          "dark": "oklch(78.05% 0.111 261.1)"
         }
       },
       {
@@ -1026,8 +1026,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "<mark> highlight fill, the same yellow in both themes.",
         "values": {
-          "light": "#f6c21c",
-          "dark": "#f6c21c"
+          "light": "oklch(83.721% 0.1664 88.4)",
+          "dark": "oklch(83.721% 0.1664 88.4)"
         }
       },
       {
@@ -1035,8 +1035,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Fill of text inputs, textareas and selects.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#1e1e1e"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(23.5% 0 none)"
         }
       },
       {
@@ -1044,8 +1044,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Typed text on `field`. 21:1 light, 11.2:1 dark.",
         "values": {
-          "light": "#000000",
-          "dark": "#f2f2f2"
+          "light": "oklch(0% 0 none)",
+          "dark": "oklch(96.12% 0 none)"
         }
       },
       {
@@ -1053,8 +1053,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Border and lead word of error messages and invalid fields. Text colour in Normal UI: the words say it is an error, never colour alone. A theme may give it a hue at 4.5:1.",
         "values": {
-          "light": "#b00000",
-          "dark": "#ff9e9e"
+          "light": "oklch(47.55% 0.195 29.2)",
+          "dark": "oklch(79.78% 0.116 20)"
         }
       },
       {
@@ -1062,8 +1062,8 @@ export const themes: Theme[] = [
         "added": false,
         "usage": "Behind a `.pd-sheet` page. Same as `canvas` in Normal UI, so a sheet is just the page.",
         "values": {
-          "light": "#e6e6e6",
-          "dark": "#0a0a0a"
+          "light": "oklch(92.49% 0 none)",
+          "dark": "oklch(14.48% 0 none)"
         }
       },
       {
@@ -1071,8 +1071,8 @@ export const themes: Theme[] = [
         "added": true,
         "usage": "Top-left highlight of a bevelled button. Decorative; the border carries the 3:1 edge.",
         "values": {
-          "light": "#ffffff",
-          "dark": "#5a5a5a"
+          "light": "oklch(100% 0 none)",
+          "dark": "oklch(46.76% 0 none)"
         }
       },
       {
@@ -1080,8 +1080,8 @@ export const themes: Theme[] = [
         "added": true,
         "usage": "Bottom-right shadow of a bevelled button and the sheet's drop shadow.",
         "values": {
-          "light": "#6e6e6e",
-          "dark": "#000000"
+          "light": "oklch(53.82% 0 none)",
+          "dark": "oklch(0% 0 none)"
         }
       }
     ],

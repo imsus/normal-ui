@@ -12,7 +12,11 @@ _Avoid_: Variable, design variable
 
 **Base styles**:
 The element-level stylesheet that repairs plain HTML; the core of the system, usable without any components.
-_Avoid_: Reset, normalize
+_Avoid_: Normalize
+
+**Reset**:
+The first sub-layer of the base styles: the rules that remove differences between browsers and set safe defaults (box sizing, text sizing, media sizing), following good-css.com's reset. It never sets the look.
+_Avoid_: Normalize, preflight
 
 **Pattern**:
 A composite class or attribute recipe (a badge, a tab) for hand-written HTML, with no JavaScript.

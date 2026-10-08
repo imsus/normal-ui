@@ -50,20 +50,23 @@
 :where(nav[aria-label="Breadcrumb"] [aria-current="page"]) { font-weight: 700; }
 
 /* Tabs: role=tablist > button[role=tab], with role=tabpanel */
-:where([role="tablist"]) { display: flex; flex-wrap: wrap; border-bottom: var(--border-width, 1px) solid var(--control-border); }
+:where([role="tablist"]) { display: flex; flex-wrap: wrap; border-block-end: var(--border-width, 1px) solid var(--control-border); }
 :where([role="tab"]) {
   min-height: calc(var(--space-lg) + var(--space-md)); padding: var(--space-sm) var(--space-md);
-  background: transparent; color: var(--canvas-text); border: 0; border-bottom: 3px solid transparent;
-  border-radius: 0; margin-bottom: -1px; cursor: pointer;
+  background: transparent; color: var(--canvas-text); border: 0; border-block-end: 3px solid transparent;
+  border-radius: 0; margin-block-end: -1px; cursor: pointer;
 }
-:where([role="tab"]):hover { border-bottom-color: var(--control-border); }
-:where([role="tab"][aria-selected="true"]) { border-bottom-color: var(--canvas-text); font-weight: 700; }
+@media (hover: hover) and (pointer: fine) {
+  :where([role="tab"]):hover { border-block-end-color: var(--control-border); }
+}
+:where([role="tab"]):active { border-block-end-color: var(--control-border); }
+:where([role="tab"][aria-selected="true"]) { border-block-end-color: var(--canvas-text); font-weight: 700; }
 :where([role="tab"]):focus-visible { outline-offset: -2px; }
 :where([role="tabpanel"]) { padding-block: var(--space-md); }
 
 /* Switch: <input type="checkbox" role="switch"> — 44×24, knob drawn with a gradient */
 :where(input[type="checkbox"][role="switch"]) {
-  appearance: none; flex: none; width: 44px; height: 24px; margin: 0 var(--space-sm) 0 0; vertical-align: middle;
+  appearance: none; flex: none; width: 44px; height: 24px; margin-block: 0; margin-inline: 0 var(--space-sm); vertical-align: middle;
   border: var(--border-width, 1px) solid var(--control-border); border-radius: 12px; cursor: pointer;
   background: radial-gradient(circle at 11px 50%, var(--canvas-text) 7px, transparent 7.5px) var(--field);
 }
@@ -86,7 +89,10 @@
   padding: var(--space-xs) var(--space-sm); background: transparent; border: 0; border-radius: 0;
   color: var(--canvas-text); text-align: start; text-decoration: none; font: 1rem/1.25 var(--font-sans);
 }
-:where(.pd-menu) :is(button, a):hover { background: var(--highlight); color: var(--highlight-text); }
+@media (hover: hover) and (pointer: fine) {
+  :where(.pd-menu) :is(button, a):hover { background: var(--highlight); color: var(--highlight-text); }
+}
+:where(.pd-menu) :is(button, a):active { background: var(--highlight); color: var(--highlight-text); }
 :where(.pd-menu) hr { margin: var(--space-xs) 0; }
 
 /* Tooltip: .pd-tip wraps the trigger and a [role=tooltip]; shows on hover and keyboard focus */
@@ -97,7 +103,10 @@
   background: var(--canvas-text); color: var(--canvas); font: 0.875rem/1.4 var(--font-sans);
   visibility: hidden;
 }
-:where(.pd-tip:is(:hover, :focus-within):not(.dismissed) [role="tooltip"]) { visibility: visible; }
+:where(.pd-tip:is(:focus-within):not(.dismissed) [role="tooltip"]) { visibility: visible; }
+@media (hover: hover) and (pointer: fine) {
+  :where(.pd-tip:is(:hover):not(.dismissed) [role="tooltip"]) { visibility: visible; }
+}
 
 /* Badge: short status text in a box, never colour alone */
 :where(.pd-badge) {
@@ -121,8 +130,8 @@
 
 /* Alert banner: .pd-alert with a data-kind of info | success | warning | error */
 :where(.pd-alert) { border: var(--border-width, 1px) solid var(--status-info, var(--canvas-text)); padding: var(--space-sm) var(--space-md); margin-block: var(--space-md); }
-:where(.pd-alert) > :first-child { margin-top: 0; }
-:where(.pd-alert) > :last-child { margin-bottom: 0; }
+:where(.pd-alert) > :first-child { margin-block-start: 0; }
+:where(.pd-alert) > :last-child { margin-block-end: 0; }
 :where(.pd-alert) strong:first-child { font-family: var(--font-sans); color: var(--pd-status, inherit); }
 /* Border weight is the cue in Normal UI; the status tokens add a hue where a theme gives one. */
 :where(.pd-alert[data-kind="info"]) { --pd-status: var(--status-info); }
@@ -134,7 +143,7 @@
 
 /* Toast: <div popover="manual" class="pd-toast" role="status"> in the top layer */
 :where(.pd-toast) {
-  inset: auto var(--space-md) calc(var(--space-md) + env(safe-area-inset-bottom, 0px)) auto;
+  inset-block: auto calc(var(--space-md) + env(safe-area-inset-bottom, 0px)); inset-inline: auto var(--space-md);
   display: none; align-items: center; gap: var(--space-md); max-width: min(24rem, calc(100% - 2 * var(--space-md)));
   padding: var(--space-sm) var(--space-md); background: var(--canvas-text); color: var(--canvas); border-color: var(--canvas-text);
   font-family: var(--font-sans);
@@ -160,7 +169,10 @@
   display: grid; justify-items: center; gap: var(--space-xs); padding: var(--space-lg) var(--space-md);
   border: 2px dashed var(--control-border); text-align: center; cursor: pointer;
 }
-:where(.pd-drop:hover, .pd-drop.dragging) { border-color: var(--canvas-text); background: var(--highlight); color: var(--highlight-text); }
+:where(.pd-drop.dragging) { border-color: var(--canvas-text); background: var(--highlight); color: var(--highlight-text); }
+@media (hover: hover) and (pointer: fine) {
+  :where(.pd-drop:hover) { border-color: var(--canvas-text); background: var(--highlight); color: var(--highlight-text); }
+}
 :where(.pd-drop:has(input:focus-visible)) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: 2px; }
 :where(.pd-drop) input[type="file"] { max-width: 100%; }
 
@@ -182,27 +194,35 @@ meter::-moz-meter-bar { background: var(--link); }
 :where([role="option"])::before { content: ""; width: 1em; flex: none; }
 :where([role="option"][aria-selected="true"]) { font-weight: 700; }
 :where([role="option"][aria-selected="true"])::before { content: "✓" / ""; }
-:where([role="option"]:hover, [role="option"].active) { background: var(--highlight); color: var(--highlight-text); }
+:where([role="option"].active) { background: var(--highlight); color: var(--highlight-text); }
+@media (hover: hover) and (pointer: fine) {
+  :where([role="option"]:hover) { background: var(--highlight); color: var(--highlight-text); }
+}
+:where([role="option"]:active) { background: var(--highlight); color: var(--highlight-text); }
 :where([role="option"].active) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -2px; }
 :where([role="option"][aria-disabled="true"]) { color: var(--gray-text); text-decoration: line-through; }
 
 /* Combobox: the input plus a listbox popup under it */
 :where(.pd-combo) { position: relative; max-width: 24rem; }
 :where(.pd-combo [role="combobox"]) { width: 100%; box-sizing: border-box; }
-:where(.pd-combo [role="listbox"]) { position: absolute; inset-inline: 0; z-index: 5; margin-top: 2px; }
+:where(.pd-combo [role="listbox"]) { position: absolute; inset-inline: 0; z-index: 5; margin-block-start: 2px; }
 
 /* Menus and menubar: role=menu gets the popover-menu look */
-:where([role="menubar"]) { display: flex; flex-wrap: wrap; border-bottom: var(--border-width, 1px) solid var(--control-border); font-family: var(--font-sans); }
+:where([role="menubar"]) { display: flex; flex-wrap: wrap; border-block-end: var(--border-width, 1px) solid var(--control-border); font-family: var(--font-sans); }
 :where([role="menubar"] > li) { position: relative; }
 :where([role="menubar"] [role="menuitem"]) { display: block; padding: var(--space-xs) var(--space-md); min-height: var(--space-lg); color: var(--canvas-text); text-decoration: none; cursor: default; }
 :where([role="menubar"] > li > [aria-expanded="true"]) { background: var(--highlight); color: var(--highlight-text); }
 :where([role="menu"]) { position: absolute; z-index: 5; min-width: 12rem; padding: var(--space-xs); border: var(--border-width, 1px) solid var(--control-border); background: var(--surface-raised); }
 :where([role="menu"] [role^="menuitem"]) { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-xs) var(--space-sm); min-height: calc(var(--space-lg) + var(--space-sm)); }
-:where([role="menu"] [role^="menuitem"]:hover, [role="menu"] [role^="menuitem"]:focus) { background: var(--highlight); color: var(--highlight-text); outline: none; }
+:where([role="menu"] [role^="menuitem"]:focus) { background: var(--highlight); color: var(--highlight-text); }
+@media (hover: hover) and (pointer: fine) {
+  :where([role="menu"] [role^="menuitem"]:hover) { background: var(--highlight); color: var(--highlight-text); }
+}
+:where([role="menu"] [role^="menuitem"]:active) { background: var(--highlight); color: var(--highlight-text); }
 :where([role="menu"] [role^="menuitem"]:focus-visible) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -2px; }
 :where([role="menuitemcheckbox"], [role="menuitemradio"])::before { content: ""; width: 1em; }
 :where([role="menuitemcheckbox"][aria-checked="true"], [role="menuitemradio"][aria-checked="true"])::before { content: "✓" / ""; }
-:where([role="menu"] [role="separator"]) { border-top: var(--border-width, 1px) solid var(--rule); margin: var(--space-xs) 0; }
+:where([role="menu"] [role="separator"]) { border-block-start: var(--border-width, 1px) solid var(--rule); margin: var(--space-xs) 0; }
 :where([role="menu"] kbd) { margin-inline-start: auto; font: 0.8125rem var(--font-sans); color: var(--gray-text); padding: 0; border: 0; background: none; }
 
 /* Toolbar and toggle buttons */
@@ -211,15 +231,15 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(button[aria-pressed="true"]) { background: var(--canvas-text); color: var(--canvas); border-color: var(--canvas-text); }
 
 /* Accordion: a heading holds a full-width button with aria-expanded */
-:where(.pd-accordion) { border-top: var(--border-width, 1px) solid var(--rule); }
+:where(.pd-accordion) { border-block-start: var(--border-width, 1px) solid var(--rule); }
 :where(.pd-accordion) > :is(h2, h3, h4) { margin: 0; font-size: 1rem; }
 :where(.pd-accordion) > :is(h2, h3, h4) > button {
   display: flex; width: 100%; align-items: center; gap: 0; min-height: calc(var(--space-lg) * 2);
-  padding: var(--space-xs) 0; background: transparent; border: 0; border-bottom: var(--border-width, 1px) solid var(--rule); border-radius: 0;
+  padding: var(--space-xs) 0; background: transparent; border: 0; border-block-end: var(--border-width, 1px) solid var(--rule); border-radius: 0;
   color: var(--canvas-text); font: 700 1rem var(--font-sans); text-align: start;
 }
 :where(.pd-accordion button[aria-expanded="false"])::before { rotate: -90deg; }
-:where(.pd-accordion [role="region"]) { padding: var(--space-xs) 0 var(--space-sm) 1.25em; border-bottom: var(--border-width, 1px) solid var(--rule); }
+:where(.pd-accordion [role="region"]) { padding-block: var(--space-xs) var(--space-sm); padding-inline: 1.25em 0; border-block-end: var(--border-width, 1px) solid var(--rule); }
 
 /* Tree view */
 :where([role="tree"] [role="group"]) { list-style: none; margin: 0; padding-inline-start: var(--space-lg); }
@@ -229,7 +249,9 @@ meter::-moz-meter-bar { background: var(--link); }
 :where([role="treeitem"]:not([aria-expanded])) > .label::before { background-color: transparent; }
 :where([role="treeitem"][aria-expanded="false"]) > [role="group"] { display: none; }
 :where([role="treeitem"][aria-selected="true"]) > .label { background: var(--highlight); color: var(--highlight-text); font-weight: 700; }
-:where([role="treeitem"]:focus) { outline: none; }
+:where([role="treeitem"]:active) > .label { background: var(--highlight); color: var(--highlight-text); }
+/* The ring lives on .label (inside the item); keep this transparent so forced-colors can still paint it. */
+:where([role="treeitem"]:focus-visible) { outline-color: transparent; }
 :where([role="treeitem"]:focus-visible) > .label { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: -2px; }
 
 /* Grid and treegrid: cell or row focus drawn inside the cell */
@@ -243,15 +265,18 @@ meter::-moz-meter-bar { background: var(--link); }
   border-inline: var(--border-width, 1px) solid var(--control-border);
   background-image: linear-gradient(var(--control-border), var(--control-border)); background-size: 2px 24px; background-position: center; background-repeat: no-repeat;
 }
-:where([role="separator"][tabindex]:hover) { background-color: var(--highlight); }
+@media (hover: hover) and (pointer: fine) {
+  :where([role="separator"][tabindex]:hover) { background-color: var(--highlight); }
+}
+:where([role="separator"][tabindex]:active) { background-color: var(--highlight); }
 
 /* Carousel */
 :where([aria-roledescription="carousel"]) { border: var(--border-width, 1px) solid var(--control-border); }
-:where([aria-roledescription="carousel"]) .controls { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: center; padding: var(--space-xs); border-bottom: var(--border-width, 1px) solid var(--rule); }
+:where([aria-roledescription="carousel"]) .controls { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: center; padding: var(--space-xs); border-block-end: var(--border-width, 1px) solid var(--rule); }
 :where([aria-roledescription="slide"]) { padding: var(--space-md); }
 
 /* Feed */
-:where([role="feed"]) > article { border-top: var(--border-width, 1px) solid var(--rule); padding-block: var(--space-sm); }
+:where([role="feed"]) > article { border-block-start: var(--border-width, 1px) solid var(--rule); padding-block: var(--space-sm); }
 :where([role="feed"]) > article:focus { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: 2px; }
 
 /* ARIA 1.3 review roles: suggestions and comments, with the change named in text */
@@ -273,7 +298,10 @@ meter::-moz-meter-bar { background: var(--link); }
   :where(select.pd-select:open) { border-color: var(--canvas-text); }
   :where(select.pd-select)::picker(select) { margin-block: 2px; padding: var(--space-xs); border: var(--border-width, 1px) solid var(--control-border); background: var(--surface-raised); color: var(--canvas-text); }
   :where(select.pd-select option) { display: flex; align-items: center; gap: var(--space-sm); min-height: calc(var(--space-lg) + var(--space-sm)); padding: var(--space-xs) var(--space-sm); }
-  :where(select.pd-select option:is(:hover, :focus-visible)) { background: var(--highlight); color: var(--highlight-text); outline: none; }
+  :where(select.pd-select option:is(:focus-visible)) { background: var(--highlight); color: var(--highlight-text); outline-color: transparent; }
+  @media (hover: hover) and (pointer: fine) {
+    :where(select.pd-select option:is(:hover)) { background: var(--highlight); color: var(--highlight-text); }
+  }
   :where(select.pd-select option:checked) { font-weight: 700; }
   :where(select.pd-select option)::checkmark { content: "✓"; }
   :where(select.pd-select option small, select.pd-select selectedcontent small) { color: inherit; opacity: 1; font-weight: 400; }
@@ -347,7 +375,7 @@ meter::-moz-meter-bar { background: var(--link); }
   --pd-card-band: var(--surface-muted);
   --pd-card-bleed-x: var(--pd-card-pad);
   --pd-flow: 0; --pd-h-after: 0; --pd-h2-before: 0; --pd-h3-before: 0; --pd-h4-before: 0;
-  display: flex; flex-direction: column; gap: var(--pd-card-pad); min-width: 0;
+  display: flex; flex-direction: column; gap: var(--pd-card-pad);
   padding: var(--pd-card-pad);
   background: var(--canvas); color: var(--canvas-text);
   border: var(--border-width, 1px) solid var(--control-border);
@@ -378,7 +406,7 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(.pd-card-footer) > * { margin: 0; }
 
 /* Body, per treatment */
-:where(.pd-card-body) { display: flex; flex-direction: column; gap: var(--pd-card-pad); min-width: 0; --pd-card-bleed-top: 0px; --pd-card-bleed-bottom: 0px; }
+:where(.pd-card-body) { display: flex; flex-direction: column; gap: var(--pd-card-pad); --pd-card-bleed-top: 0px; --pd-card-bleed-bottom: 0px; }
 :where(.pd-card:not([data-body]), .pd-card[data-body="seamless"]) > :where(.pd-card-body:first-child) { --pd-card-bleed-top: var(--pd-card-pad); }
 :where(.pd-card:not([data-body]), .pd-card[data-body="seamless"]) > :where(.pd-card-body:last-child) { --pd-card-bleed-bottom: var(--pd-card-pad); }
 :where(.pd-card[data-body="inset"]) > :where(.pd-card-body) { padding: var(--pd-card-pad); background: var(--pd-card-panel); border: var(--border-width, 1px) solid var(--rule); --pd-card-bleed-top: var(--pd-card-pad); --pd-card-bleed-bottom: var(--pd-card-pad); }
@@ -390,8 +418,8 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(.pd-card[data-body="flush"]) > :where(.pd-card-header, .pd-card-footer) { padding-inline: var(--pd-card-pad); }
 :where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-header, .pd-card-footer) { padding: var(--pd-card-pad); }
 :where(.pd-card[data-body="divided"][data-divider="inset"]) > :where(.pd-card-header, .pd-card-footer) { padding-inline: 0; }
-:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-header) { border-bottom: var(--border-width, 1px) solid var(--rule); }
-:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-footer) { border-top: var(--border-width, 1px) solid var(--rule); }
+:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-header) { border-block-end: var(--border-width, 1px) solid var(--rule); }
+:where(.pd-card:is([data-body="divided"], [data-body="separated"])) > :where(.pd-card-footer) { border-block-start: var(--border-width, 1px) solid var(--rule); }
 :where(.pd-card[data-body="separated"]) > :where(.pd-card-header, .pd-card-footer) { background: var(--pd-card-band); }
 
 /* Bleed: out to the card's edges; a table inside runs its rows edge to edge */
@@ -406,8 +434,8 @@ meter::-moz-meter-bar { background: var(--link); }
 :where(.pd-card-bleed) > :where(table) :where(th, td) { border-inline-width: 0; }
 :where(.pd-card-bleed) > :where(table) :where(tr) > :where(:first-child) { padding-inline-start: var(--pd-card-bleed-x, var(--space-sm)); }
 :where(.pd-card-bleed) > :where(table) :where(tr) > :where(:last-child) { padding-inline-end: var(--pd-card-bleed-x, var(--space-sm)); }
-:where(.pd-card-bleed) > :where(table) > :where(:is(thead, tbody):first-of-type) > :where(tr:first-child) > * { border-top-width: 0; }
-:where(.pd-card-bleed) > :where(table) > :where(tbody:last-of-type) > :where(tr:last-child) > * { border-bottom-width: 0; }
+:where(.pd-card-bleed) > :where(table) > :where(:is(thead, tbody):first-of-type) > :where(tr:first-child) > * { border-block-start-width: 0; }
+:where(.pd-card-bleed) > :where(table) > :where(tbody:last-of-type) > :where(tr:last-child) > * { border-block-end-width: 0; }
 :where(.pd-card-bleed) > :where(table) > :where(caption) { padding-inline: var(--pd-card-bleed-x, var(--space-sm)); }
 
 @media (forced-colors: active) {
@@ -416,11 +444,14 @@ meter::-moz-meter-bar { background: var(--link); }
 @media (forced-colors: active) {
   :where(input[role="switch"]) { forced-color-adjust: none; border-color: CanvasText; background: radial-gradient(circle at 11px 50%, CanvasText 7px, transparent 7.5px) Canvas; }
   :where(input[role="switch"]:checked) { background: radial-gradient(circle at calc(100% - 11px) 50%, Canvas 7px, transparent 7.5px) Highlight; border-color: Highlight; }
-  :where([role="tab"][aria-selected="true"]) { border-bottom-color: Highlight; }
+  :where([role="tab"][aria-selected="true"]) { border-block-end-color: Highlight; }
   :where(.pd-tip [role="tooltip"], .pd-toast, .pd-badge[data-tone="strong"]) { border: var(--border-width, 1px) solid CanvasText; }
   :where(.pd-steps li[data-done])::before { forced-color-adjust: none; background: CanvasText; color: Canvas; }
   :where(button[aria-pressed="true"]) { forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight; }
-  :where([role="option"].active, [role="option"]:hover, [role="treeitem"][aria-selected="true"] > .label, [role="menu"] [role^="menuitem"]:focus) { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  :where([role="option"].active, [role="treeitem"][aria-selected="true"] > .label, [role="treeitem"]:active > .label, [role="menu"] [role^="menuitem"]:focus) { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  @media (hover: hover) and (pointer: fine) {
+    :where([role="option"]:hover) { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  }
   :where(ins) { background: Mark; color: MarkText; }
   :where(.pd-hint) { border: var(--border-width, 1px) solid CanvasText; }
 }

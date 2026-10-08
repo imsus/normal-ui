@@ -142,7 +142,9 @@ const s = stylex.create({
     borderBottomStyle: 'solid',
     borderBottomColor: color.controlBorder,
   },
-  tools: { display: 'flex', alignItems: 'center', gap: space.md, marginInlineStart: 'auto' },
+  // max-content, not squeezed: the reset's min-width: 0 would let the search box
+  // and selects collapse below their content at narrow widths.
+  tools: { display: 'flex', alignItems: 'center', gap: space.md, marginInlineStart: 'auto', minWidth: 'max-content' },
   // On a phone the tools drop below the name rather than squeezing it.
   topWrap: { flexWrap: 'wrap', rowGap: space.xs, paddingBlock: space.xs },
   brand: { whiteSpace: 'nowrap', fontWeight: 700, fontSize: '1.17em', color: color.canvasText },

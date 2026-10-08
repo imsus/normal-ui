@@ -13,6 +13,7 @@
 // tokens.json and themes/<id>/tokens.json are the only places a value is written by hand.
 // Every theme (and the base) is checked for the contrast pairs below; a failure stops the build.
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { checkContrast, checkGamut, resolveColors, toHex } from './color.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
@@ -21,13 +22,12 @@ const tokens = read('tokens.json');
 
 const allModes = tokens.color.themes.map((t) => t.id);
 const [primary] = allModes;
-const alias = (v) => v.replace(/^\{(.+)\}$/, 'var(--$1)');
+const alias = (v) => v.replace(/\{([\w-]+)\}/g, 'var(--$1)');
 const valueIn = (t, mode) => (typeof t.value === 'string' ? t.value : (t.value[mode] ?? t.value[primary]));
 const colorFor = (t, mode) => alias(valueIn(t, mode));
 const camel = (s) => s.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
 
 const decl = (lines, indent = '  ') => lines.map((l) => indent + l).join('\n');
-const colors = (list, mode) => list.map((t) => `--${t.name}: ${colorFor(t, mode)};`);
 // The select arrow, as an image filled with the theme's field-text (an image cannot
 // use currentColor). Same triangle as --pd-chevron in base.css; the -open one points up.
 const arrow = (fill, path) =>
@@ -64,84 +64,49 @@ const fontFaces = (src, dir) =>
     })
     .join('');
 
-// ---------- Contrast ----------
-// The pairs every theme must hold, in each of its modes (WCAG 2.2 AA: 1.4.3 text, 1.4.11
-// non-text). "a|b" on the foreground side passes if either one holds (a light focus ring
-// with a dark inset, for example).
-const pairs = [
-  ['canvas-text', 'canvas', 4.5], ['link', 'canvas', 4.5], ['link-visited', 'canvas', 4.5], ['link-active', 'canvas', 4.5],
-  ['button-text', 'button-face', 4.5], ['button-text', 'button-face-hover', 4.5], ['button-pressed-text', 'button-pressed-face', 4.5],
-  ['button-primary-text', 'button-primary-face', 4.5], ['button-primary-text', 'button-primary-face-hover', 4.5],
-  ['button-warning-text', 'button-warning-face', 4.5], ['button-warning-text', 'button-warning-face-hover', 4.5],
-  ['field-text', 'field', 4.5], ['placeholder', 'field', 4.5],
-  ['gray-text', 'canvas', 4.5], ['gray-text', 'surface-soft', 4.5], ['gray-text', 'surface-muted', 4.5], ['gray-text', 'surface-raised', 4.5],
-  ['mark-text', 'mark', 4.5], ['highlight-text', 'highlight', 4.5], ['masthead-text', 'masthead', 4.5],
-  ['status-error', 'canvas', 4.5], ['status-warning', 'canvas', 4.5], ['status-success', 'canvas', 4.5], ['status-info', 'canvas', 4.5],
-  ['control-border', 'canvas', 3], ['control-border', 'field', 3],
-  ['control-border', 'surface-soft', 3], ['control-border', 'surface-muted', 3], ['control-border', 'surface-raised', 3],
-  ['rule', 'canvas', 3], ['focus-ring|focus-inset', 'canvas', 3], ['accent', 'canvas', 3],
-];
-const luminance = (hex) => {
-  let h = hex.replace('#', '');
-  if (h.length === 3) h = [...h].map((c) => c + c).join('');
-  return [0, 2, 4]
-    .map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
-    .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
-    .reduce((sum, c, i) => sum + c * [0.2126, 0.7152, 0.0722][i], 0);
-};
-const ratio = (a, b) => {
-  const [x, y] = [luminance(a), luminance(b)];
-  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
-};
-/** Every colour token's literal value in one mode, aliases followed. */
-const resolve = (list, mode) => {
-  const v = Object.fromEntries(list.map((t) => [t.name, valueIn(t, mode)]));
-  const get = (name, seen = new Set()) => {
-    const raw = v[name];
-    const ref = raw?.match(/^\{(.+)\}$/)?.[1];
-    if (!ref) return raw;
-    if (seen.has(ref)) throw new Error(`tokens: alias loop at ${name}`);
-    return get(ref, seen.add(ref));
-  };
-  return Object.fromEntries(Object.keys(v).map((k) => [k, get(k)]));
-};
-const isHex = (v) => /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v ?? '');
-/** Run the checks; returns [{ mode, fg, bg, min, ratio, ok, waived }]. */
-function check(list, modes, extra = [], waive = {}) {
-  const out = [];
-  for (const mode of modes) {
-    const v = resolve(list, mode);
-    for (const [fgs, bg, min] of [...pairs, ...extra]) {
-      if (!isHex(v[bg])) continue;
-      const tried = fgs.split('|').filter((fg) => isHex(v[fg])).map((fg) => ({ fg, r: ratio(v[fg], v[bg]) }));
-      if (!tried.length) continue;
-      const best = tried.reduce((a, b) => (b.r > a.r ? b : a));
-      const reason = waive[`${fgs}/${bg}`];
-      out.push({ mode, fg: fgs, bg, min, ratio: Math.round(best.r * 100) / 100, ok: best.r >= min, waived: best.r < min && reason ? reason : undefined });
-    }
-  }
-  return out;
-}
+// ---------- Contrast and gamut (the checks live in ./color.mjs) ----------
 const failures = [];
 const report = (name, results) =>
   results.filter((r) => !r.ok && !r.waived).forEach((r) => failures.push(`${name} (${r.mode}): ${r.fg} on ${r.bg} is ${r.ratio}:1, needs ${r.min}:1`));
+const gamutFailures = [];
+/** Every authored colour must sit inside sRGB (and must parse at all). */
+const reportGamut = (name, list, modes) => {
+  for (const mode of modes) {
+    for (const [token, value] of Object.entries(resolveColors(list, mode))) {
+      const bad = checkGamut(value);
+      if (bad) gamutFailures.push(`${name} (${mode}): --${token}: ${bad}`);
+    }
+  }
+};
+/** The select arrow's fill as sRGB hex (a data-URI image cannot use oklch()). */
+const arrowFill = (list, mode) => {
+  const fill = toHex(resolveColors(list, mode)['field-text']);
+  if (!fill) throw new Error(`tokens: field-text in ${mode} must be opaque for the select arrow`);
+  return fill;
+};
 
 // ---------- Base ----------
 const baseColors = tokens.color.tokens;
-const baseBlock = (mode) => [...colors(baseColors, mode), ...selectArrows(resolve(baseColors, mode)['field-text'])];
+const darkMode = allModes.includes('dark') ? 'dark' : null;
+/** One declaration per colour: light-dark() when the modes differ, else the single value. */
+const colorDecl = (t, m1, m2) => {
+  const a = colorFor(t, m1);
+  if (!m2) return `--${t.name}: ${a};`;
+  const b = colorFor(t, m2);
+  return a === b ? `--${t.name}: ${a};` : `--${t.name}: light-dark(${a}, ${b});`;
+};
 let css = `/* Generated from tokens.json by scripts/build-tokens.mjs. Do not edit. */
 ${fontFaces(tokens, '../../')}:root {
-  color-scheme: ${primary};
-${decl([...baseBlock(primary), ...families(tokens), ...rootBase(tokens), ...lengths(tokens)])}
+  color-scheme: ${darkMode ? 'light dark' : primary};
+${decl([...baseColors.map((t) => colorDecl(t, primary, darkMode)), ...selectArrows(arrowFill(baseColors, primary)), ...families(tokens), ...rootBase(tokens), ...lengths(tokens)])}
 }
 ${rootSteps(tokens, ':root')}`;
-if (allModes.includes('dark')) {
+if (darkMode) {
   css += `
-/* No data-color-scheme on <html>: follow the device. */
+/* The select arrow is an image, so it cannot use light-dark(): one per-mode image. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-color-scheme]) {
-    color-scheme: dark;
-${decl(baseBlock('dark'), '    ')}
+${decl(selectArrows(arrowFill(baseColors, darkMode)), '    ')}
   }
 }
 `;
@@ -151,12 +116,13 @@ for (const mode of allModes) {
   css += `
 [data-color-scheme="${mode}"] {
   color-scheme: ${mode};
-${decl(baseBlock(mode))}
+${decl(selectArrows(arrowFill(baseColors, mode)))}
 }
 `;
 }
 writeFileSync(new URL('src/styles/tokens.css', root), css);
-report('Normal UI', check(baseColors, allModes));
+report('Normal UI', checkContrast(baseColors, allModes));
+reportGamut('Normal UI', baseColors, allModes);
 
 const group = (name, entries, doc) =>
   `/** ${doc} */\nexport const ${name} = stylex.defineConsts({\n${entries
@@ -219,34 +185,36 @@ for (const id of ids) {
   // A mode the theme does not have falls back to its first one, every token included.
   const shown = (mode) => (modes.includes(mode) ? mode : modes[0]);
   const at = `[data-theme="${id}"]`;
-  // Re-draw the select arrow when the theme changes the text it is filled with.
-  const arrows = (mode) => (own.some((t) => t.name === 'field-text') ? selectArrows(resolve(merged, mode)['field-text']) : []);
-  const block = (mode, indent = '  ') => {
-    const m = shown(mode);
-    // Out of its modes, the theme restates every colour so nothing of the other mode shows through.
-    const list = m === mode ? own : merged;
-    const scheme = m === mode ? [] : [`color-scheme: ${m};`];
-    const fill = m === mode ? arrows(m) : selectArrows(resolve(merged, m)['field-text']);
-    return decl([...scheme, ...colors(list, m), ...fill], indent);
-  };
   const first = modes[0];
+  const single = modes.length === 1;
+  // A fixed theme restates every colour, so nothing of the other mode shows
+  // through; a two-mode theme overrides only its own, once per mode pair.
+  const themeColors = single
+    ? merged.map((t) => `--${t.name}: ${colorFor(t, first)};`)
+    : own.map((t) => colorDecl(t, 'light', 'dark'));
+  // Fixed themes always pin their arrow; two-mode themes only when they change
+  // the text it is filled with (else the base arrows inherit correctly).
+  const needsArrows = single || own.some((t) => t.name === 'field-text');
   let chunk = `
 /* ${theme.name} */
 ${fontFaces(theme, `../../themes/${id}/`)}${at} {
-${decl([...(modes.length === 1 ? [`color-scheme: ${first};`] : []), ...colors(own, first), ...arrows(first), ...families(theme), ...rootBase(theme), ...lengths(theme)])}
+${decl([...(single ? [`color-scheme: ${first};`] : []), ...themeColors, ...(needsArrows ? selectArrows(arrowFill(merged, first)) : []), ...families(theme), ...rootBase(theme), ...lengths(theme)])}
 }
-${rootSteps(theme, at)}/* No data-color-scheme: follow the device. (0,3,0) on <html> to beat tokens.css; (0,1,0) further in. */
+${rootSteps(theme, at)}`;
+  if (darkMode && needsArrows) {
+    chunk += `/* The select arrow is an image: one per-mode image under each scheme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-color-scheme])${at}, :where(:root:not([data-color-scheme])) ${at} {
-${block('dark', '    ')}
+${decl(selectArrows(arrowFill(merged, shown(darkMode))), '    ')}
   }
 }
 `;
-  for (const mode of allModes) {
-    chunk += `${at}[data-color-scheme="${mode}"], ${at} [data-color-scheme="${mode}"], [data-color-scheme="${mode}"] ${at} {
-${block(mode)}
+    for (const mode of allModes) {
+      chunk += `${at}[data-color-scheme="${mode}"], ${at} [data-color-scheme="${mode}"], [data-color-scheme="${mode}"] ${at} {
+${decl(selectArrows(arrowFill(merged, shown(mode))))}
 }
 `;
+    }
   }
   themeCss += chunk;
   chunks[id] = { name: theme.name, values: chunk, rules: text(`themes/${id}/theme.css`) };
@@ -256,8 +224,9 @@ ${block(mode)}
   ];
   if (added.length) themeTs += `\n${group(camel(id), added.map((t) => [camel(t.name), `var(--${t.name})`, t.usage]), `Added by the ${theme.name} theme.`)}`;
 
-  const results = check(merged, modes, theme.checks ?? [], theme.waive ?? {});
+  const results = checkContrast(merged, modes, theme.checks ?? [], theme.waive ?? {});
   report(theme.name, results);
+  reportGamut(theme.name, merged, modes);
   manifest.push({
     id,
     name: theme.name,
@@ -269,7 +238,7 @@ ${block(mode)}
       name: t.name,
       added: !baseNames.has(t.name),
       usage: t.usage ?? baseColors.find((b) => b.name === t.name)?.usage ?? '',
-      values: Object.fromEntries(modes.map((m) => [m, resolve(merged, m)[t.name]])),
+      values: Object.fromEntries(modes.map((m) => [m, resolveColors(merged, m)[t.name]])),
     })),
     families: theme.type?.families ?? {},
     fonts: (theme.type?.fonts ?? []).map((f) => f.family),
@@ -313,6 +282,11 @@ for (const id of ids) {
 }
 writeFileSync(new URL('dist/themes.css', root), distThemes);
 
+if (gamutFailures.length) {
+  console.error(`tokens: colours outside the sRGB gamut (or not colours at all):\n  ${gamutFailures.join('\n  ')}\n` +
+    `Fix the value; the token build only ships colours every screen can show.`);
+  process.exit(1);
+}
 if (failures.length) {
   console.error(`tokens: contrast below WCAG 2.2 AA:\n  ${failures.join('\n  ')}\n` +
     `Fix the value, or (for a theme) add the pair to "waive" with the reason.`);

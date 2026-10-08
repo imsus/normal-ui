@@ -68,7 +68,7 @@ export function Tabs({ label, tabs, defaultIndex = 0, className, style }: { labe
 }
 
 const styles = stylex.create({
-  list: { display: 'flex', flexWrap: 'wrap', borderBottomWidth: shape.borderWidth, borderBottomStyle: 'solid', borderBottomColor: color.controlBorder },
+  list: { display: 'flex', flexWrap: 'wrap', borderBlockEndWidth: shape.borderWidth, borderBlockEndStyle: 'solid', borderBlockEndColor: color.controlBorder },
   tab: {
     minHeight: `calc(${shape.targetMin} + ${space.md})`,
     paddingBlock: space.sm,
@@ -77,17 +77,26 @@ const styles = stylex.create({
     color: color.canvasText,
     borderWidth: 0,
     borderStyle: 'none',
-    borderBottomWidth: 3,
-    borderBottomStyle: 'solid',
-    borderBottomColor: { default: 'transparent', ':hover': color.controlBorder },
+    borderBlockEndWidth: 3,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: {
+      default: 'transparent',
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.controlBorder },
+      ':active': color.controlBorder,
+    },
     borderRadius: 0,
-    marginBottom: -1,
+    marginBlockEnd: -1,
     cursor: 'pointer',
     fontSize: '1rem',
     outlineOffset: { default: null, ':focus-visible': `calc(-1 * ${shape.focusWidth})` },
   },
   selected: {
-    borderBottomColor: { default: color.canvasText, ':hover': color.canvasText, '@media (forced-colors: active)': 'Highlight' },
+    borderBlockEndColor: {
+      default: color.canvasText,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.canvasText },
+      ':active': color.canvasText,
+      '@media (forced-colors: active)': 'Highlight',
+    },
     fontWeight: 700,
   },
   panel: { paddingBlock: space.md },

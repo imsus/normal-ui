@@ -10,7 +10,7 @@
    Like modern-normalize, the page font is the operating system's UI font instead of
    the browser's default serif. */
 @layer reset {
-  *, ::before, ::after { box-sizing: border-box; }
+  *, ::before, ::after { box-sizing: border-box; min-width: 0; }
   html {
     font-family: var(--font-sans, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji");
     line-height: 1.5;
@@ -19,17 +19,33 @@
     tab-size: 4;
     hanging-punctuation: first allow-end last;
   }
-  body { margin: 0; }
+  /* good-css reset: stable gutter, no synthesized faces, no tap flash, safer
+     wrapping, prettier paragraphs, grayscale type. */
+  :root {
+    scrollbar-gutter: stable;
+    font-synthesis: none;
+    -webkit-tap-highlight-color: transparent;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body { margin: 0; min-height: 100svh; }
   hr { height: 0; color: inherit; overflow: visible; }
   abbr[title] { text-decoration: underline dotted; }
   b, strong { font-weight: bolder; }
   code, kbd, samp, pre { font-family: var(--font-mono, ui-monospace, monospace); font-size: 1em; }
   small { font-size: 80%; }
   sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
-  sub { bottom: -0.25em; }
-  sup { top: -0.5em; }
+  sub { bottom: -0.25em; } /* stylelint-disable-line csstools/use-logical -- physical on purpose: offsets match historical browser sub/sup metrics; vertical-align would shift the look */
+  sup { top: -0.5em; } /* stylelint-disable-line csstools/use-logical -- physical on purpose: offsets match historical browser sub/sup metrics; vertical-align would shift the look */
   table { text-indent: 0; border-color: currentcolor; }
   button, input, optgroup, select, textarea { font-family: inherit; font-size: 100%; line-height: 1.15; margin: 0; }
+  /* iOS zooms into fields under 16px; 1rem keeps it relative to the root. */
+  input, textarea, select { font-size: max(16px, 1rem); }
+  /* Phones: no double-tap zoom on pressables, no selecting button labels. */
+  button, a, [role="button"] { touch-action: manipulation; }
+  button, [role="button"] { -webkit-user-select: none; user-select: none; }
   button, [type="button"], [type="reset"], [type="submit"] { -webkit-appearance: button; }
   legend { padding: 0; }
   progress { vertical-align: baseline; }
@@ -38,16 +54,11 @@
   ::-webkit-search-decoration { -webkit-appearance: none; }
   ::-webkit-file-upload-button { -webkit-appearance: button; font: inherit; }
   summary { display: list-item; }
-  /* Added: people who ask for less motion get none, whatever a component says */
-  @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  }
 }
 
 :where(:root) {
   /* Sticky bars set these so keyboard focus never scrolls under them (WCAG 2.4.11) */
   scroll-padding-block: var(--pd-sticky-top, 0px) var(--pd-sticky-bottom, 0px);
-  color-scheme: light;
   interpolate-size: allow-keywords;
   /* The one state arrow, a solid triangle pointing down. Every disclosure and dropdown
      uses it as a mask filled with currentColor, so it is the same in every font and
@@ -55,7 +66,6 @@
      closed; dropdowns flip it up while open. */
   --pd-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4h8l-4 5z'/%3E%3C/svg%3E");
 }
-:where([data-color-scheme="dark"]) { color-scheme: dark; }
 /* The root text size: 100% (the reader's own setting) unless a theme changes it. */
 :where(html) { font-size: var(--font-size-root, 100%); }
 
@@ -117,33 +127,36 @@
 :where(dd) { margin-inline-start: var(--space-indent); }
 :where(blockquote) { margin-inline: var(--space-indent); }
 :where(figure) { margin-inline: 0; }
-:where(hr) { border: 0; border-top: var(--border-width, 1px) solid var(--rule); margin-block: calc(var(--pd-flow, 1.5rem) / 2); }
-:where(img, video, svg, canvas) { max-width: 100%; height: auto; }
+:where(hr) { border: 0; border-block-start: var(--border-width, 1px) solid var(--rule); margin-block: calc(var(--pd-flow, 1.5rem) / 2); }
+:where(img, video, svg, canvas) { display: block; max-width: 100%; height: auto; }
 /* The first heading in a box has no space above it; the last child has none below */
 :where(:is(h1, h2, h3, h4, h5, h6):first-child) { margin-block-start: 0; }
 :where(body, main, article, section, aside, header, footer, nav, div, li, dd, td, th, blockquote, details, figure, dialog, form, fieldset) > :where(:last-child) { margin-block-end: 0; }
 
 /* Layout primitives for app UI, where spacing comes from gap, not margins */
-:where(.pd-stack) { display: flex; flex-direction: column; gap: var(--pd-stack-gap, var(--space-md)); min-width: 0; }
-:where(.pd-stack) > * { margin-block: 0; min-width: 0; --pd-stack-gap: initial; }  /* a nested stack does not inherit its parent's gap */
+:where(.pd-stack) { display: flex; flex-direction: column; gap: var(--pd-stack-gap, var(--space-md)); }
+:where(.pd-stack) > * { margin-block: 0; --pd-stack-gap: initial; }  /* a nested stack does not inherit its parent's gap */
 :where(.pd-cluster) { display: flex; flex-wrap: wrap; align-items: center; gap: var(--pd-cluster-gap, var(--space-sm)); }
-:where(.pd-cluster) > * { margin: 0; min-width: 0; --pd-cluster-gap: initial; }
+:where(.pd-cluster) > * { margin: 0; --pd-cluster-gap: initial; }
 
 /* Links: colour never carries the meaning alone, so the underline stays */
 :where(a:link) { color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
 :where(a:visited) { color: var(--link-visited); }
 :where(a:active) { color: var(--link-active); }
-:where(a:hover) { text-decoration-thickness: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  :where(a:hover) { text-decoration-thickness: 2px; }
+}
 /* In navigation a link is identified by where it sits (1.4.1), so a theme may drop the
    underline there; in running text it always stays. */
 :where(nav) :where(a:link, a:visited) { text-decoration-line: var(--nav-link-decoration, underline); }
-:where(nav) :where(a:hover) { text-decoration-line: underline; }
+@media (hover: hover) and (pointer: fine) {
+  :where(nav) :where(a:hover) { text-decoration-line: underline; }
+}
 
 /* Focus: one visible, solid ring on every focusable thing */
 :where(:focus-visible) { outline: var(--focus-width, 2px) solid var(--focus-ring); outline-offset: var(--focus-offset, 2px); }
 /* Fields add an inset ring (transparent in Normal UI) for themes with a light outline */
 :where(input, select, textarea):focus-visible:not(:user-invalid, [aria-invalid="true"]) { box-shadow: inset 0 0 0 2px var(--focus-inset, transparent); }
-:where(:focus:not(:focus-visible)) { outline: none; }
 
 /* Inline text */
 :where(code, kbd, samp, pre) { font-family: var(--font-mono); font-size: 1em; }
@@ -187,11 +200,17 @@
   box-shadow: 0 var(--button-edge-width, 0px) 0 var(--button-edge, transparent), var(--button-shadow, 0 0 0 transparent);
 }
 :where(button, input:is([type="button"], [type="submit"], [type="reset"])):disabled { border-color: var(--button-border-disabled, var(--button-border, var(--control-border))); }
-:where(button, input:is([type="button"], [type="submit"], [type="reset"])):hover:not(:disabled) {
+@media (hover: hover) and (pointer: fine) {
+  :where(button, input:is([type="button"], [type="submit"], [type="reset"])):hover:not(:disabled) {
+    background: var(--button-face-hover, var(--button-face));
+    border-color: var(--button-border-hover, var(--canvas-text));
+  }
+}
+/* Pressed looks hovered, so touch users see the press even where the theme
+   sets no press offset; the offset and shadow still apply on top. */
+:where(button, input:is([type="button"], [type="submit"], [type="reset"])):active:not(:disabled) {
   background: var(--button-face-hover, var(--button-face));
   border-color: var(--button-border-hover, var(--canvas-text));
-}
-:where(button, input:is([type="button"], [type="submit"], [type="reset"])):active:not(:disabled) {
   box-shadow: var(--button-shadow-active, 0 0 0 transparent);
   translate: 0 var(--button-press-offset, 0px);
 }
@@ -230,12 +249,18 @@
 /* Selects: the system's state arrow (--pd-chevron's triangle, in field-text) instead of
    each browser's own, with 8px after it. It flips up while the list is open. Lists
    (multiple, size) keep their native look; forced-colours mode keeps the native arrow,
-   whose colour the system palette controls. */
+   whose colour the system palette controls.
+   Plain selects keep the data-URI arrow on purpose: appearance: base-select sizes
+   the button to the selected option instead of the widest one, which narrows selects
+   and reflows their surroundings. The .pd-select pattern in patterns.css is the
+   opt-in customizable select; move plain selects over only when base-select keeps
+   native sizing. */
 :where(select:not([multiple], [size])) {
   appearance: none;
   padding-inline-end: calc(var(--space-sm) + 0.75em + 0.5em);
   background-image: var(--pd-select-arrow);
   background-repeat: no-repeat;
+  /* Physical: background-position has no logical form, so RTL gets its own rule below. */
   background-position: right var(--space-sm) center;
   background-size: 0.75em;
 }
@@ -265,7 +290,7 @@
 :where(input[type="checkbox"], input[type="radio"]) {
   width: var(--choice-size, 18px);
   height: var(--choice-size, 18px);
-  margin: 3px 6px 3px 3px;
+  margin-block: 3px; margin-inline: 3px 6px;
   vertical-align: -4px;
   accent-color: var(--accent);
 }
@@ -310,7 +335,7 @@
   max-width: calc(100% - 2 * var(--space-md));
 }
 :where(dialog:modal) { max-height: calc(100% - 2 * var(--space-md)); overflow: auto; }
-:where(dialog)::backdrop { background: rgb(0 0 0 / 0.5); }
+:where(dialog)::backdrop { background: color-mix(in oklch, black 50%, transparent); }
 
 /* Details open and close smoothly, only for people who have not asked for less motion */
 @media (prefers-reduced-motion: no-preference) {
@@ -336,7 +361,7 @@
 @media (forced-colors: active) {
   :where(:focus-visible) { outline-color: Highlight; }
   :where(button, input, select, textarea, fieldset, th, td) { border-color: CanvasText; }
-  :where(hr) { border-top-color: CanvasText; }
+  :where(hr) { border-block-start-color: CanvasText; }
   :where(dialog) { border-color: CanvasText; }
   :where(button, input):disabled { color: GrayText; border-color: GrayText; }
   :where(mark) { background: Mark; color: MarkText; }

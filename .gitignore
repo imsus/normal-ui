@@ -8,3 +8,6 @@ dist/
 fixtures/tarballs/
 fixtures/*/pnpm-lock.yaml
 packages/react/skills/normal-ui-react/references/
+test-results/
+playwright-report/
+playwright/.cache/

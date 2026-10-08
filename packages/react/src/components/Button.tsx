@@ -89,13 +89,20 @@ export const buttonStyles = stylex.create({
     paddingBlock: shape.buttonPaddingBlock,
     paddingInline: shape.buttonPaddingInline,
     // Disabled: transparent, so it takes the colour of the surface it sits on.
-    backgroundColor: { default: color.buttonFace, ':hover:not(:disabled)': color.buttonFaceHover, ':disabled': 'transparent' },
+    // Pressed looks hovered, so touch users see the press (base.css does the same).
+    backgroundColor: {
+      default: color.buttonFace,
+      '@media (hover: hover) and (pointer: fine)': { ':hover:not(:disabled)': color.buttonFaceHover },
+      ':active:not(:disabled)': color.buttonFaceHover,
+      ':disabled': 'transparent',
+    },
     color: { default: color.buttonText, ':disabled': color.grayText },
     borderWidth: shape.controlBorderWidth,
     borderStyle: { default: 'solid', ':disabled': 'dashed' },
     borderColor: {
       default: color.buttonBorder,
-      ':hover:not(:disabled)': color.buttonBorderHover,
+      '@media (hover: hover) and (pointer: fine)': { ':hover:not(:disabled)': color.buttonBorderHover },
+      ':active:not(:disabled)': color.buttonBorderHover,
       ':disabled': color.buttonBorderDisabled,
       '@media (prefers-contrast: more)': color.canvasText,
       '@media (forced-colors: active)': 'CanvasText',

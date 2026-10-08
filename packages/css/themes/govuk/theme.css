@@ -7,9 +7,11 @@
   text-decoration-thickness: max(1px, 0.0625rem);
   text-underline-offset: 0.15em;
 }
-:where([data-theme="govuk"]) :where(a:hover) {
-  color: var(--link-hover);
-  text-decoration-thickness: max(3px, 0.1875rem);
+@media (hover: hover) and (pointer: fine) {
+  :where([data-theme="govuk"]) :where(a:hover) {
+    color: var(--link-hover);
+    text-decoration-thickness: max(3px, 0.1875rem);
+  }
 }
 :where([data-theme="govuk"]) :where(a:focus-visible) {
   outline: 3px solid transparent;
@@ -37,7 +39,7 @@
   display: inline-grid;
   place-content: center;
   flex: none;
-  margin: 0 var(--space-sm) 0 0;
+  margin-block: 0; margin-inline: 0 var(--space-sm);
   vertical-align: middle;
   border: var(--control-border-width) solid var(--control-border);
   background: var(--field);
@@ -72,7 +74,7 @@
   translate: 0;
 }
 :where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]):focus-visible {
-  outline: none;
+  outline-color: transparent;
   box-shadow: 0 0 0 var(--focus-width) var(--focus-ring);
 }
 :where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]):disabled { opacity: 0.5; }
@@ -80,11 +82,11 @@
   :where([data-theme="govuk"]) :where(input[type="checkbox"], input[type="radio"]) { appearance: auto; }
 }
 
-/* Tables: rows only, generous right padding */
+/* Tables: rows only, generous trailing padding */
 :where([data-theme="govuk"]) :where(th, td) {
   border: 0;
   border-block-end: var(--border-width) solid var(--rule);
-  padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+  padding-block: var(--space-sm); padding-inline: 0 var(--space-md);
 }
 
 /* Details: a link-coloured summary, the content behind a grey bar */

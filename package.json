@@ -12,7 +12,13 @@
     "build": "pnpm tokens && pnpm run build:react && pnpm --filter docs run build",
     "preview": "pnpm --filter docs run preview",
     "deploy": "pnpm --filter docs run deploy",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "lint:css": "stylelint \"packages/css/src/styles/*.css\" \"packages/css/themes/*/theme.css\"",
+    "lint:stylex": "node scripts/check-stylex.mjs",
+    "lint": "pnpm lint:css && pnpm lint:stylex",
+    "test": "node --test scripts/check-stylex.test.mjs scripts/stylelint-good-css.test.mjs && pnpm --filter @imsus/normal-ui-css run test",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots"
   },
   "browserslist": [
     "last 2 Chrome versions",
@@ -20,6 +26,9 @@
     "last 2 Safari versions"
   ],
   "devDependencies": {
-    "@changesets/cli": "^3.0.3"
+    "@changesets/cli": "^3.0.3",
+    "@playwright/test": "1.64.0",
+    "stylelint": "17.16.0",
+    "stylelint-use-logical": "2.1.3"
   }
 }

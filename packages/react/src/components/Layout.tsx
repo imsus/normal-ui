@@ -41,7 +41,6 @@ const styles = stylex.create({
   stack: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: 0,
     '--pd-flow': '0',
     '--pd-h-after': '0',
     '--pd-h2-before': '0',

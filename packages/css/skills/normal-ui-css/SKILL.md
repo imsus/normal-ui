@@ -26,6 +26,8 @@ then component styles, then your own unlayered CSS. Your unlayered rules always 
 `data-color-scheme="light|dark"` forces a color scheme on an element (or `<html>`).
 Without it, the page follows the device. `data-theme="govuk|mcmaster|usgraphics"`
 applies a theme; without it, you get plain Normal UI. GOV.UK is light only.
+Each token holds both schemes as one `light-dark()` declaration; switching sets
+`color-scheme` only, so a forced scheme works on any element.
 
 ## Plain HTML
 
@@ -46,3 +48,16 @@ Customize by overriding properties on an element, never by editing the package:
 ```
 
 `tokens.json` (package export `./tokens.json`) is the value source for tooling.
+Colours are written in `oklch()` there; a variant of another token is a
+`color-mix(in oklch, …)` from its base.
+
+## Motion
+
+Transitions that move or scale run only inside `@media (prefers-reduced-motion: no-preference)`.
+There is no global kill switch: if your own CSS animates, gate it the same way.
+
+## CSS standard
+
+Every stylesheet follows [good-css.com](https://good-css.com/), pinned in
+`skills/good-css/` at the repo root (see `apps/docs/docs/adr/0002-adopt-good-css.md`).
+Read the matching `references/*.md` there before writing any CSS.

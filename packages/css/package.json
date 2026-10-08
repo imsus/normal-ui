@@ -25,13 +25,15 @@
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
     "compile-stylex": "node scripts/compile-stylex.mjs && tsc -p tsconfig.build.json",
-    "build": "node scripts/build-tokens.mjs && pnpm run compile-stylex"
+    "build": "node scripts/build-tokens.mjs && pnpm run compile-stylex",
+    "test": "node --test scripts/color.test.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@babel/plugin-syntax-typescript": "^7.29.7",
     "@stylexjs/babel-plugin": "^0.19.1",
     "@stylexjs/unplugin": "^0.19.1",
+    "culori": "^4.0.2",
     "esbuild": "^0.28.2",
     "typescript": "^7.0.2"
   },

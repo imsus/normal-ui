@@ -121,6 +121,6 @@ export function AlertDialog({
 
 const styles = stylex.create({
   dialog: { maxWidth: `min(26rem, calc(100% - 2 * ${space.md}))` },
-  title: { marginTop: 0, fontSize: '1.17em' },
-  actions: { display: 'flex', gap: space.sm, justifyContent: 'flex-end', flexWrap: 'wrap', marginBottom: 0 },
+  title: { marginBlockStart: 0, fontSize: '1.17em' },
+  actions: { display: 'flex', gap: space.sm, justifyContent: 'flex-end', flexWrap: 'wrap', marginBlockEnd: 0 },
 });

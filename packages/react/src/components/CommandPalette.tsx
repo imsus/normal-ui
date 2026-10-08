@@ -240,7 +240,8 @@ const styles = stylex.create({
     width: `min(36rem, calc(100% - 2 * ${space.md}))`,
     maxHeight: `calc(100dvh - 2 * min(12vh, 6rem))`,
     padding: 0,
-    overflow: 'hidden',
+    // Clip, not hidden: the list inside scrolls, the dialog itself never does.
+    overflow: 'clip',
   },
   inner: { display: 'flex', flexDirection: 'column', maxHeight: 'inherit' },
   input: {
@@ -249,7 +250,7 @@ const styles = stylex.create({
     paddingInline: space.md,
     fontSize: '1.125rem',
     borderWidth: 0,
-    borderBottomWidth: shape.borderWidth,
+    borderBlockEndWidth: shape.borderWidth,
     borderStyle: 'solid',
     borderColor: color.controlBorder,
     borderRadius: 0,
@@ -273,7 +274,7 @@ const styles = stylex.create({
   // No checkmark column: commands are run, not selected.
   // patterns.css bolds [aria-selected=true]; here that is only the highlight.
   option: { '::before': { content: 'none' }, justifyContent: 'space-between', cursor: 'pointer', fontWeight: 'normal' },
-  label: { minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+  label: { overflow: 'clip', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   detail: { flex: 'none', fontSize: '0.875rem', color: color.grayText },
   detailOn: { color: 'inherit' },
   empty: { margin: 0, padding: space.md, color: color.grayText },
@@ -287,8 +288,8 @@ const styles = stylex.create({
     fontFamily: font.sans,
     fontSize: '0.8125rem',
     color: color.grayText,
-    borderTopWidth: shape.borderWidth,
-    borderTopStyle: 'solid',
-    borderTopColor: color.rule,
+    borderBlockStartWidth: shape.borderWidth,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartColor: color.rule,
   },
 });

@@ -79,15 +79,15 @@ const carousel = stylex.create({
     gap: space.xs,
     alignItems: 'center',
     padding: space.xs,
-    borderBottomWidth: shape.borderWidth,
-    borderBottomStyle: 'solid',
-    borderBottomColor: color.rule,
+    borderBlockEndWidth: shape.borderWidth,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: color.rule,
   },
   nav: { display: 'flex', flexWrap: 'wrap', gap: space.xs },
   status: { color: color.grayText, marginInlineStart: 'auto' },
   slide: { padding: space.md },
-  title: { marginTop: 0 },
-  body: { marginBottom: 0 },
+  title: { marginBlockStart: 0 },
+  body: { marginBlockEnd: 0 },
 });
 
 /**
@@ -255,12 +255,12 @@ export function Feed({
 }
 
 const feed = stylex.create({
-  heading: { fontSize: '1.17em', marginTop: 0 },
-  hint: { marginTop: 0 },
+  heading: { fontSize: '1.17em', marginBlockStart: 0 },
+  hint: { marginBlockStart: 0 },
   article: {
-    borderTopWidth: shape.borderWidth,
-    borderTopStyle: 'solid',
-    borderTopColor: color.rule,
+    borderBlockStartWidth: shape.borderWidth,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartColor: color.rule,
     paddingBlock: space.sm,
     outline: { default: null, ':focus': `${shape.focusWidth} solid ${color.focusRing}` },
     outlineOffset: shape.focusOffset,

@@ -22,7 +22,7 @@ const styles = stylex.create({
   scroll: { overflowX: 'auto', maxWidth: '100%' },
   cell: { outline: { default: null, ':focus': `${shape.focusWidth} solid ${color.focusRing}` }, outlineOffset: `calc(-1 * ${shape.focusWidth} - 1px)` },
   edit: { width: '6em' },
-  title: { marginTop: 0 },
+  title: { marginBlockStart: 0 },
   // A bleeding table: rows run edge to edge with horizontal lines only, and the first
   // and last cells line up with the card's content. Outside a card the inset falls
   // back to the normal cell padding.
@@ -32,8 +32,8 @@ const styles = stylex.create({
   bleedCell: { borderInlineWidth: 0 },
   bleedFirst: { paddingInlineStart: `var(--pd-card-bleed-x, ${space.sm})` },
   bleedLast: { paddingInlineEnd: `var(--pd-card-bleed-x, ${space.sm})` },
-  bleedTop: { borderTopWidth: 0 },
-  bleedBottom: { borderBottomWidth: 0 },
+  bleedTop: { borderBlockStartWidth: 0 },
+  bleedBottom: { borderBlockEndWidth: 0 },
   bleedCaption: { paddingInline: `var(--pd-card-bleed-x, ${space.sm})` },
 });
 

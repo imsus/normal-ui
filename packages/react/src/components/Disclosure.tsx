@@ -109,7 +109,7 @@ export function Details({ summary, children, open, name, className, style }: { s
 }
 
 const styles = stylex.create({
-  accordion: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule },
+  accordion: { borderBlockStartWidth: shape.borderWidth, borderBlockStartStyle: 'solid', borderBlockStartColor: color.rule },
   heading: { margin: 0, fontSize: '1rem' },
   button: {
     display: 'flex',
@@ -120,9 +120,9 @@ const styles = stylex.create({
     paddingInline: 0,
     backgroundColor: 'transparent',
     borderWidth: 0,
-    borderBottomWidth: shape.borderWidth,
-    borderBottomStyle: 'solid',
-    borderBottomColor: color.rule,
+    borderBlockEndWidth: shape.borderWidth,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: color.rule,
     borderRadius: 0,
     color: color.canvasText,
     fontFamily: font.sans,
@@ -133,9 +133,9 @@ const styles = stylex.create({
   panel: {
     paddingBlock: `${space.xs} ${space.sm}`,
     paddingInlineStart: `calc(${chevron.size} + ${chevron.gap})`,
-    borderBottomWidth: shape.borderWidth,
-    borderBottomStyle: 'solid',
-    borderBottomColor: color.rule,
+    borderBlockEndWidth: shape.borderWidth,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: color.rule,
   },
   details: { paddingBlock: `${space.xs} 0` },
 });

@@ -24,8 +24,16 @@ export const optionStyles = stylex.create({
     paddingInline: space.sm,
     cursor: 'default',
     fontFamily: font.sans,
-    backgroundColor: { default: null, ':hover': color.highlight },
-    color: { default: null, ':hover': color.highlightText },
+    backgroundColor: {
+      default: null,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlight },
+      ':active': color.highlight,
+    },
+    color: {
+      default: null,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': color.highlightText },
+      ':active': color.highlightText,
+    },
     '::before': { content: '""', width: '1em', flex: 'none' },
   },
   selected: { fontWeight: 700, '::before': { content: '"✓" / ""', width: '1em', flex: 'none' } },

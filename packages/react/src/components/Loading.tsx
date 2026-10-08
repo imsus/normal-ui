@@ -6,8 +6,9 @@ import { mergeRootProps, shared } from './shared';
 
 /*
  * Loading at every level. Status is always said in words first; the spinner, the
- * skeleton and the progress bar are second cues. Motion stops for people who ask for
- * less of it (base.css switches animation off under prefers-reduced-motion).
+ * skeleton and the progress bar are second cues. The spin runs only inside
+ * prefers-reduced-motion: no-preference; the pulse is an opacity fade, so it
+ * may run anywhere.
  */
 
 const spin = stylex.keyframes({ to: { rotate: '1turn' } });
@@ -97,7 +98,7 @@ export function Loading({
   style?: CSSProperties;
 }) {
   return (
-    <div aria-busy={busy} {...mergeRootProps(stylex.props(styles.region, xstyle), { className, style })}>
+    <div aria-busy={busy} {...mergeRootProps(stylex.props(xstyle), { className, style })}>
       {/* Exists from the first render, so the first message is not missed. */}
       <span role="status" {...stylex.props(shared.visuallyHidden)}>{busy ? label : ''}</span>
       {!busy ? (
@@ -127,7 +128,9 @@ const styles = stylex.create({
     // A gap in the ring shows the motion; it stays a ring when motion is off.
     borderInlineEndColor: 'transparent',
     borderRadius: '50%',
-    animationName: spin,
+    // No name outside no-preference, so the ring stays static; the durations
+    // below are inert without one.
+    animationName: { default: null, '@media (prefers-reduced-motion: no-preference)': spin },
     animationDuration: '0.8s',
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
@@ -145,7 +148,6 @@ const styles = stylex.create({
   line: { maxWidth: '100%' },
   size: (width: string, height: string) => ({ width, height }),
   circle: { borderRadius: '50%' },
-  region: { minWidth: 0 },
   fallback: { display: 'grid', gap: space.sm, maxWidth: '24rem' },
   page: { minHeight: '50vh', alignContent: 'center', justifyItems: 'center', maxWidth: 'none', textAlign: 'center' },
   label: { margin: 0 },

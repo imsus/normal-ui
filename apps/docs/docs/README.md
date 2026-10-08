@@ -45,6 +45,8 @@ There are no brand or status hues. For an error, write it out ("Enter a date aft
 
 `link-active` in light passes by a hair. It only shows while the pointer is held down; never use it for resting text.
 
+Colours are authored in `oklch()` in `tokens.json` (grays with a `none` hue) and generated into one block: each token is a single `light-dark()` declaration on `:root`, with `color-scheme: light dark`. Nothing is restated per scheme; `data-color-scheme="light|dark"` only sets `color-scheme`, and without it the page follows the device. A variant of another token (a hover face, a tint) is written as `color-mix(in oklch, …)` from its base; values chosen by hand for contrast stay literals. The token build checks every pair above in every theme (plus gamut), and fails on a regression.
+
 ## Typography
 
 Three families, all already on the reader's device, no web fonts to load:
@@ -65,8 +67,9 @@ Three families, all already on the reader's device, no web fonts to load:
 The reset follows modern-normalize rule for rule, with these additions:
 - `line-height: 1.5` on `html`;
 - `hanging-punctuation`;
-- normalize's `hr` and `abbr` fixes;
-- a reduced-motion override that switches off animation for people who ask for less motion.
+- normalize's `hr` and `abbr` fixes.
+
+Motion is opt-in per rule: transitions and animations that move or scale live inside `@media (prefers-reduced-motion: no-preference)`, while opacity and colour fades may run anywhere. There is no global kill switch, so your own CSS keeps its motion; gate it the same way.
 
 It uses the same system UI font stack as modern-normalize.
 

@@ -251,7 +251,6 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     gap: P,
-    minWidth: 0,
     backgroundColor: color.canvas,
     color: color.canvasText,
     borderWidth: shape.borderWidth,
@@ -292,7 +291,7 @@ const styles = stylex.create({
   noGap: { gap: 0 },
 
   header: { display: 'flex', alignItems: 'flex-start', gap: space.sm },
-  titles: { display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, minWidth: 0 },
+  titles: { display: 'flex', flexDirection: 'column', gap: '2px', flex: 1 },
   heading: { margin: 0, fontWeight: 700, lineHeight: 1.25, color: 'var(--pd-card-strong, inherit)' },
   headingSize: (fontSize: string) => ({ fontSize }),
   subheading: { margin: 0, fontSize: '0.875rem', color: 'var(--pd-card-muted, var(--gray-text))' },
@@ -312,7 +311,6 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     gap: P,
-    minWidth: 0,
     '--pd-card-bleed-top': '0px',
     '--pd-card-bleed-bottom': '0px',
   },
@@ -360,8 +358,8 @@ const styles = stylex.create({
   partPad: { padding: P },
   partPadBlock: { paddingBlock: P },
   partPadInline: { paddingInline: P },
-  lineBelow: { borderBottomWidth: shape.borderWidth, borderBottomStyle: 'solid', borderBottomColor: color.rule },
-  lineAbove: { borderTopWidth: shape.borderWidth, borderTopStyle: 'solid', borderTopColor: color.rule },
+  lineBelow: { borderBlockEndWidth: shape.borderWidth, borderBlockEndStyle: 'solid', borderBlockEndColor: color.rule },
+  lineAbove: { borderBlockStartWidth: shape.borderWidth, borderBlockStartStyle: 'solid', borderBlockStartColor: color.rule },
   // A separated header or footer: a tinted band (recessed on a plain card, raised on a
   // tinted one). Every surface keeps gray-text above 4.5:1, so text colours stay.
   band: { backgroundColor: 'var(--pd-card-band)' },

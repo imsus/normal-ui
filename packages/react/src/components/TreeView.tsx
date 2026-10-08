@@ -130,12 +130,24 @@ const styles = stylex.create({
   list: { listStyle: 'none', margin: 0, padding: 0 },
   tree: { maxWidth: '20rem' },
   group: { paddingInlineStart: space.lg },
-  item: { cursor: 'default', outline: 'none' },
+  // The ring lives on the label (styles.ring); keep this transparent so
+  // forced-colors mode can still paint it.
+  item: { cursor: 'default', outlineColor: { default: null, ':focus-visible': 'transparent' } },
   label: {
     display: 'flex',
     alignItems: 'center',
     minHeight: `calc(${shape.targetMin} + ${space.sm})`,
     paddingInline: space.xs,
+    backgroundColor: {
+      default: null,
+      ':active': color.highlight,
+      '@media (forced-colors: active)': { ':active': 'Highlight' },
+    },
+    color: {
+      default: null,
+      ':active': color.highlightText,
+      '@media (forced-colors: active)': { ':active': 'HighlightText' },
+    },
   },
   ring: {
     outlineWidth: shape.focusWidth,

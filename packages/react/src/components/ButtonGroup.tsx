@@ -69,9 +69,14 @@ export const buttonGroupItem = stylex.create({
     borderEndStartRadius: { default: 0, ':first-child': radius.control },
     borderStartEndRadius: { default: 0, ':last-child': radius.control },
     borderEndEndRadius: { default: 0, ':last-child': radius.control },
-    // Lift the item under the pointer or focus above its neighbours, so its
+    // Lift the item under the pointer, press or focus above its neighbours, so its
     // darker border and its focus ring are never hidden by the overlap.
-    zIndex: { default: null, ':hover': 1, ':focus-visible': 2 },
+    zIndex: {
+      default: null,
+      '@media (hover: hover) and (pointer: fine)': { ':hover': 1 },
+      ':active': 1,
+      ':focus-visible': 2,
+    },
   },
   /** A pressed toggle keeps its inverted border visible over its neighbours. */
   raised: { zIndex: { default: 1, ':focus-visible': 2 } },
