@@ -16,7 +16,7 @@
     "@imsus/normal-ui-css": "workspace:*",
     "@imsus/normal-ui-react": "workspace:*",
     "@stylexjs/stylex": "^0.19.1",
-    "astro": "^7.3.6",
+    "astro": "^7.4.7",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
